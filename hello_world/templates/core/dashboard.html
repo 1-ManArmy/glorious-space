@@ -1,0 +1,475 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard - {{ user.get_full_name|default:user.username }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .dashboard-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 60px 0 40px;
+        position: relative;
+    }
+    
+    .stats-card {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+        border: none;
+        height: 100%;
+    }
+    
+    .stats-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .stats-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+    
+    .stats-number {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    
+    .activity-item {
+        padding: 15px 0;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .activity-item:last-child {
+        border-bottom: none;
+    }
+    
+    .project-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+    
+    .project-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    }
+    
+    .quick-action-btn {
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        border: none;
+        color: white;
+        border-radius: 50px;
+        padding: 15px 30px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .quick-action-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        color: white;
+    }
+    
+    .canvas-thumbnail {
+        width: 100%;
+        height: 150px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        color: #dee2e6;
+        margin-bottom: 15px;
+    }
+    
+    .progress-circle {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: conic-gradient(from 0deg, #667eea var(--progress), #e9ecef var(--progress));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: #667eea;
+    }
+    
+    .notification-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: #dc3545;
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        font-size: 0.7rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Dashboard Header -->
+<div class="dashboard-header">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-6 fw-bold mb-3">
+                    Welcome back, {{ user.get_full_name|default:user.username }}! 👑
+                </h1>
+                <p class="lead mb-0">
+                    Ready to build something amazing today? Your development kingdom awaits.
+                </p>
+            </div>
+            <div class="col-lg-6 text-end">
+                <div class="d-flex gap-3 justify-content-end flex-wrap">
+                    <a href="{% url 'core:canvas_playground' %}" class="btn btn-warning btn-lg">
+                        <i class="fas fa-paint-brush me-2"></i>New Canvas
+                    </a>
+                    <a href="{% url 'core:project_create' %}" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-plus me-2"></i>New Project
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Dashboard Stats -->
+<div class="container my-5">
+    <div class="row g-4">
+        <div class="col-lg-3 col-md-6">
+            <div class="stats-card text-center">
+                <div class="stats-icon bg-primary bg-opacity-10 mx-auto">
+                    <i class="fas fa-project-diagram text-primary"></i>
+                </div>
+                <div class="stats-number text-primary">{{ user_stats.total_projects }}</div>
+                <h6 class="text-muted">Total Projects</h6>
+                <p class="small text-muted mb-0">+{{ user_stats.projects_this_month }} this month</p>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6">
+            <div class="stats-card text-center">
+                <div class="stats-icon bg-success bg-opacity-10 mx-auto">
+                    <i class="fas fa-palette text-success"></i>
+                </div>
+                <div class="stats-number text-success">{{ user_stats.total_canvas_sessions }}</div>
+                <h6 class="text-muted">Canvas Sessions</h6>
+                <p class="small text-muted mb-0">{{ user_stats.canvas_hours }}h total time</p>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6">
+            <div class="stats-card text-center">
+                <div class="stats-icon bg-warning bg-opacity-10 mx-auto">
+                    <i class="fas fa-users text-warning"></i>
+                </div>
+                <div class="stats-number text-warning">{{ user_stats.collaborations }}</div>
+                <h6 class="text-muted">Collaborations</h6>
+                <p class="small text-muted mb-0">{{ user_stats.active_collaborations }} active</p>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6">
+            <div class="stats-card text-center">
+                <div class="stats-icon bg-info bg-opacity-10 mx-auto">
+                    <i class="fas fa-trophy text-info"></i>
+                </div>
+                <div class="stats-number text-info">{{ user_stats.achievements }}</div>
+                <h6 class="text-muted">Achievements</h6>
+                <p class="small text-muted mb-0">Level {{ user_stats.level }} Developer</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="container mb-5">
+    <div class="row">
+        <div class="col-12">
+            <h3 class="fw-bold mb-4">Quick Actions</h3>
+            <div class="row g-3">
+                <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+                    <a href="{% url 'core:canvas_playground' %}?type=2d" class="btn quick-action-btn w-100 text-center">
+                        <i class="fas fa-draw-polygon d-block mb-2"></i>
+                        2D Canvas
+                    </a>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+                    <a href="{% url 'core:canvas_playground' %}?type=3d" class="btn quick-action-btn w-100 text-center">
+                        <i class="fas fa-cube d-block mb-2"></i>
+                        3D WebGL
+                    </a>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+                    <a href="{% url 'core:canvas_playground' %}?type=4d" class="btn quick-action-btn w-100 text-center">
+                        <i class="fas fa-atom d-block mb-2"></i>
+                        4D Space
+                    </a>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+                    <a href="{% url 'core:canvas_playground' %}?type=5g" class="btn quick-action-btn w-100 text-center">
+                        <i class="fas fa-broadcast-tower d-block mb-2"></i>
+                        5G Real-time
+                    </a>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+                    <a href="{% url 'core:project_create' %}" class="btn quick-action-btn w-100 text-center">
+                        <i class="fas fa-plus d-block mb-2"></i>
+                        New Project
+                    </a>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+                    <a href="{% url 'core:developers' %}" class="btn quick-action-btn w-100 text-center">
+                        <i class="fas fa-users d-block mb-2"></i>
+                        Find Devs
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Dashboard Content -->
+<div class="container">
+    <div class="row g-4">
+        <!-- Recent Projects -->
+        <div class="col-lg-8">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="fw-bold">Your Recent Projects</h3>
+                <a href="{% url 'core:projects' %}" class="btn btn-outline-primary">View All</a>
+            </div>
+            
+            {% if recent_projects %}
+                <div class="row g-4">
+                    {% for project in recent_projects %}
+                    <div class="col-md-6">
+                        <div class="card project-card h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <h5 class="card-title">{{ project.name }}</h5>
+                                    <span class="badge bg-{{ project.status_color }}">{{ project.get_status_display }}</span>
+                                </div>
+                                
+                                <p class="card-text text-muted">{{ project.description|truncatewords:15 }}</p>
+                                
+                                <div class="canvas-thumbnail mb-3">
+                                    {% if project.canvas_data.type == '2d' %}
+                                        <i class="fas fa-draw-polygon"></i>
+                                    {% elif project.canvas_data.type == '3d' %}
+                                        <i class="fas fa-cube"></i>
+                                    {% elif project.canvas_data.type == '4d' %}
+                                        <i class="fas fa-atom"></i>
+                                    {% elif project.canvas_data.type == '5g' %}
+                                        <i class="fas fa-broadcast-tower"></i>
+                                    {% else %}
+                                        <i class="fas fa-project-diagram"></i>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div>
+                                        <small class="text-muted">
+                                            <i class="fas fa-eye"></i> {{ project.views_count }}
+                                            <i class="fas fa-heart ms-2"></i> {{ project.likes_count }}
+                                        </small>
+                                    </div>
+                                    <small class="text-muted">
+                                        Updated {{ project.updated_at|timesince }} ago
+                                    </small>
+                                </div>
+                                
+                                <div class="d-flex gap-2">
+                                    <a href="{% url 'core:project_detail' project.id %}" class="btn btn-outline-primary btn-sm flex-fill">
+                                        <i class="fas fa-eye me-1"></i>View
+                                    </a>
+                                    <a href="{% url 'core:project_edit' project.id %}" class="btn btn-primary btn-sm flex-fill">
+                                        <i class="fas fa-edit me-1"></i>Edit
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-project-diagram fa-4x text-muted mb-3"></i>
+                    <h5>No projects yet</h5>
+                    <p class="text-muted">Start building your first project to showcase your skills!</p>
+                    <a href="{% url 'core:project_create' %}" class="btn btn-primary">Create Your First Project</a>
+                </div>
+            {% endif %}
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Profile Progress -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h6 class="card-title fw-bold">Profile Completion</h6>
+                    <div class="d-flex align-items-center">
+                        <div class="progress-circle" style="--progress: {{ profile_completion }}%;">
+                            {{ profile_completion }}%
+                        </div>
+                        <div class="ms-3">
+                            <p class="mb-1">Almost there!</p>
+                            <small class="text-muted">Complete your profile to attract collaborators</small>
+                        </div>
+                    </div>
+                    {% if profile_completion < 100 %}
+                    <div class="mt-3">
+                        <a href="{% url 'users:profile' %}" class="btn btn-outline-primary btn-sm w-100">
+                            Complete Profile
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Recent Activity -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h6 class="card-title fw-bold">Recent Activity</h6>
+                    {% if recent_activities %}
+                        {% for activity in recent_activities %}
+                        <div class="activity-item">
+                            <div class="d-flex align-items-center">
+                                <div class="me-3">
+                                    <i class="fas fa-{{ activity.icon }} text-{{ activity.color }}"></i>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <p class="mb-1 small">{{ activity.description }}</p>
+                                    <small class="text-muted">{{ activity.timestamp|timesince }} ago</small>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-muted small">No recent activity</p>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Collaboration Invites -->
+            {% if collaboration_invites %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="card-title fw-bold mb-0">Collaboration Invites</h6>
+                        <span class="notification-badge">{{ collaboration_invites|length }}</span>
+                    </div>
+                    
+                    {% for invite in collaboration_invites %}
+                    <div class="activity-item">
+                        <div class="d-flex align-items-center">
+                            <img src="{{ invite.from_user.profile_picture|default:'/static/img/default-avatar.png' }}" 
+                                 alt="{{ invite.from_user.username }}" 
+                                 class="rounded-circle me-3" 
+                                 width="40" height="40">
+                            <div class="flex-grow-1">
+                                <p class="mb-1 small">
+                                    <strong>{{ invite.from_user.username }}</strong> invited you to collaborate on 
+                                    <strong>{{ invite.project.name }}</strong>
+                                </p>
+                                <div class="d-flex gap-2 mt-2">
+                                    <button class="btn btn-primary btn-xs">Accept</button>
+                                    <button class="btn btn-outline-secondary btn-xs">Decline</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Trending in Community -->
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title fw-bold">Trending in Community</h6>
+                    {% if trending_projects %}
+                        {% for project in trending_projects %}
+                        <div class="activity-item">
+                            <div class="d-flex align-items-center">
+                                <div class="me-3">
+                                    <i class="fas fa-fire text-danger"></i>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <p class="mb-1 small">
+                                        <strong>{{ project.name }}</strong>
+                                    </p>
+                                    <small class="text-muted">
+                                        by {{ project.owner.username }} • {{ project.views_count }} views
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-muted small">No trending projects</p>
+                    {% endif %}
+                    
+                    <div class="mt-3">
+                        <a href="{% url 'core:projects' %}?sort=trending" class="btn btn-outline-primary btn-sm w-100">
+                            Explore Trending
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Animate progress circle
+    const progressCircle = document.querySelector('.progress-circle');
+    if (progressCircle) {
+        const progress = progressCircle.style.getPropertyValue('--progress');
+        progressCircle.style.setProperty('--progress', '0%');
+        setTimeout(() => {
+            progressCircle.style.setProperty('--progress', progress);
+        }, 500);
+    }
+    
+    // Handle collaboration invite actions
+    const acceptBtns = document.querySelectorAll('.btn-primary.btn-xs');
+    const declineBtns = document.querySelectorAll('.btn-outline-secondary.btn-xs');
+    
+    acceptBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // TODO: Implement accept collaboration invite
+            this.textContent = 'Accepted';
+            this.disabled = true;
+            this.classList.remove('btn-primary');
+            this.classList.add('btn-success');
+        });
+    });
+    
+    declineBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // TODO: Implement decline collaboration invite
+            this.closest('.activity-item').style.display = 'none';
+        });
+    });
+});
+</script>
+{% endblock %}

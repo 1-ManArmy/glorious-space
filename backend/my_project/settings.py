@@ -61,20 +61,16 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.google',
     
-    # OAuth2 & Keycloak Integration
-    'oauth2_provider',
-    
     # Browser reload for development
     'django_browser_reload',
 ]
 
 LOCAL_APPS = [
     # Our Magnificent Applications
-    'hello_world.core.apps.CoreConfig',
+    'users',
+    'api',
+    'core',
 ]
-
-# 👑 The Complete Royal Application Suite
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 # Site Framework
 SITE_ID = 1
@@ -87,7 +83,6 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'allauth.account.middleware.AccountMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_browser_reload.middleware.BrowserReloadMiddleware',
@@ -95,15 +90,15 @@ MIDDLEWARE = [
 
 X_FRAME_OPTIONS = "ALLOW-FROM preview.app.github.dev"
 
-ROOT_URLCONF = 'hello_world.urls'
+ROOT_URLCONF = "my_project.urls"
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / 'hello_world' / 'templates',
-            BASE_DIR / 'hello_world' / 'templates' / 'core',
-            BASE_DIR / 'hello_world' / 'templates' / 'users',
+            BASE_DIR / 'templates',
+            BASE_DIR / 'templates' / 'core',
+            BASE_DIR / 'templates' / 'users',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -148,16 +143,12 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Custom User Model
-# Custom User Model - The Royal Identity System
-AUTH_USER_MODEL = 'core.CustomUser'
+AUTH_USER_MODEL = 'users.User'
 
 # Authentication Backends
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
-    'oauth2_provider.backends.OAuth2Backend',
-    'hello_world.core.keycloak_auth.KeycloakAuthenticationBackend',
-    'hello_world.core.keycloak_auth.KeycloakTokenAuthenticationBackend',
 ]
 
 # Internationalization - Global Excellence
@@ -171,7 +162,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'hello_world' / 'static',
+    BASE_DIR / 'static',
 ]
 
 # Media files - User Generated Masterpieces
@@ -291,62 +282,6 @@ FEATURES = {
     'PROJECT_SHOWCASE': True,
     'DEVELOPER_COMMUNITY': True,
 }
-
-# 👑 Keycloak Configuration - Royal Authentication Gateway
-KEYCLOAK_CONFIG = {
-    'SERVER_URL': config('KEYCLOAK_SERVER_URL', default='http://localhost:8080'),
-    'REALM': config('KEYCLOAK_REALM', default='glorious-space'),
-    'CLIENT_ID': config('KEYCLOAK_CLIENT_ID', default='glorious-space-client'),
-    'CLIENT_SECRET': config('KEYCLOAK_CLIENT_SECRET', default=''),
-    'ADMIN_CLIENT_ID': config('KEYCLOAK_ADMIN_CLIENT_ID', default='admin-cli'),
-    'ADMIN_USERNAME': config('KEYCLOAK_ADMIN_USERNAME', default='admin'),
-    'ADMIN_PASSWORD': config('KEYCLOAK_ADMIN_PASSWORD', default=''),
-    'VERIFY_SSL': config('KEYCLOAK_VERIFY_SSL', default=True, cast=bool),
-}
-
-# OAuth2 Settings for Django OAuth Toolkit
-OAUTH2_PROVIDER = {
-    'SCOPES': {
-        'read': 'Read scope',
-        'write': 'Write scope',
-    },
-    'ACCESS_TOKEN_EXPIRE_SECONDS': 3600,
-    'REFRESH_TOKEN_EXPIRE_SECONDS': 24 * 60 * 60 * 7,  # 1 week
-    'AUTHORIZATION_CODE_EXPIRE_SECONDS': 600,
-    'ROTATE_REFRESH_TOKEN': True,
-}
-
-# Django Allauth Configuration for Keycloak
-SOCIALACCOUNT_PROVIDERS = {
-    'keycloak': {
-        'KEYCLOAK_URL': KEYCLOAK_CONFIG['SERVER_URL'],
-        'KEYCLOAK_REALM': KEYCLOAK_CONFIG['REALM'],
-        'APP': {
-            'client_id': KEYCLOAK_CONFIG['CLIENT_ID'],
-            'secret': KEYCLOAK_CONFIG['CLIENT_SECRET'],
-        }
-    },
-    'github': {
-        'APP': {
-            'client_id': config('GITHUB_CLIENT_ID', default=''),
-            'secret': config('GITHUB_CLIENT_SECRET', default=''),
-        }
-    },
-    'google': {
-        'APP': {
-            'client_id': config('GOOGLE_CLIENT_ID', default=''),
-            'secret': config('GOOGLE_CLIENT_SECRET', default=''),
-        }
-    }
-}
-
-# Authentication Configuration
-ACCOUNT_EMAIL_VERIFICATION = 'optional'
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-LOGIN_REDIRECT_URL = '/dashboard/'
-LOGOUT_REDIRECT_URL = '/'
 
 print("🏰 Glorious Space Kingdom Initialized - The Developer's Crown Jewel Awaits! ✨")
 
