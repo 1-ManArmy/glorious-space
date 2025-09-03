@@ -16,19 +16,14 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
     # Core Application Routes - The Heart of Our Kingdom
-    path('', include('hello_world.core.urls', namespace='core')),
+    path('', include('core.urls', namespace='core')),
     
-    # Keycloak Authentication - Royal Gateway
-    path('auth/', include('hello_world.core.auth_urls', namespace='auth')),
-    
-    # OAuth2 Provider - Token Gateway
-    path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
-    
-    # Django Allauth - Social Authentication
+    # User Authentication & Management
+    path('auth/', include('users.urls', namespace='users')),
     path('accounts/', include('allauth.urls')),
     
-    # API Routes - The Digital Crown Jewels - Coming Soon
-    # path('api/v1/', include('api.urls', namespace='api')),
+    # API Routes - The Digital Crown Jewels
+    path('api/v1/', include('api.urls', namespace='api')),
     
     # REST Framework Browsable API
     path('api-auth/', include('rest_framework.urls')),
@@ -45,8 +40,8 @@ if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# Custom Error Pages - Elegant Failure Handling (TODO: Implement these views)
-# handler404 = 'hello_world.core.views.custom_404'
-# handler500 = 'hello_world.core.views.custom_500'
-# handler403 = 'hello_world.core.views.custom_403'
-# handler400 = 'hello_world.core.views.custom_400'
+# Custom Error Pages - Elegant Failure Handling
+handler404 = 'core.views.custom_404'
+handler500 = 'core.views.custom_500'
+handler403 = 'core.views.custom_403'
+handler400 = 'core.views.custom_400'

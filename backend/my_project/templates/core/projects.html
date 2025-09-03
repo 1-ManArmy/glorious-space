@@ -1,0 +1,992 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Projects Gallery - Showcase of Excellence{% endblock %}
+
+{% block extra_css %}
+<style>
+    .projects-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 80px 0;
+        position: relative;
+    }
+    
+    .filter-tabs {
+        background: white;
+        border-radius: 50px;
+        padding: 5px;
+        display: inline-flex;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        margin-bottom: 40px;
+    }
+    
+    .filter-tab {
+        padding: 12px 25px;
+        border-radius: 25px;
+        background: transparent;
+        border: none;
+        color: #666;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .filter-tab.active {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    }
+    
+    .project-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        transition: all 0.4s ease;
+        border: none;
+        height: 100%;
+        position: relative;
+    }
+    
+    .project-card:hover {
+        transform: translateY(-15px);
+        box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+    }
+    
+    .project-image {
+        position: relative;
+        height: 220px;
+        overflow: hidden;
+        background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+    }
+    
+    .project-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+    }
+    
+    .project-card:hover .project-image img {
+        transform: scale(1.1);
+    }
+    
+    .project-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, rgba(102, 126, 234, 0.8), rgba(118, 75, 162, 0.8));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .project-card:hover .project-overlay {
+        opacity: 1;
+    }
+    
+    .project-type-badge {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        border: 2px solid white;
+    }
+    
+    .project-stats {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        display: flex;
+        gap: 10px;
+    }
+    
+    .stat-item {
+        background: rgba(255,255,255,0.9);
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #333;
+    }
+    
+    .project-content {
+        padding: 25px;
+    }
+    
+    .project-title {
+        font-size: 1.3rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #333;
+    }
+    
+    .project-description {
+        color: #666;
+        margin-bottom: 20px;
+        line-height: 1.6;
+    }
+    
+    .project-tech {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 20px;
+    }
+    
+    .tech-tag {
+        background: #f8f9fa;
+        color: #495057;
+        padding: 5px 12px;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        border: 1px solid #e9ecef;
+    }
+    
+    .project-footer {
+        display: flex;
+        justify-content: between;
+        align-items: center;
+        padding-top: 20px;
+        border-top: 1px solid #f1f3f4;
+    }
+    
+    .project-author {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .author-avatar {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        border: 2px solid #e9ecef;
+    }
+    
+    .project-actions {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .action-btn {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        border: 1px solid #e9ecef;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .action-btn:hover {
+        background: #667eea;
+        color: white;
+        border-color: #667eea;
+    }
+    
+    .search-section {
+        background: white;
+        padding: 40px 0;
+    }
+    
+    .search-bar {
+        max-width: 600px;
+        margin: 0 auto;
+        position: relative;
+    }
+    
+    .search-input {
+        width: 100%;
+        padding: 15px 50px 15px 20px;
+        border: 2px solid #e9ecef;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+    }
+    
+    .search-input:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 20px rgba(102, 126, 234, 0.2);
+        outline: none;
+    }
+    
+    .search-btn {
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .search-btn:hover {
+        transform: translateY(-50%) scale(1.1);
+    }
+    
+    .sort-controls {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        justify-content: end;
+        margin-bottom: 30px;
+    }
+    
+    .sort-dropdown {
+        padding: 10px 15px;
+        border: 1px solid #e9ecef;
+        border-radius: 25px;
+        background: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .sort-dropdown:hover {
+        border-color: #667eea;
+    }
+    
+    .featured-banner {
+        background: linear-gradient(45deg, #ffc107, #ff8c00);
+        color: white;
+        text-align: center;
+        padding: 15px;
+        margin-bottom: 40px;
+        border-radius: 10px;
+        font-weight: 600;
+    }
+    
+    .empty-state {
+        text-align: center;
+        padding: 80px 20px;
+        color: #666;
+    }
+    
+    .empty-state i {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        color: #dee2e6;
+    }
+    
+    .pagination-wrapper {
+        display: flex;
+        justify-content: center;
+        margin-top: 50px;
+    }
+    
+    .pagination {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+    
+    .page-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 1px solid #e9ecef;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        color: #666;
+        transition: all 0.3s ease;
+    }
+    
+    .page-btn:hover,
+    .page-btn.active {
+        background: #667eea;
+        color: white;
+        border-color: #667eea;
+        text-decoration: none;
+    }
+    
+    .loading-skeleton {
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+    }
+    
+    @keyframes loading {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Projects Hero -->
+<section class="projects-hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">
+                    Project <span class="text-warning">Gallery</span>
+                </h1>
+                <p class="lead mb-0">
+                    Discover amazing projects built by our talented developer community. 
+                    From AI-powered applications to stunning 3D visualizations - 
+                    find inspiration for your next masterpiece.
+                </p>
+            </div>
+            <div class="col-lg-6 text-end">
+                <div class="d-flex gap-3 justify-content-end flex-wrap">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'core:project_create' %}" class="btn btn-warning btn-lg">
+                            <i class="fas fa-plus me-2"></i>Create Project
+                        </a>
+                    {% endif %}
+                    <a href="{% url 'core:canvas_playground' %}" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-paint-brush me-2"></i>Try Canvas
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Search Section -->
+<section class="search-section">
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="Search projects, technologies, or creators..." id="searchInput">
+            <button class="search-btn" id="searchBtn">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Content -->
+<section class="py-5">
+    <div class="container">
+        <!-- Featured Banner -->
+        {% if featured_projects %}
+        <div class="featured-banner">
+            <i class="fas fa-star me-2"></i>
+            Featured Projects - Handpicked by our community
+        </div>
+        {% endif %}
+        
+        <!-- Filter and Sort Controls -->
+        <div class="row align-items-center mb-4">
+            <div class="col-lg-8">
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-filter="all">All Projects</button>
+                    <button class="filter-tab" data-filter="2d">2D Canvas</button>
+                    <button class="filter-tab" data-filter="3d">3D WebGL</button>
+                    <button class="filter-tab" data-filter="4d">4D Space</button>
+                    <button class="filter-tab" data-filter="5g">5G Real-time</button>
+                    <button class="filter-tab" data-filter="ai">AI Powered</button>
+                    <button class="filter-tab" data-filter="web3">Web3/Blockchain</button>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="sort-controls">
+                    <span class="text-muted">Sort by:</span>
+                    <select class="sort-dropdown" id="sortDropdown">
+                        <option value="newest">Newest First</option>
+                        <option value="popular">Most Popular</option>
+                        <option value="trending">Trending</option>
+                        <option value="views">Most Viewed</option>
+                        <option value="likes">Most Liked</option>
+                        <option value="alphabetical">A-Z</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Projects Grid -->
+        <div class="row g-4" id="projectsGrid">
+            <!-- Featured Project 1 -->
+            <div class="col-lg-4 col-md-6 project-item" data-category="3d ai">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="/static/img/project1.jpg" alt="AI-Powered 3D Visualization">
+                        <div class="project-overlay">
+                            <a href="#" class="btn btn-light btn-lg">
+                                <i class="fas fa-eye me-2"></i>View Project
+                            </a>
+                        </div>
+                        <div class="project-type-badge bg-success text-white">3D + AI</div>
+                        <div class="project-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-eye me-1"></i>2.5K
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-heart me-1"></i>187
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h5 class="project-title">AI-Powered 3D Data Visualization</h5>
+                        <p class="project-description">
+                            Interactive 3D visualization platform that uses machine learning to 
+                            analyze complex datasets and present insights through immersive 3D environments.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Three.js</span>
+                            <span class="tech-tag">TensorFlow</span>
+                            <span class="tech-tag">WebGL</span>
+                            <span class="tech-tag">Python</span>
+                        </div>
+                        <div class="project-footer">
+                            <div class="project-author">
+                                <img src="/static/img/dev1.jpg" alt="Alex Chen" class="author-avatar">
+                                <div>
+                                    <small class="fw-bold">Alex Chen</small>
+                                    <br><small class="text-muted">2 days ago</small>
+                                </div>
+                            </div>
+                            <div class="project-actions">
+                                <button class="action-btn" title="Like">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                                <button class="action-btn" title="Bookmark">
+                                    <i class="fas fa-bookmark"></i>
+                                </button>
+                                <button class="action-btn" title="Share">
+                                    <i class="fas fa-share"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Featured Project 2 -->
+            <div class="col-lg-4 col-md-6 project-item" data-category="5g web3">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="/static/img/project2.jpg" alt="Real-time NFT Marketplace">
+                        <div class="project-overlay">
+                            <a href="#" class="btn btn-light btn-lg">
+                                <i class="fas fa-eye me-2"></i>View Project
+                            </a>
+                        </div>
+                        <div class="project-type-badge bg-warning text-dark">5G + Web3</div>
+                        <div class="project-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-eye me-1"></i>4.1K
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-heart me-1"></i>312
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h5 class="project-title">Real-time NFT Marketplace</h5>
+                        <p class="project-description">
+                            Ultra-fast NFT trading platform with real-time bidding, instant transactions, 
+                            and immersive AR preview capabilities using 5G technology.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Solidity</span>
+                            <span class="tech-tag">WebRTC</span>
+                            <span class="tech-tag">WebXR</span>
+                            <span class="tech-tag">Ethereum</span>
+                        </div>
+                        <div class="project-footer">
+                            <div class="project-author">
+                                <img src="/static/img/dev2.jpg" alt="Maria Santos" class="author-avatar">
+                                <div>
+                                    <small class="fw-bold">Maria Santos</small>
+                                    <br><small class="text-muted">5 days ago</small>
+                                </div>
+                            </div>
+                            <div class="project-actions">
+                                <button class="action-btn" title="Like">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                                <button class="action-btn" title="Bookmark">
+                                    <i class="fas fa-bookmark"></i>
+                                </button>
+                                <button class="action-btn" title="Share">
+                                    <i class="fas fa-share"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Featured Project 3 -->
+            <div class="col-lg-4 col-md-6 project-item" data-category="4d ai">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="/static/img/project3.jpg" alt="4D Time-Series Analyzer">
+                        <div class="project-overlay">
+                            <a href="#" class="btn btn-light btn-lg">
+                                <i class="fas fa-eye me-2"></i>View Project
+                            </a>
+                        </div>
+                        <div class="project-type-badge bg-info text-white">4D + AI</div>
+                        <div class="project-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-eye me-1"></i>1.8K
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-heart me-1"></i>156
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h5 class="project-title">4D Time-Series Data Analyzer</h5>
+                        <p class="project-description">
+                            Revolutionary 4D visualization tool that displays time-series data across 
+                            multiple dimensions, revealing hidden patterns in financial and scientific data.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">D3.js</span>
+                            <span class="tech-tag">WebGL</span>
+                            <span class="tech-tag">TensorFlow</span>
+                            <span class="tech-tag">React</span>
+                        </div>
+                        <div class="project-footer">
+                            <div class="project-author">
+                                <img src="/static/img/dev3.jpg" alt="David Kim" class="author-avatar">
+                                <div>
+                                    <small class="fw-bold">David Kim</small>
+                                    <br><small class="text-muted">1 week ago</small>
+                                </div>
+                            </div>
+                            <div class="project-actions">
+                                <button class="action-btn" title="Like">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                                <button class="action-btn" title="Bookmark">
+                                    <i class="fas fa-bookmark"></i>
+                                </button>
+                                <button class="action-btn" title="Share">
+                                    <i class="fas fa-share"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Regular Project 4 -->
+            <div class="col-lg-4 col-md-6 project-item" data-category="2d">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="/static/img/project4.jpg" alt="Interactive Canvas Art">
+                        <div class="project-overlay">
+                            <a href="#" class="btn btn-light btn-lg">
+                                <i class="fas fa-eye me-2"></i>View Project
+                            </a>
+                        </div>
+                        <div class="project-type-badge bg-primary text-white">2D Canvas</div>
+                        <div class="project-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-eye me-1"></i>950
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-heart me-1"></i>73
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h5 class="project-title">Interactive Digital Art Canvas</h5>
+                        <p class="project-description">
+                            Collaborative digital art platform where multiple artists can create 
+                            masterpieces together in real-time with advanced brush engines.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Canvas API</span>
+                            <span class="tech-tag">WebSocket</span>
+                            <span class="tech-tag">Node.js</span>
+                        </div>
+                        <div class="project-footer">
+                            <div class="project-author">
+                                <img src="/static/img/dev4.jpg" alt="Sophie Miller" class="author-avatar">
+                                <div>
+                                    <small class="fw-bold">Sophie Miller</small>
+                                    <br><small class="text-muted">2 weeks ago</small>
+                                </div>
+                            </div>
+                            <div class="project-actions">
+                                <button class="action-btn" title="Like">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                                <button class="action-btn" title="Bookmark">
+                                    <i class="fas fa-bookmark"></i>
+                                </button>
+                                <button class="action-btn" title="Share">
+                                    <i class="fas fa-share"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Regular Project 5 -->
+            <div class="col-lg-4 col-md-6 project-item" data-category="ai web3">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="/static/img/project5.jpg" alt="AI Trading Bot">
+                        <div class="project-overlay">
+                            <a href="#" class="btn btn-light btn-lg">
+                                <i class="fas fa-eye me-2"></i>View Project
+                            </a>
+                        </div>
+                        <div class="project-type-badge bg-danger text-white">AI + DeFi</div>
+                        <div class="project-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-eye me-1"></i>3.2K
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-heart me-1"></i>245
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h5 class="project-title">AI-Powered DeFi Trading Bot</h5>
+                        <p class="project-description">
+                            Intelligent trading bot that uses machine learning to analyze market patterns 
+                            and execute profitable DeFi strategies automatically.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">TensorFlow</span>
+                            <span class="tech-tag">Web3.py</span>
+                            <span class="tech-tag">Uniswap</span>
+                        </div>
+                        <div class="project-footer">
+                            <div class="project-author">
+                                <img src="/static/img/dev5.jpg" alt="James Wilson" class="author-avatar">
+                                <div>
+                                    <small class="fw-bold">James Wilson</small>
+                                    <br><small class="text-muted">3 weeks ago</small>
+                                </div>
+                            </div>
+                            <div class="project-actions">
+                                <button class="action-btn" title="Like">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                                <button class="action-btn" title="Bookmark">
+                                    <i class="fas fa-bookmark"></i>
+                                </button>
+                                <button class="action-btn" title="Share">
+                                    <i class="fas fa-share"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Regular Project 6 -->
+            <div class="col-lg-4 col-md-6 project-item" data-category="3d 5g">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="/static/img/project6.jpg" alt="Virtual Reality Meeting">
+                        <div class="project-overlay">
+                            <a href="#" class="btn btn-light btn-lg">
+                                <i class="fas fa-eye me-2"></i>View Project
+                            </a>
+                        </div>
+                        <div class="project-type-badge bg-dark text-white">VR + 5G</div>
+                        <div class="project-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-eye me-1"></i>1.4K
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-heart me-1"></i>98
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h5 class="project-title">Ultra-Low Latency VR Meetings</h5>
+                        <p class="project-description">
+                            Next-generation virtual reality meeting platform with 5G integration 
+                            for seamless, lag-free remote collaboration experiences.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">WebXR</span>
+                            <span class="tech-tag">Three.js</span>
+                            <span class="tech-tag">WebRTC</span>
+                            <span class="tech-tag">5G API</span>
+                        </div>
+                        <div class="project-footer">
+                            <div class="project-author">
+                                <img src="/static/img/dev6.jpg" alt="Emma Zhang" class="author-avatar">
+                                <div>
+                                    <small class="fw-bold">Emma Zhang</small>
+                                    <br><small class="text-muted">1 month ago</small>
+                                </div>
+                            </div>
+                            <div class="project-actions">
+                                <button class="action-btn" title="Like">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                                <button class="action-btn" title="Bookmark">
+                                    <i class="fas fa-bookmark"></i>
+                                </button>
+                                <button class="action-btn" title="Share">
+                                    <i class="fas fa-share"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Load More Button -->
+        <div class="text-center mt-5">
+            <button class="btn btn-outline-primary btn-lg" id="loadMoreBtn">
+                <i class="fas fa-plus me-2"></i>Load More Projects
+            </button>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="pagination-wrapper">
+            <div class="pagination">
+                <a href="#" class="page-btn">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <a href="#" class="page-btn active">1</a>
+                <a href="#" class="page-btn">2</a>
+                <a href="#" class="page-btn">3</a>
+                <span class="mx-2">...</span>
+                <a href="#" class="page-btn">12</a>
+                <a href="#" class="page-btn">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Filter functionality
+    const filterTabs = document.querySelectorAll('.filter-tab');
+    const projectItems = document.querySelectorAll('.project-item');
+    
+    filterTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            // Update active tab
+            filterTabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            
+            const filter = this.dataset.filter;
+            
+            // Filter projects
+            projectItems.forEach(item => {
+                if (filter === 'all' || item.dataset.category.includes(filter)) {
+                    item.style.display = 'block';
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0)';
+                    }, 100);
+                } else {
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        item.style.display = 'none';
+                    }, 300);
+                }
+            });
+        });
+    });
+    
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
+    
+    function performSearch() {
+        const searchTerm = searchInput.value.toLowerCase();
+        
+        projectItems.forEach(item => {
+            const title = item.querySelector('.project-title').textContent.toLowerCase();
+            const description = item.querySelector('.project-description').textContent.toLowerCase();
+            const techTags = Array.from(item.querySelectorAll('.tech-tag')).map(tag => tag.textContent.toLowerCase());
+            
+            const matches = title.includes(searchTerm) || 
+                          description.includes(searchTerm) || 
+                          techTags.some(tag => tag.includes(searchTerm));
+            
+            if (matches || searchTerm === '') {
+                item.style.display = 'block';
+                setTimeout(() => {
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, 100);
+            } else {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    item.style.display = 'none';
+                }, 300);
+            }
+        });
+    }
+    
+    searchBtn.addEventListener('click', performSearch);
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            performSearch();
+        }
+    });
+    
+    // Real-time search
+    searchInput.addEventListener('input', function() {
+        clearTimeout(this.searchTimeout);
+        this.searchTimeout = setTimeout(performSearch, 300);
+    });
+    
+    // Sort functionality
+    const sortDropdown = document.getElementById('sortDropdown');
+    sortDropdown.addEventListener('change', function() {
+        const sortBy = this.value;
+        const projectsGrid = document.getElementById('projectsGrid');
+        const projects = Array.from(projectItems);
+        
+        projects.sort((a, b) => {
+            switch(sortBy) {
+                case 'alphabetical':
+                    const titleA = a.querySelector('.project-title').textContent;
+                    const titleB = b.querySelector('.project-title').textContent;
+                    return titleA.localeCompare(titleB);
+                
+                case 'views':
+                    const viewsA = parseInt(a.querySelector('.stat-item i.fa-eye').parentElement.textContent.replace(/[^\d]/g, ''));
+                    const viewsB = parseInt(b.querySelector('.stat-item i.fa-eye').parentElement.textContent.replace(/[^\d]/g, ''));
+                    return viewsB - viewsA;
+                
+                case 'likes':
+                    const likesA = parseInt(a.querySelector('.stat-item i.fa-heart').parentElement.textContent.replace(/[^\d]/g, ''));
+                    const likesB = parseInt(b.querySelector('.stat-item i.fa-heart').parentElement.textContent.replace(/[^\d]/g, ''));
+                    return likesB - likesA;
+                
+                default:
+                    return 0;
+            }
+        });
+        
+        // Re-append sorted elements
+        projects.forEach(project => {
+            projectsGrid.appendChild(project);
+        });
+    });
+    
+    // Action buttons
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.action-btn')) {
+            const btn = e.target.closest('.action-btn');
+            const icon = btn.querySelector('i');
+            
+            if (icon.classList.contains('fa-heart')) {
+                // Toggle like
+                btn.classList.toggle('liked');
+                if (btn.classList.contains('liked')) {
+                    btn.style.background = '#dc3545';
+                    btn.style.color = 'white';
+                    btn.style.borderColor = '#dc3545';
+                } else {
+                    btn.style.background = 'white';
+                    btn.style.color = '#666';
+                    btn.style.borderColor = '#e9ecef';
+                }
+            } else if (icon.classList.contains('fa-bookmark')) {
+                // Toggle bookmark
+                btn.classList.toggle('bookmarked');
+                if (btn.classList.contains('bookmarked')) {
+                    btn.style.background = '#ffc107';
+                    btn.style.color = 'white';
+                    btn.style.borderColor = '#ffc107';
+                } else {
+                    btn.style.background = 'white';
+                    btn.style.color = '#666';
+                    btn.style.borderColor = '#e9ecef';
+                }
+            } else if (icon.classList.contains('fa-share')) {
+                // Share functionality
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Check out this amazing project!',
+                        text: 'Found this cool project on Developer Crown Site',
+                        url: window.location.href
+                    });
+                } else {
+                    // Fallback: copy to clipboard
+                    navigator.clipboard.writeText(window.location.href).then(() => {
+                        alert('Project link copied to clipboard!');
+                    });
+                }
+            }
+        }
+    });
+    
+    // Load more functionality
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    loadMoreBtn.addEventListener('click', function() {
+        // Simulate loading more projects
+        this.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Loading...';
+        this.disabled = true;
+        
+        setTimeout(() => {
+            // Reset button
+            this.innerHTML = '<i class="fas fa-plus me-2"></i>Load More Projects';
+            this.disabled = false;
+            
+            // In a real app, you would fetch more projects via AJAX
+            alert('More projects loaded! (In development)');
+        }, 2000);
+    });
+    
+    // Intersection Observer for animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const projectCards = document.querySelectorAll('.project-card');
+    const cardObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }, index * 100);
+            }
+        });
+    }, observerOptions);
+    
+    projectCards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        card.style.transition = 'all 0.6s ease';
+        cardObserver.observe(card);
+    });
+    
+    // Initialize project items for animations
+    projectItems.forEach(item => {
+        item.style.transition = 'all 0.3s ease';
+    });
+});
+</script>
+{% endblock %}

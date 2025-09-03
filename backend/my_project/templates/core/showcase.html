@@ -1,0 +1,1114 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Showcase - Discover Amazing Projects{% endblock %}
+
+{% block extra_css %}
+<style>
+    .showcase-hero {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        color: white;
+        padding: 100px 0;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .showcase-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="showcase-pattern" width="40" height="40" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="3" fill="rgba(255,255,255,0.1)"/><rect x="18" y="10" width="4" height="20" fill="rgba(255,255,255,0.05)"/><rect x="10" y="18" width="20" height="4" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23showcase-pattern)"/></svg>');
+        animation: float 20s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+    }
+    
+    .showcase-filters {
+        background: white;
+        padding: 40px 0;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+    
+    .filter-category {
+        display: inline-block;
+        padding: 12px 24px;
+        background: #f8f9fa;
+        border: 2px solid #e9ecef;
+        border-radius: 50px;
+        margin: 8px;
+        cursor: pointer;
+        transition: all 0.4s ease;
+        text-decoration: none;
+        color: #495057;
+        font-weight: 600;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .filter-category::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+        transition: left 0.5s ease;
+    }
+    
+    .filter-category:hover::before {
+        left: 100%;
+    }
+    
+    .filter-category:hover,
+    .filter-category.active {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-color: #667eea;
+        text-decoration: none;
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+    }
+    
+    .showcase-grid {
+        padding: 80px 0;
+        background: #f8f9fa;
+    }
+    
+    .project-showcase {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+        transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: none;
+        position: relative;
+        height: 100%;
+    }
+    
+    .project-showcase:hover {
+        transform: translateY(-20px) scale(1.02);
+        box-shadow: 0 25px 80px rgba(0,0,0,0.2);
+    }
+    
+    .project-image {
+        position: relative;
+        height: 250px;
+        overflow: hidden;
+        background: linear-gradient(45deg, #667eea, #764ba2);
+    }
+    
+    .project-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    
+    .project-showcase:hover .project-image img {
+        transform: scale(1.1);
+    }
+    
+    .project-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.8) 0%, rgba(118, 75, 162, 0.8) 100%);
+        opacity: 0;
+        transition: all 0.4s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .project-showcase:hover .project-overlay {
+        opacity: 1;
+    }
+    
+    .overlay-button {
+        padding: 12px 25px;
+        background: rgba(255,255,255,0.2);
+        border: 2px solid white;
+        border-radius: 50px;
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+    }
+    
+    .overlay-button:hover {
+        background: white;
+        color: #667eea;
+        text-decoration: none;
+        transform: scale(1.1);
+    }
+    
+    .project-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: #ff6b6b;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .project-badge.featured { background: #ffc107; color: #333; }
+    .project-badge.trending { background: #28a745; }
+    .project-badge.new { background: #17a2b8; }
+    
+    .project-content {
+        padding: 30px;
+    }
+    
+    .project-title {
+        font-size: 1.4rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #333;
+        line-height: 1.3;
+    }
+    
+    .project-description {
+        color: #6c757d;
+        margin-bottom: 20px;
+        line-height: 1.6;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    
+    .project-technologies {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 20px;
+    }
+    
+    .tech-tag {
+        background: #e3f2fd;
+        color: #1976d2;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        border: 1px solid #bbdefb;
+    }
+    
+    .tech-tag.ai { background: #f3e5f5; color: #7b1fa2; border-color: #ce93d8; }
+    .tech-tag.web3 { background: #e8f5e8; color: #388e3c; border-color: #a5d6a7; }
+    .tech-tag.mobile { background: #fff3e0; color: #f57c00; border-color: #ffcc02; }
+    .tech-tag.game { background: #fce4ec; color: #c2185b; border-color: #f8bbd9; }
+    
+    .project-stats {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 20px;
+        border-top: 1px solid #f1f3f4;
+    }
+    
+    .project-metrics {
+        display: flex;
+        gap: 20px;
+    }
+    
+    .metric {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: #6c757d;
+        font-size: 0.85rem;
+    }
+    
+    .metric i {
+        color: #667eea;
+    }
+    
+    .project-author {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .author-avatar {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        border: 2px solid #f8f9fa;
+    }
+    
+    .author-name {
+        font-weight: 600;
+        color: #495057;
+        font-size: 0.9rem;
+    }
+    
+    .featured-showcase {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 80px 0;
+        margin: 80px 0;
+    }
+    
+    .featured-project {
+        background: rgba(255,255,255,0.1);
+        border-radius: 20px;
+        padding: 40px;
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255,255,255,0.2);
+    }
+    
+    .featured-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    
+    .featured-description {
+        font-size: 1.1rem;
+        margin-bottom: 30px;
+        opacity: 0.9;
+        line-height: 1.6;
+    }
+    
+    .featured-stats {
+        display: flex;
+        gap: 40px;
+        margin-bottom: 30px;
+    }
+    
+    .featured-stat {
+        text-align: center;
+    }
+    
+    .featured-number {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #ffc107;
+        display: block;
+    }
+    
+    .featured-label {
+        font-size: 0.9rem;
+        opacity: 0.8;
+    }
+    
+    .search-showcase {
+        max-width: 600px;
+        margin: 0 auto 40px;
+        position: relative;
+    }
+    
+    .search-input-showcase {
+        width: 100%;
+        padding: 18px 60px 18px 25px;
+        border: 3px solid #e9ecef;
+        border-radius: 60px;
+        font-size: 1.1rem;
+        transition: all 0.4s ease;
+        background: white;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    .search-input-showcase:focus {
+        border-color: #667eea;
+        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+        outline: none;
+        transform: translateY(-2px);
+    }
+    
+    .search-btn-showcase {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .search-btn-showcase:hover {
+        transform: translateY(-50%) scale(1.1);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+    
+    .showcase-stats {
+        background: #2c3e50;
+        color: white;
+        padding: 60px 0;
+        text-align: center;
+    }
+    
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 40px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .stat-item {
+        text-align: center;
+    }
+    
+    .stat-icon {
+        font-size: 3rem;
+        color: #3498db;
+        margin-bottom: 15px;
+    }
+    
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #ecf0f1;
+    }
+    
+    .stat-description {
+        font-size: 1rem;
+        opacity: 0.8;
+    }
+    
+    .load-more-showcase {
+        text-align: center;
+        padding: 60px 0;
+    }
+    
+    .view-mode-toggle {
+        display: flex;
+        background: #f8f9fa;
+        border-radius: 50px;
+        padding: 5px;
+        margin: 0 auto 40px;
+        width: fit-content;
+        box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .view-mode-btn {
+        padding: 12px 20px;
+        border: none;
+        background: transparent;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        color: #6c757d;
+        font-weight: 600;
+    }
+    
+    .view-mode-btn.active {
+        background: white;
+        color: #667eea;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .grid-view { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px; }
+    .list-view { display: flex; flex-direction: column; gap: 20px; }
+    
+    .project-showcase.list-style {
+        display: flex;
+        height: 200px;
+    }
+    
+    .project-showcase.list-style .project-image {
+        width: 300px;
+        height: 100%;
+    }
+    
+    .project-showcase.list-style .project-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Showcase Hero -->
+<section class="showcase-hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-3 fw-bold mb-4">
+                    Project <span class="text-warning">Showcase</span>
+                </h1>
+                <p class="lead mb-4">
+                    Discover incredible projects built by our community. From AI-powered applications 
+                    to cutting-edge Web3 experiences, explore the future of technology.
+                </p>
+                
+                <!-- Search Bar -->
+                <div class="search-showcase">
+                    <input type="text" class="search-input-showcase" placeholder="Search projects, technologies, or creators..." id="showcaseSearch">
+                    <button class="search-btn-showcase" id="showcaseSearchBtn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Filters -->
+<section class="showcase-filters">
+    <div class="container">
+        <div class="text-center">
+            <a href="#" class="filter-category active" data-category="all">
+                <i class="fas fa-star me-2"></i>All Projects
+            </a>
+            <a href="#" class="filter-category" data-category="ai">
+                <i class="fas fa-brain me-2"></i>AI & Machine Learning
+            </a>
+            <a href="#" class="filter-category" data-category="web3">
+                <i class="fab fa-ethereum me-2"></i>Web3 & Blockchain
+            </a>
+            <a href="#" class="filter-category" data-category="canvas">
+                <i class="fas fa-palette me-2"></i>Canvas & 3D
+            </a>
+            <a href="#" class="filter-category" data-category="mobile">
+                <i class="fas fa-mobile-alt me-2"></i>Mobile Apps
+            </a>
+            <a href="#" class="filter-category" data-category="games">
+                <i class="fas fa-gamepad me-2"></i>Games
+            </a>
+            <a href="#" class="filter-category" data-category="iot">
+                <i class="fas fa-microchip me-2"></i>IoT & Hardware
+            </a>
+            <a href="#" class="filter-category" data-category="ar-vr">
+                <i class="fas fa-vr-cardboard me-2"></i>AR/VR
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Project -->
+<section class="featured-showcase">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="featured-project">
+                    <h2 class="featured-title">NeuroCanvas AI</h2>
+                    <p class="featured-description">
+                        Revolutionary AI-powered 3D canvas that transforms thoughts into visual reality. 
+                        Using advanced neural networks and WebGL rendering for immersive creative experiences.
+                    </p>
+                    <div class="featured-stats">
+                        <div class="featured-stat">
+                            <span class="featured-number">50K+</span>
+                            <span class="featured-label">Active Users</span>
+                        </div>
+                        <div class="featured-stat">
+                            <span class="featured-number">12M+</span>
+                            <span class="featured-label">Creations</span>
+                        </div>
+                        <div class="featured-stat">
+                            <span class="featured-number">4.9</span>
+                            <span class="featured-label">Rating</span>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="btn btn-warning btn-lg">
+                            <i class="fas fa-play me-2"></i>Try Now
+                        </a>
+                        <a href="#" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-code me-2"></i>View Source
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="text-center">
+                    <img src="/static/img/featured-neurocanvas.jpg" alt="NeuroCanvas AI" class="img-fluid rounded" style="box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- View Mode Toggle -->
+<section class="py-4">
+    <div class="container">
+        <div class="view-mode-toggle">
+            <button class="view-mode-btn active" data-view="grid">
+                <i class="fas fa-th me-2"></i>Grid View
+            </button>
+            <button class="view-mode-btn" data-view="list">
+                <i class="fas fa-list me-2"></i>List View
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Grid -->
+<section class="showcase-grid">
+    <div class="container">
+        <div class="projects-container grid-view" id="projectsContainer">
+            
+            <!-- AI Project -->
+            <div class="project-showcase" data-category="ai">
+                <div class="project-image">
+                    <img src="/static/img/project-ai-assistant.jpg" alt="AI Assistant">
+                    <div class="project-badge trending">Trending</div>
+                    <div class="project-overlay">
+                        <a href="#" class="overlay-button">
+                            <i class="fas fa-eye me-2"></i>Live Demo
+                        </a>
+                        <a href="#" class="overlay-button">
+                            <i class="fas fa-code me-2"></i>Source Code
+                        </a>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">AI Voice Assistant</h3>
+                    <p class="project-description">
+                        Advanced conversational AI with natural language processing, voice recognition, 
+                        and real-time response generation. Built with cutting-edge neural networks.
+                    </p>
+                    <div class="project-technologies">
+                        <span class="tech-tag ai">TensorFlow</span>
+                        <span class="tech-tag ai">PyTorch</span>
+                        <span class="tech-tag">WebRTC</span>
+                        <span class="tech-tag">React</span>
+                    </div>
+                    <div class="project-stats">
+                        <div class="project-metrics">
+                            <div class="metric">
+                                <i class="fas fa-heart"></i>
+                                <span>2.3K</span>
+                            </div>
+                            <div class="metric">
+                                <i class="fas fa-star"></i>
+                                <span>4.8</span>
+                            </div>
+                            <div class="metric">
+                                <i class="fas fa-download"></i>
+                                <span>15K</span>
+                            </div>
+                        </div>
+                        <div class="project-author">
+                            <img src="/static/img/dev-sarah.jpg" alt="Sarah" class="author-avatar">
+                            <span class="author-name">Sarah Johnson</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Web3 Project -->
+            <div class="project-showcase" data-category="web3">
+                <div class="project-image">
+                    <img src="/static/img/project-defi.jpg" alt="DeFi Platform">
+                    <div class="project-badge featured">Featured</div>
+                    <div class="project-overlay">
+                        <a href="#" class="overlay-button">
+                            <i class="fas fa-external-link-alt me-2"></i>Launch App
+                        </a>
+                        <a href="#" class="overlay-button">
+                            <i class="fas fa-github me-2"></i>GitHub
+                        </a>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">NextGen DeFi Platform</h3>
+                    <p class="project-description">
+                        Decentralized finance platform with yield farming, NFT marketplace, 
+                        and cross-chain compatibility. Built on Ethereum and Polygon networks.
+                    </p>
+                    <div class="project-technologies">
+                        <span class="tech-tag web3">Solidity</span>
+                        <span class="tech-tag web3">Web3.js</span>
+                        <span class="tech-tag web3">IPFS</span>
+                        <span class="tech-tag">React</span>
+                    </div>
+                    <div class="project-stats">
+                        <div class="project-metrics">
+                            <div class="metric">
+                                <i class="fas fa-heart"></i>
+                                <span>5.7K</span>
+                            </div>
+                            <div class="metric">
+                                <i class="fas fa-star"></i>
+                                <span>4.9</span>
+                            </div>
+                            <div class="metric">
+                                <i class="fas fa-coins"></i>
+                                <span>$2.5M TVL</span>
+                            </div>
+                        </div>
+                        <div class="project-author">
+                            <img src="/static/img/dev-emma.jpg" alt="Emma" class="author-avatar">
+                            <span class="author-name">Emma Rodriguez</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Canvas/3D Project -->
+            <div class="project-showcase" data-category="canvas">
+                <div class="project-image">
+                    <img src="/static/img/project-3d-visualizer.jpg" alt="3D Visualizer">
+                    <div class="project-badge new">New</div>
+                    <div class="project-overlay">
+                        <a href="#" class="overlay-button">
+                            <i class="fas fa-cube me-2"></i>Try 3D Demo
+                        </a>
+                        <a href="#" class="overlay-button">
+                            <i class="fas fa-download me-2"></i>Download
+                        </a>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Quantum 3D Visualizer</h3>
+                    <p class="project-description">
+                        Interactive 3D data visualization platform with quantum physics simulations, 
+                        real-time particle systems, and immersive VR support.
+                    </p>
+                    <div class="project-technologies">
+                        <span class="tech-tag">Three.js</span>
+                        <span class="tech-tag">WebGL</span>
+                        <span class="tech-tag">WebXR</span>
+                        <span class="tech-tag">TypeScript</span>
+                    </div>
+                    <div class="project-stats">
+                        <div class="project-metrics">
+                            <div class="metric">
+                                <i class="fas fa-heart"></i>
+                                <span>1.9K</span>
+                            </div>
+                            <div class="metric">
+                                <i class="fas fa-star"></i>
+                                <span>4.7</span>
+                            </div>
+                            <div class="metric">
+                                <i class="fas fa-eye"></i>
+                                <span>8.5K</span>
+                            </div>
+                        </div>
+                        <div class="project-author">
+                            <img src="/static/img/dev-mike.jpg" alt="Mike" class="author-avatar">
+                            <span class="author-name">Mike Chen</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mobile App -->
+            <div class="project-showcase" data-category="mobile">
+                <div class="project-image">
+                    <img src="/static/img/project-health-app.jpg" alt="Health App">
+                    <div class="project-overlay">
+                        <a href="#" class="overlay-button">
+                            <i class="fab fa-app-store me-2"></i>App Store
+                        </a>
+                        <a href="#" class="overlay-button">
+                            <i class="fab fa-google-play me-2"></i>Play Store
+                        </a>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">AI Health Companion</h3>
+                    <p class="project-description">
+                        Personalized health tracking app with AI-powered insights, workout planning, 
+                        nutrition guidance, and real-time biometric monitoring.
+                    </p>
+                    <div class="project-technologies">
+                        <span class="tech-tag mobile">React Native</span>
+                        <span class="tech-tag ai">TensorFlow Lite</span>
+                        <span class="tech-tag mobile">Firebase</span>
+                        <span class="tech-tag">HealthKit</span>
+                    </div>
+                    <div class="project-stats">
+                        <div class="project-metrics">
+                            <div class="metric">
+                                <i class="fas fa-heart"></i>
+                                <span>12K</span>
+                            </div>
+                            <div class="metric">
+                                <i class="fas fa-star"></i>
+                                <span>4.6</span>
+                            </div>
+                            <div class="metric">
+                                <i class="fas fa-download"></i>
+                                <span>50K+</span>
+                            </div>
+                        </div>
+                        <div class="project-author">
+                            <img src="/static/img/dev-priya.jpg" alt="Priya" class="author-avatar">
+                            <span class="author-name">Priya Sharma</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Game Project -->
+            <div class="project-showcase" data-category="games">
+                <div class="project-image">
+                    <img src="/static/img/project-space-game.jpg" alt="Space Game">
+                    <div class="project-badge trending">Hot</div>
+                    <div class="project-overlay">
+                        <a href="#" class="overlay-button">
+                            <i class="fas fa-gamepad me-2"></i>Play Now
+                        </a>
+                        <a href="#" class="overlay-button">
+                            <i class="fas fa-trophy me-2"></i>Leaderboard
+                        </a>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Cosmic Explorer VR</h3>
+                    <p class="project-description">
+                        Immersive space exploration game with realistic physics, procedural planet generation, 
+                        and multiplayer collaboration in virtual reality.
+                    </p>
+                    <div class="project-technologies">
+                        <span class="tech-tag game">Unity</span>
+                        <span class="tech-tag game">C#</span>
+                        <span class="tech-tag">WebXR</span>
+                        <span class="tech-tag">Photon</span>
+                    </div>
+                    <div class="project-stats">
+                        <div class="project-metrics">
+                            <div class="metric">
+                                <i class="fas fa-heart"></i>
+                                <span>8.3K</span>
+                            </div>
+                            <div class="metric">
+                                <i class="fas fa-star"></i>
+                                <span>4.8</span>
+                            </div>
+                            <div class="metric">
+                                <i class="fas fa-users"></i>
+                                <span>25K</span>
+                            </div>
+                        </div>
+                        <div class="project-author">
+                            <img src="/static/img/dev-carlos.jpg" alt="Carlos" class="author-avatar">
+                            <span class="author-name">Carlos Rivera</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- IoT Project -->
+            <div class="project-showcase" data-category="iot">
+                <div class="project-image">
+                    <img src="/static/img/project-smart-home.jpg" alt="Smart Home">
+                    <div class="project-overlay">
+                        <a href="#" class="overlay-button">
+                            <i class="fas fa-home me-2"></i>Demo
+                        </a>
+                        <a href="#" class="overlay-button">
+                            <i class="fas fa-cog me-2"></i>Setup Guide
+                        </a>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Neural Smart Home</h3>
+                    <p class="project-description">
+                        AI-powered smart home ecosystem with predictive automation, energy optimization, 
+                        and advanced security features using edge computing.
+                    </p>
+                    <div class="project-technologies">
+                        <span class="tech-tag">Raspberry Pi</span>
+                        <span class="tech-tag ai">Edge AI</span>
+                        <span class="tech-tag">MQTT</span>
+                        <span class="tech-tag">Node.js</span>
+                    </div>
+                    <div class="project-stats">
+                        <div class="project-metrics">
+                            <div class="metric">
+                                <i class="fas fa-heart"></i>
+                                <span>3.1K</span>
+                            </div>
+                            <div class="metric">
+                                <i class="fas fa-star"></i>
+                                <span>4.5</span>
+                            </div>
+                            <div class="metric">
+                                <i class="fas fa-home"></i>
+                                <span>1.2K</span>
+                            </div>
+                        </div>
+                        <div class="project-author">
+                            <img src="/static/img/dev-alex.jpg" alt="Alex" class="author-avatar">
+                            <span class="author-name">Alex Mueller</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Load More -->
+        <div class="load-more-showcase">
+            <button class="btn btn-primary btn-lg" id="loadMoreShowcase">
+                <i class="fas fa-plus me-2"></i>Load More Projects
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- Showcase Stats -->
+<section class="showcase-stats">
+    <div class="container">
+        <h2 class="text-center mb-5">Community Impact</h2>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <div class="stat-number">15,247</div>
+                <div class="stat-description">Projects Launched</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-number">52,891</div>
+                <div class="stat-description">Active Developers</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <i class="fas fa-download"></i>
+                </div>
+                <div class="stat-number">2.3M</div>
+                <div class="stat-description">Total Downloads</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <div class="stat-number">127</div>
+                <div class="stat-description">Countries Reached</div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Filter functionality
+    const filterCategories = document.querySelectorAll('.filter-category');
+    const projectItems = document.querySelectorAll('.project-showcase');
+    const projectsContainer = document.getElementById('projectsContainer');
+    
+    filterCategories.forEach(filter => {
+        filter.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Update active filter
+            filterCategories.forEach(f => f.classList.remove('active'));
+            this.classList.add('active');
+            
+            const category = this.dataset.category;
+            
+            // Filter projects with animation
+            projectItems.forEach((item, index) => {
+                const itemCategory = item.dataset.category;
+                const shouldShow = category === 'all' || itemCategory === category;
+                
+                if (shouldShow) {
+                    setTimeout(() => {
+                        item.style.display = 'block';
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'translateY(0) scale(1)';
+                        }, 50);
+                    }, index * 50);
+                } else {
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateY(30px) scale(0.95)';
+                    setTimeout(() => {
+                        item.style.display = 'none';
+                    }, 300);
+                }
+            });
+        });
+    });
+    
+    // Search functionality
+    const searchInput = document.getElementById('showcaseSearch');
+    const searchBtn = document.getElementById('showcaseSearchBtn');
+    
+    function performSearch() {
+        const searchTerm = searchInput.value.toLowerCase();
+        
+        projectItems.forEach(item => {
+            const title = item.querySelector('.project-title').textContent.toLowerCase();
+            const description = item.querySelector('.project-description').textContent.toLowerCase();
+            const technologies = Array.from(item.querySelectorAll('.tech-tag'))
+                .map(tag => tag.textContent.toLowerCase()).join(' ');
+            const author = item.querySelector('.author-name').textContent.toLowerCase();
+            
+            const matches = title.includes(searchTerm) || 
+                          description.includes(searchTerm) || 
+                          technologies.includes(searchTerm) ||
+                          author.includes(searchTerm);
+            
+            if (matches || searchTerm === '') {
+                item.style.display = 'block';
+                setTimeout(() => {
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0) scale(1)';
+                }, 100);
+            } else {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(30px) scale(0.95)';
+                setTimeout(() => {
+                    item.style.display = 'none';
+                }, 300);
+            }
+        });
+    }
+    
+    searchBtn.addEventListener('click', performSearch);
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            performSearch();
+        }
+    });
+    
+    // Real-time search
+    searchInput.addEventListener('input', function() {
+        clearTimeout(this.searchTimeout);
+        this.searchTimeout = setTimeout(performSearch, 300);
+    });
+    
+    // View mode toggle
+    const viewModeButtons = document.querySelectorAll('.view-mode-btn');
+    
+    viewModeButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            viewModeButtons.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            const viewMode = this.dataset.view;
+            
+            if (viewMode === 'grid') {
+                projectsContainer.className = 'projects-container grid-view';
+                projectItems.forEach(item => {
+                    item.classList.remove('list-style');
+                });
+            } else {
+                projectsContainer.className = 'projects-container list-view';
+                projectItems.forEach(item => {
+                    item.classList.add('list-style');
+                });
+            }
+        });
+    });
+    
+    // Load more functionality
+    const loadMoreBtn = document.getElementById('loadMoreShowcase');
+    loadMoreBtn.addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Loading Projects...';
+        this.disabled = true;
+        
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-plus me-2"></i>Load More Projects';
+            this.disabled = false;
+            alert('More amazing projects loaded! 🚀');
+        }, 2000);
+    });
+    
+    // Project interactions
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.overlay-button')) {
+            const button = e.target.closest('.overlay-button');
+            const action = button.textContent.trim().toLowerCase();
+            
+            if (action.includes('demo') || action.includes('try')) {
+                alert('🚀 Launching interactive demo! Feature coming soon!');
+            } else if (action.includes('source') || action.includes('github')) {
+                alert('📁 Opening source code repository!');
+            } else if (action.includes('download')) {
+                alert('📥 Starting download! Feature coming soon!');
+            } else if (action.includes('store')) {
+                alert('📱 Redirecting to app store!');
+            }
+        }
+    });
+    
+    // Intersection Observer for animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const projectObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }, index * 100);
+            }
+        });
+    }, observerOptions);
+    
+    projectItems.forEach(project => {
+        project.style.opacity = '0';
+        project.style.transform = 'translateY(50px)';
+        project.style.transition = 'all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+        projectObserver.observe(project);
+    });
+    
+    // Initialize project styles
+    projectItems.forEach(item => {
+        item.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+    });
+    
+    // Dynamic stats animation
+    const statNumbers = document.querySelectorAll('.stat-number');
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const finalNumber = entry.target.textContent;
+                const numValue = parseInt(finalNumber.replace(/[^\d]/g, ''));
+                let currentNumber = 0;
+                const increment = numValue / 50;
+                
+                const timer = setInterval(() => {
+                    currentNumber += increment;
+                    if (currentNumber >= numValue) {
+                        entry.target.textContent = finalNumber;
+                        clearInterval(timer);
+                    } else {
+                        entry.target.textContent = Math.floor(currentNumber).toLocaleString();
+                    }
+                }, 30);
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    statNumbers.forEach(stat => {
+        statsObserver.observe(stat);
+    });
+});
+</script>
+{% endblock %}

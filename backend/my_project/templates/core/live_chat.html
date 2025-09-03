@@ -1,0 +1,1225 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Live Chat - Connect & Collaborate{% endblock %}
+
+{% block extra_css %}
+<style>
+    .chat-container {
+        height: 100vh;
+        max-height: 100vh;
+        overflow: hidden;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .chat-sidebar {
+        background: rgba(255,255,255,0.95);
+        backdrop-filter: blur(20px);
+        height: 100vh;
+        overflow-y: auto;
+        border-right: 1px solid rgba(255,255,255,0.2);
+        transition: all 0.3s ease;
+    }
+    
+    .chat-header {
+        padding: 20px;
+        background: rgba(255,255,255,0.1);
+        border-bottom: 1px solid rgba(255,255,255,0.2);
+        color: white;
+        text-align: center;
+    }
+    
+    .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 20px;
+        border-bottom: 1px solid #e9ecef;
+    }
+    
+    .user-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 3px solid #667eea;
+        position: relative;
+    }
+    
+    .user-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+    
+    .online-status {
+        position: absolute;
+        bottom: 2px;
+        right: 2px;
+        width: 14px;
+        height: 14px;
+        background: #28a745;
+        border: 2px solid white;
+        border-radius: 50%;
+    }
+    
+    .user-info h5 {
+        margin: 0;
+        color: #333;
+        font-weight: 600;
+    }
+    
+    .user-status {
+        color: #6c757d;
+        font-size: 0.85rem;
+        margin: 0;
+    }
+    
+    .chat-rooms {
+        padding: 0;
+    }
+    
+    .room-section {
+        padding: 15px 20px 10px;
+        background: #f8f9fa;
+        border-bottom: 1px solid #e9ecef;
+        font-weight: 600;
+        color: #495057;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .chat-room {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 15px 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border-bottom: 1px solid #f1f3f4;
+        position: relative;
+    }
+    
+    .chat-room:hover,
+    .chat-room.active {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+    
+    .room-icon {
+        width: 35px;
+        height: 35px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        color: white;
+    }
+    
+    .room-icon.general { background: #17a2b8; }
+    .room-icon.ai { background: #6f42c1; }
+    .room-icon.web3 { background: #28a745; }
+    .room-icon.canvas { background: #fd7e14; }
+    .room-icon.random { background: #e83e8c; }
+    .room-icon.help { background: #ffc107; color: #333; }
+    
+    .room-info {
+        flex: 1;
+    }
+    
+    .room-name {
+        font-weight: 600;
+        margin: 0;
+        font-size: 0.95rem;
+    }
+    
+    .room-last-message {
+        font-size: 0.8rem;
+        opacity: 0.7;
+        margin: 2px 0 0 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 150px;
+    }
+    
+    .room-meta {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 5px;
+    }
+    
+    .room-time {
+        font-size: 0.7rem;
+        opacity: 0.6;
+    }
+    
+    .unread-count {
+        background: #dc3545;
+        color: white;
+        border-radius: 10px;
+        padding: 2px 7px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        min-width: 18px;
+        text-align: center;
+    }
+    
+    .chat-main {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        background: white;
+    }
+    
+    .chat-top-bar {
+        padding: 20px;
+        background: rgba(255,255,255,0.95);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid #e9ecef;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .current-room-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .current-room-icon {
+        width: 45px;
+        height: 45px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        color: white;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .current-room-details h4 {
+        margin: 0;
+        color: #333;
+        font-weight: 600;
+    }
+    
+    .current-room-members {
+        color: #6c757d;
+        font-size: 0.85rem;
+        margin: 2px 0 0 0;
+    }
+    
+    .chat-actions {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .action-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        border: 1px solid #e9ecef;
+        background: white;
+        color: #6c757d;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .action-btn:hover {
+        background: #667eea;
+        color: white;
+        border-color: #667eea;
+        transform: translateY(-2px);
+    }
+    
+    .chat-messages {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+        background: #f8f9fa;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .message {
+        display: flex;
+        gap: 15px;
+        animation: messageSlideIn 0.4s ease;
+    }
+    
+    .message.own {
+        flex-direction: row-reverse;
+    }
+    
+    @keyframes messageSlideIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .message-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid white;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .message-content {
+        max-width: 70%;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .message.own .message-content {
+        align-items: flex-end;
+    }
+    
+    .message-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 5px;
+    }
+    
+    .message.own .message-header {
+        flex-direction: row-reverse;
+    }
+    
+    .message-author {
+        font-weight: 600;
+        color: #333;
+        font-size: 0.9rem;
+    }
+    
+    .message-time {
+        color: #6c757d;
+        font-size: 0.75rem;
+    }
+    
+    .message-bubble {
+        background: white;
+        padding: 15px 20px;
+        border-radius: 20px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        position: relative;
+        word-wrap: break-word;
+        line-height: 1.5;
+    }
+    
+    .message.own .message-bubble {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+    
+    .message-bubble::before {
+        content: '';
+        position: absolute;
+        top: 10px;
+        left: -8px;
+        width: 0;
+        height: 0;
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+        border-right: 8px solid white;
+    }
+    
+    .message.own .message-bubble::before {
+        left: auto;
+        right: -8px;
+        border-right: none;
+        border-left: 8px solid #667eea;
+    }
+    
+    .message-reactions {
+        display: flex;
+        gap: 5px;
+        margin-top: 5px;
+    }
+    
+    .reaction {
+        background: rgba(255,255,255,0.9);
+        border: 1px solid #e9ecef;
+        border-radius: 15px;
+        padding: 3px 8px;
+        font-size: 0.75rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .reaction:hover {
+        background: #667eea;
+        color: white;
+        border-color: #667eea;
+    }
+    
+    .typing-indicator {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 15px 20px;
+        background: rgba(255,255,255,0.7);
+        backdrop-filter: blur(10px);
+        margin: 10px 20px;
+        border-radius: 15px;
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0%, 100% { opacity: 0.6; }
+        50% { opacity: 1; }
+    }
+    
+    .typing-dots {
+        display: flex;
+        gap: 3px;
+    }
+    
+    .typing-dot {
+        width: 6px;
+        height: 6px;
+        background: #667eea;
+        border-radius: 50%;
+        animation: typing 1.4s infinite;
+    }
+    
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+    
+    @keyframes typing {
+        0%, 60%, 100% { transform: translateY(0); }
+        30% { transform: translateY(-10px); }
+    }
+    
+    .chat-input-container {
+        padding: 20px;
+        background: white;
+        border-top: 1px solid #e9ecef;
+    }
+    
+    .chat-input-wrapper {
+        display: flex;
+        gap: 15px;
+        align-items: flex-end;
+    }
+    
+    .input-actions {
+        display: flex;
+        gap: 8px;
+    }
+    
+    .input-action {
+        width: 35px;
+        height: 35px;
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+        background: white;
+        color: #6c757d;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .input-action:hover {
+        background: #667eea;
+        color: white;
+        border-color: #667eea;
+    }
+    
+    .message-input {
+        flex: 1;
+        min-height: 45px;
+        max-height: 120px;
+        border: 2px solid #e9ecef;
+        border-radius: 20px;
+        padding: 12px 20px;
+        resize: none;
+        font-family: inherit;
+        font-size: 0.95rem;
+        line-height: 1.4;
+        transition: all 0.3s ease;
+    }
+    
+    .message-input:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 20px rgba(102, 126, 234, 0.2);
+        outline: none;
+    }
+    
+    .send-button {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+    }
+    
+    .send-button:hover {
+        transform: scale(1.1);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+    
+    .send-button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+    }
+    
+    .online-users {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background: white;
+        border: 1px solid #e9ecef;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        min-width: 250px;
+        max-height: 300px;
+        overflow-y: auto;
+        z-index: 1000;
+        display: none;
+    }
+    
+    .online-users.show {
+        display: block;
+        animation: slideDown 0.3s ease;
+    }
+    
+    @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .online-user {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 15px;
+        border-bottom: 1px solid #f1f3f4;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+    
+    .online-user:hover {
+        background: #f8f9fa;
+    }
+    
+    .online-user:last-child {
+        border-bottom: none;
+    }
+    
+    .online-user-avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        position: relative;
+    }
+    
+    .online-user-info {
+        flex: 1;
+    }
+    
+    .online-user-name {
+        font-weight: 600;
+        color: #333;
+        font-size: 0.9rem;
+        margin: 0;
+    }
+    
+    .online-user-activity {
+        color: #28a745;
+        font-size: 0.75rem;
+        margin: 2px 0 0 0;
+    }
+    
+    .voice-chat {
+        background: rgba(255,255,255,0.1);
+        backdrop-filter: blur(20px);
+        border-radius: 10px;
+        padding: 15px;
+        margin: 10px 0;
+        border: 1px solid rgba(255,255,255,0.2);
+    }
+    
+    .voice-controls {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+    
+    .voice-btn {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 2px solid white;
+        background: rgba(255,255,255,0.2);
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+    }
+    
+    .voice-btn:hover {
+        background: white;
+        color: #667eea;
+        transform: scale(1.1);
+    }
+    
+    .voice-btn.active {
+        background: #28a745;
+        border-color: #28a745;
+    }
+    
+    .voice-btn.muted {
+        background: #dc3545;
+        border-color: #dc3545;
+    }
+    
+    @media (max-width: 768px) {
+        .chat-container {
+            flex-direction: column;
+        }
+        
+        .chat-sidebar {
+            height: auto;
+            max-height: 40vh;
+        }
+        
+        .chat-main {
+            height: 60vh;
+        }
+        
+        .message-content {
+            max-width: 85%;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-0">
+    <div class="row g-0 chat-container">
+        <!-- Chat Sidebar -->
+        <div class="col-lg-3 col-md-4">
+            <div class="chat-sidebar">
+                <!-- Chat Header -->
+                <div class="chat-header">
+                    <h4 class="mb-2">
+                        <i class="fas fa-comments me-2"></i>Live Chat
+                    </h4>
+                    <p class="mb-0 opacity-75">Connect with the community</p>
+                </div>
+                
+                <!-- User Profile -->
+                <div class="user-profile">
+                    <div class="user-avatar">
+                        <img src="/static/img/user-profile.jpg" alt="Your Avatar">
+                        <div class="online-status"></div>
+                    </div>
+                    <div class="user-info">
+                        <h5>{{ user.username|default:"Guest User" }}</h5>
+                        <p class="user-status">Online - Available</p>
+                    </div>
+                </div>
+                
+                <!-- Voice Chat Controls -->
+                <div class="voice-chat">
+                    <div class="text-center mb-3">
+                        <h6 class="text-white mb-0">Voice Chat</h6>
+                        <small class="text-white-50">Join the conversation</small>
+                    </div>
+                    <div class="voice-controls">
+                        <button class="voice-btn" id="micBtn" title="Toggle Microphone">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                        <button class="voice-btn" id="speakerBtn" title="Toggle Speaker">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                        <button class="voice-btn" id="videoBtn" title="Toggle Video">
+                            <i class="fas fa-video"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Chat Rooms -->
+                <div class="chat-rooms">
+                    <div class="room-section">Public Channels</div>
+                    
+                    <div class="chat-room active" data-room="general">
+                        <div class="room-icon general">
+                            <i class="fas fa-hashtag"></i>
+                        </div>
+                        <div class="room-info">
+                            <h6 class="room-name">general</h6>
+                            <p class="room-last-message">Welcome to our platform!</p>
+                        </div>
+                        <div class="room-meta">
+                            <span class="room-time">2m</span>
+                            <span class="unread-count">3</span>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-room" data-room="ai-discussion">
+                        <div class="room-icon ai">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="room-info">
+                            <h6 class="room-name">ai-discussion</h6>
+                            <p class="room-last-message">Check out this neural network...</p>
+                        </div>
+                        <div class="room-meta">
+                            <span class="room-time">5m</span>
+                            <span class="unread-count">12</span>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-room" data-room="web3-dev">
+                        <div class="room-icon web3">
+                            <i class="fab fa-ethereum"></i>
+                        </div>
+                        <div class="room-info">
+                            <h6 class="room-name">web3-dev</h6>
+                            <p class="room-last-message">New DeFi protocol deployed!</p>
+                        </div>
+                        <div class="room-meta">
+                            <span class="room-time">12m</span>
+                            <span class="unread-count">7</span>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-room" data-room="canvas-3d">
+                        <div class="room-icon canvas">
+                            <i class="fas fa-cube"></i>
+                        </div>
+                        <div class="room-info">
+                            <h6 class="room-name">canvas-3d</h6>
+                            <p class="room-last-message">Amazing WebGL animation!</p>
+                        </div>
+                        <div class="room-meta">
+                            <span class="room-time">20m</span>
+                        </div>
+                    </div>
+                    
+                    <div class="room-section">Community</div>
+                    
+                    <div class="chat-room" data-room="random">
+                        <div class="room-icon random">
+                            <i class="fas fa-random"></i>
+                        </div>
+                        <div class="room-info">
+                            <h6 class="room-name">random</h6>
+                            <p class="room-last-message">Coffee break discussions</p>
+                        </div>
+                        <div class="room-meta">
+                            <span class="room-time">1h</span>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-room" data-room="help-support">
+                        <div class="room-icon help">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <div class="room-info">
+                            <h6 class="room-name">help-support</h6>
+                            <p class="room-last-message">How do I integrate the API?</p>
+                        </div>
+                        <div class="room-meta">
+                            <span class="room-time">2h</span>
+                            <span class="unread-count">2</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Chat Main -->
+        <div class="col-lg-9 col-md-8">
+            <div class="chat-main">
+                <!-- Chat Top Bar -->
+                <div class="chat-top-bar">
+                    <div class="current-room-info">
+                        <div class="current-room-icon">
+                            <i class="fas fa-hashtag"></i>
+                        </div>
+                        <div class="current-room-details">
+                            <h4>general</h4>
+                            <p class="current-room-members">
+                                <i class="fas fa-users me-1"></i>
+                                1,247 members • 234 online
+                            </p>
+                        </div>
+                    </div>
+                    <div class="chat-actions">
+                        <button class="action-btn" id="searchBtn" title="Search Messages">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <button class="action-btn" id="membersBtn" title="View Members">
+                            <i class="fas fa-users"></i>
+                        </button>
+                        <button class="action-btn" id="settingsBtn" title="Room Settings">
+                            <i class="fas fa-cog"></i>
+                        </button>
+                        <div style="position: relative;">
+                            <button class="action-btn" id="onlineUsersBtn" title="Online Users">
+                                <i class="fas fa-circle" style="color: #28a745;"></i>
+                            </button>
+                            <div class="online-users" id="onlineUsersList">
+                                <div class="online-user">
+                                    <div class="online-user-avatar">
+                                        <img src="/static/img/dev-sarah.jpg" alt="Sarah" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                                        <div class="online-status"></div>
+                                    </div>
+                                    <div class="online-user-info">
+                                        <h6 class="online-user-name">Sarah Johnson</h6>
+                                        <p class="online-user-activity">Coding AI models</p>
+                                    </div>
+                                </div>
+                                <div class="online-user">
+                                    <div class="online-user-avatar">
+                                        <img src="/static/img/dev-mike.jpg" alt="Mike" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                                        <div class="online-status"></div>
+                                    </div>
+                                    <div class="online-user-info">
+                                        <h6 class="online-user-name">Mike Chen</h6>
+                                        <p class="online-user-activity">3D Canvas work</p>
+                                    </div>
+                                </div>
+                                <div class="online-user">
+                                    <div class="online-user-avatar">
+                                        <img src="/static/img/dev-emma.jpg" alt="Emma" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                                        <div class="online-status"></div>
+                                    </div>
+                                    <div class="online-user-info">
+                                        <h6 class="online-user-name">Emma Rodriguez</h6>
+                                        <p class="online-user-activity">DeFi development</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Chat Messages -->
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Welcome Message -->
+                    <div class="message">
+                        <img src="/static/img/bot-avatar.jpg" alt="Bot" class="message-avatar">
+                        <div class="message-content">
+                            <div class="message-header">
+                                <span class="message-author">DevBot</span>
+                                <span class="message-time">Just now</span>
+                            </div>
+                            <div class="message-bubble">
+                                🎉 Welcome to our amazing developer community! Feel free to share your projects, ask questions, and collaborate with fellow developers. 
+                                <br><br>
+                                <strong>Quick tips:</strong><br>
+                                • Use @username to mention someone<br>
+                                • Share code with ```code blocks```<br>
+                                • React to messages with emojis<br>
+                                • Join voice chat for real-time collaboration
+                            </div>
+                            <div class="message-reactions">
+                                <span class="reaction">👍 12</span>
+                                <span class="reaction">🎉 8</span>
+                                <span class="reaction">❤️ 15</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- User Messages -->
+                    <div class="message">
+                        <img src="/static/img/dev-sarah.jpg" alt="Sarah" class="message-avatar">
+                        <div class="message-content">
+                            <div class="message-header">
+                                <span class="message-author">Sarah Johnson</span>
+                                <span class="message-time">2 minutes ago</span>
+                            </div>
+                            <div class="message-bubble">
+                                Just deployed a new neural network for image recognition! 
+                                The accuracy is incredible - 98.7% on the test dataset. 
+                                Anyone interested in collaborating on the next phase? 🧠✨
+                            </div>
+                            <div class="message-reactions">
+                                <span class="reaction">🚀 5</span>
+                                <span class="reaction">🔥 3</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="message">
+                        <img src="/static/img/dev-mike.jpg" alt="Mike" class="message-avatar">
+                        <div class="message-content">
+                            <div class="message-header">
+                                <span class="message-author">Mike Chen</span>
+                                <span class="message-time">1 minute ago</span>
+                            </div>
+                            <div class="message-bubble">
+                                @Sarah Johnson That sounds amazing! I'm working on 3D visualizations 
+                                that could really benefit from AI-powered scene understanding. 
+                                Would love to explore integration possibilities! 🎨
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="message own">
+                        <img src="/static/img/user-profile.jpg" alt="You" class="message-avatar">
+                        <div class="message-content">
+                            <div class="message-header">
+                                <span class="message-author">You</span>
+                                <span class="message-time">30 seconds ago</span>
+                            </div>
+                            <div class="message-bubble">
+                                This community is incredible! The collaboration opportunities are endless. 
+                                Can't wait to share my latest Web3 project here soon! 🌐
+                            </div>
+                            <div class="message-reactions">
+                                <span class="reaction">👏 2</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Typing Indicator -->
+                    <div class="typing-indicator" id="typingIndicator" style="display: none;">
+                        <img src="/static/img/dev-emma.jpg" alt="Emma" class="message-avatar">
+                        <div class="typing-content">
+                            <span class="typing-author">Emma Rodriguez is typing</span>
+                            <div class="typing-dots">
+                                <div class="typing-dot"></div>
+                                <div class="typing-dot"></div>
+                                <div class="typing-dot"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Chat Input -->
+                <div class="chat-input-container">
+                    <div class="chat-input-wrapper">
+                        <div class="input-actions">
+                            <button class="input-action" id="emojiBtn" title="Add Emoji">
+                                <i class="far fa-smile"></i>
+                            </button>
+                            <button class="input-action" id="attachBtn" title="Attach File">
+                                <i class="fas fa-paperclip"></i>
+                            </button>
+                            <button class="input-action" id="codeBtn" title="Code Block">
+                                <i class="fas fa-code"></i>
+                            </button>
+                            <button class="input-action" id="gifBtn" title="GIF">
+                                <i class="fas fa-images"></i>
+                            </button>
+                        </div>
+                        <textarea 
+                            class="message-input" 
+                            id="messageInput" 
+                            placeholder="Type a message... (Shift + Enter for new line)"
+                            rows="1"></textarea>
+                        <button class="send-button" id="sendBtn" disabled>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const messageInput = document.getElementById('messageInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const chatMessages = document.getElementById('chatMessages');
+    const typingIndicator = document.getElementById('typingIndicator');
+    const onlineUsersBtn = document.getElementById('onlineUsersBtn');
+    const onlineUsersList = document.getElementById('onlineUsersList');
+    const chatRooms = document.querySelectorAll('.chat-room');
+    const voiceButtons = document.querySelectorAll('.voice-btn');
+    
+    // Auto-resize textarea
+    messageInput.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        
+        // Enable/disable send button
+        sendBtn.disabled = this.value.trim() === '';
+    });
+    
+    // Send message function
+    function sendMessage() {
+        const message = messageInput.value.trim();
+        if (message === '') return;
+        
+        // Create message element
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message own';
+        messageDiv.innerHTML = `
+            <img src="/static/img/user-profile.jpg" alt="You" class="message-avatar">
+            <div class="message-content">
+                <div class="message-header">
+                    <span class="message-author">You</span>
+                    <span class="message-time">Just now</span>
+                </div>
+                <div class="message-bubble">
+                    ${message.replace(/\n/g, '<br>')}
+                </div>
+            </div>
+        `;
+        
+        // Remove typing indicator and add message
+        typingIndicator.style.display = 'none';
+        chatMessages.appendChild(messageDiv);
+        
+        // Clear input and scroll to bottom
+        messageInput.value = '';
+        messageInput.style.height = 'auto';
+        sendBtn.disabled = true;
+        scrollToBottom();
+        
+        // Simulate typing response
+        setTimeout(simulateTyping, 1000);
+    }
+    
+    // Send button click
+    sendBtn.addEventListener('click', sendMessage);
+    
+    // Enter key handling
+    messageInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+        }
+    });
+    
+    // Simulate typing indicator
+    function simulateTyping() {
+        typingIndicator.style.display = 'flex';
+        scrollToBottom();
+        
+        setTimeout(() => {
+            typingIndicator.style.display = 'none';
+            
+            // Add bot response
+            const responses = [
+                "Great question! I'd love to help with that project. 🚀",
+                "That's an interesting approach! Have you considered using TypeScript? 💡",
+                "Awesome work! The community would love to see your code. 👏",
+                "I had a similar challenge last week. Let me share my solution! 🔧",
+                "This reminds me of a great tutorial I saw recently. Want the link? 📚"
+            ];
+            
+            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+            const users = ['Emma Rodriguez', 'Mike Chen', 'Sarah Johnson', 'Alex Mueller'];
+            const randomUser = users[Math.floor(Math.random() * users.length)];
+            const avatars = {
+                'Emma Rodriguez': '/static/img/dev-emma.jpg',
+                'Mike Chen': '/static/img/dev-mike.jpg',
+                'Sarah Johnson': '/static/img/dev-sarah.jpg',
+                'Alex Mueller': '/static/img/dev-alex.jpg'
+            };
+            
+            const responseDiv = document.createElement('div');
+            responseDiv.className = 'message';
+            responseDiv.innerHTML = `
+                <img src="${avatars[randomUser]}" alt="${randomUser}" class="message-avatar">
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author">${randomUser}</span>
+                        <span class="message-time">Just now</span>
+                    </div>
+                    <div class="message-bubble">
+                        ${randomResponse}
+                    </div>
+                </div>
+            `;
+            
+            chatMessages.appendChild(responseDiv);
+            scrollToBottom();
+        }, 2000);
+    }
+    
+    // Scroll to bottom
+    function scrollToBottom() {
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    
+    // Room switching
+    chatRooms.forEach(room => {
+        room.addEventListener('click', function() {
+            // Update active room
+            chatRooms.forEach(r => r.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Update room info in top bar
+            const roomName = this.dataset.room;
+            const roomIcon = this.querySelector('.room-icon i').className;
+            const currentRoomIcon = document.querySelector('.current-room-icon i');
+            const currentRoomTitle = document.querySelector('.current-room-details h4');
+            
+            currentRoomIcon.className = roomIcon;
+            currentRoomTitle.textContent = roomName;
+            
+            // Clear unread count
+            const unreadCount = this.querySelector('.unread-count');
+            if (unreadCount) {
+                unreadCount.remove();
+            }
+            
+            // Simulate loading new messages
+            chatMessages.innerHTML = `
+                <div class="message">
+                    <img src="/static/img/bot-avatar.jpg" alt="Bot" class="message-avatar">
+                    <div class="message-content">
+                        <div class="message-header">
+                            <span class="message-author">DevBot</span>
+                            <span class="message-time">Just now</span>
+                        </div>
+                        <div class="message-bubble">
+                            Welcome to #${roomName}! This is where the magic happens. ✨
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            scrollToBottom();
+        });
+    });
+    
+    // Online users toggle
+    onlineUsersBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        onlineUsersList.classList.toggle('show');
+    });
+    
+    // Close online users when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('#onlineUsersBtn') && !e.target.closest('#onlineUsersList')) {
+            onlineUsersList.classList.remove('show');
+        }
+    });
+    
+    // Voice chat controls
+    voiceButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const btnId = this.id;
+            
+            if (btnId === 'micBtn') {
+                this.classList.toggle('muted');
+                const icon = this.querySelector('i');
+                if (this.classList.contains('muted')) {
+                    icon.className = 'fas fa-microphone-slash';
+                    this.title = 'Unmute Microphone';
+                } else {
+                    icon.className = 'fas fa-microphone';
+                    this.title = 'Mute Microphone';
+                }
+            } else if (btnId === 'speakerBtn') {
+                this.classList.toggle('muted');
+                const icon = this.querySelector('i');
+                if (this.classList.contains('muted')) {
+                    icon.className = 'fas fa-volume-mute';
+                    this.title = 'Unmute Speaker';
+                } else {
+                    icon.className = 'fas fa-volume-up';
+                    this.title = 'Mute Speaker';
+                }
+            } else if (btnId === 'videoBtn') {
+                this.classList.toggle('active');
+                const icon = this.querySelector('i');
+                if (this.classList.contains('active')) {
+                    icon.className = 'fas fa-video-slash';
+                    this.title = 'Stop Video';
+                } else {
+                    icon.className = 'fas fa-video';
+                    this.title = 'Start Video';
+                }
+            }
+        });
+    });
+    
+    // Input action buttons
+    document.getElementById('emojiBtn').addEventListener('click', function() {
+        const emojis = ['😀', '🚀', '💡', '🔥', '👏', '❤️', '🎉', '✨', '🌟', '👍'];
+        const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+        messageInput.value += randomEmoji;
+        messageInput.focus();
+        sendBtn.disabled = messageInput.value.trim() === '';
+    });
+    
+    document.getElementById('codeBtn').addEventListener('click', function() {
+        const currentValue = messageInput.value;
+        const cursorPos = messageInput.selectionStart;
+        const codeBlock = '```\n\n```';
+        messageInput.value = currentValue.slice(0, cursorPos) + codeBlock + currentValue.slice(cursorPos);
+        messageInput.setSelectionRange(cursorPos + 4, cursorPos + 4);
+        messageInput.focus();
+        sendBtn.disabled = messageInput.value.trim() === '';
+    });
+    
+    document.getElementById('attachBtn').addEventListener('click', function() {
+        alert('📎 File attachment feature coming soon! Upload images, documents, and more.');
+    });
+    
+    document.getElementById('gifBtn').addEventListener('click', function() {
+        alert('🎬 GIF picker coming soon! Express yourself with animated reactions.');
+    });
+    
+    // Action buttons
+    document.getElementById('searchBtn').addEventListener('click', function() {
+        alert('🔍 Message search feature coming soon! Find any message instantly.');
+    });
+    
+    document.getElementById('membersBtn').addEventListener('click', function() {
+        alert('👥 Member list feature coming soon! See all room participants.');
+    });
+    
+    document.getElementById('settingsBtn').addEventListener('click', function() {
+        alert('⚙️ Room settings coming soon! Customize notifications and preferences.');
+    });
+    
+    // Message reactions
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('reaction')) {
+            const currentText = e.target.textContent;
+            const [emoji, count] = currentText.split(' ');
+            const newCount = parseInt(count) + 1;
+            e.target.textContent = `${emoji} ${newCount}`;
+            e.target.style.background = '#667eea';
+            e.target.style.color = 'white';
+        }
+    });
+    
+    // Initialize scroll position
+    scrollToBottom();
+    
+    // Simulate periodic new messages
+    setInterval(() => {
+        if (Math.random() < 0.1) { // 10% chance every 10 seconds
+            simulateTyping();
+        }
+    }, 10000);
+});
+</script>
+{% endblock %}

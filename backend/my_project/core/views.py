@@ -20,7 +20,7 @@ import json
 import uuid
 from datetime import datetime, timedelta
 
-from .models import (
+from ..models import (
     CustomUser, Project, ProjectCollaboration, ChatRoom, ChatMessage,
     AIConversation, AIMessage, Notification, UserActivity
 )

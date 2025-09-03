@@ -1,0 +1,856 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}AI Services - Transform Your Development{% endblock %}
+
+{% block extra_css %}
+<style>
+    .ai-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 100px 0;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .ai-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="circuit" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M10 0v20M0 10h20M5 5h10v10H5z" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" fill="none"/></pattern></defs><rect width="100" height="100" fill="url(%23circuit)"/></svg>');
+        opacity: 0.3;
+    }
+    
+    .service-card {
+        background: white;
+        border-radius: 20px;
+        padding: 40px 30px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        transition: all 0.4s ease;
+        border: none;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .service-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        transition: height 0.3s ease;
+    }
+    
+    .service-card:hover {
+        transform: translateY(-15px);
+        box-shadow: 0 30px 80px rgba(0,0,0,0.15);
+    }
+    
+    .service-card:hover::before {
+        height: 10px;
+    }
+    
+    .service-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        margin-bottom: 25px;
+        position: relative;
+    }
+    
+    .service-icon::after {
+        content: '';
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        width: 20px;
+        height: 20px;
+        background: #28a745;
+        border-radius: 50%;
+        border: 3px solid white;
+    }
+    
+    .pricing-card {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        border: 2px solid transparent;
+    }
+    
+    .pricing-card.featured {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        transform: scale(1.05);
+        border-color: #ffc107;
+    }
+    
+    .pricing-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 25px 70px rgba(0,0,0,0.15);
+    }
+    
+    .feature-check {
+        color: #28a745;
+        margin-right: 10px;
+    }
+    
+    .ai-demo-section {
+        background: #f8f9fa;
+        padding: 80px 0;
+    }
+    
+    .demo-terminal {
+        background: #1e1e1e;
+        border-radius: 10px;
+        padding: 20px;
+        color: #ffffff;
+        font-family: 'Courier New', monospace;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .terminal-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #333;
+    }
+    
+    .terminal-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-right: 8px;
+    }
+    
+    .dot-red { background: #ff5f56; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green { background: #27ca3f; }
+    
+    .typing-animation {
+        animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
+        white-space: nowrap;
+        overflow: hidden;
+        border-right: 3px solid #fff;
+    }
+    
+    @keyframes typing {
+        from { width: 0; }
+        to { width: 100%; }
+    }
+    
+    @keyframes blink-caret {
+        from, to { border-color: transparent; }
+        50% { border-color: #fff; }
+    }
+    
+    .ai-stats {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 60px 0;
+    }
+    
+    .stat-item {
+        text-align: center;
+        padding: 20px;
+    }
+    
+    .stat-number {
+        font-size: 3.5rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #ffc107;
+    }
+    
+    .technology-showcase {
+        padding: 80px 0;
+        background: white;
+    }
+    
+    .tech-item {
+        text-align: center;
+        padding: 30px 20px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+    
+    .tech-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+    }
+    
+    .tech-icon {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 20px;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: white;
+    }
+    
+    .success-stories {
+        background: #f8f9fa;
+        padding: 80px 0;
+    }
+    
+    .story-card {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        height: 100%;
+    }
+    
+    .story-avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        margin-right: 15px;
+    }
+    
+    .cta-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 80px 0;
+        text-align: center;
+    }
+    
+    .floating-ai-assistant {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        animation: pulse-ai 2s infinite;
+        z-index: 1000;
+    }
+    
+    @keyframes pulse-ai {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- AI Hero Section -->
+<section class="ai-hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-3 fw-bold mb-4">
+                    AI-Powered Development <span class="text-warning">Revolution</span>
+                </h1>
+                <p class="lead mb-4">
+                    Transform your ideas into reality with our cutting-edge AI services. 
+                    From machine learning to full-stack development, we're your intelligent partner 
+                    in the digital kingdom.
+                </p>
+                <div class="d-flex gap-3 flex-wrap">
+                    <a href="#services" class="btn btn-warning btn-lg">
+                        <i class="fas fa-robot me-2"></i>Explore AI Services
+                    </a>
+                    <a href="#demo" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-play me-2"></i>Watch Demo
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="demo-terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dot dot-red"></div>
+                        <div class="terminal-dot dot-yellow"></div>
+                        <div class="terminal-dot dot-green"></div>
+                        <span class="ms-3">AI Development Assistant</span>
+                    </div>
+                    <div class="typing-animation">
+                        $ ai-assistant create --project "E-commerce Platform"<br>
+                        🤖 Analyzing requirements...<br>
+                        ✅ Generated full-stack architecture<br>
+                        ✅ Created 47 optimized components<br>
+                        ✅ Deployed to cloud in 3.2 minutes<br>
+                        🚀 Your crown is ready, Your Majesty!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- AI Stats -->
+<section class="ai-stats">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="stat-item">
+                    <div class="stat-number">10K+</div>
+                    <h5>AI Models Deployed</h5>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-item">
+                    <div class="stat-number">99.9%</div>
+                    <h5>Uptime Guarantee</h5>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-item">
+                    <div class="stat-number">50x</div>
+                    <h5>Faster Development</h5>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <h5>AI Support</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- AI Services -->
+<section id="services" class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold">Complete AI Development Ecosystem</h2>
+            <p class="lead text-muted">Everything you need to build, train, and deploy intelligent applications</p>
+        </div>
+        
+        <div class="row g-4">
+            <!-- AI Training & Machine Learning -->
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card text-center">
+                    <div class="service-icon bg-primary bg-opacity-10 mx-auto">
+                        <i class="fas fa-brain text-primary"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3">AI Training & ML</h4>
+                    <p class="text-muted mb-4">
+                        Custom machine learning models, neural networks, and AI training pipelines 
+                        tailored to your specific business needs.
+                    </p>
+                    <ul class="list-unstyled text-start mb-4">
+                        <li><i class="fas fa-check feature-check"></i>Custom Neural Networks</li>
+                        <li><i class="fas fa-check feature-check"></i>Deep Learning Models</li>
+                        <li><i class="fas fa-check feature-check"></i>Computer Vision AI</li>
+                        <li><i class="fas fa-check feature-check"></i>NLP & Language Models</li>
+                        <li><i class="fas fa-check feature-check"></i>Predictive Analytics</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary w-100">Start AI Training</a>
+                </div>
+            </div>
+            
+            <!-- Full-Stack Development -->
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card text-center">
+                    <div class="service-icon bg-success bg-opacity-10 mx-auto">
+                        <i class="fas fa-code text-success"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3">AI-Powered Development</h4>
+                    <p class="text-muted mb-4">
+                        Complete web applications, mobile apps, and enterprise solutions 
+                        built with AI assistance for maximum efficiency.
+                    </p>
+                    <ul class="list-unstyled text-start mb-4">
+                        <li><i class="fas fa-check feature-check"></i>React/Vue/Angular Apps</li>
+                        <li><i class="fas fa-check feature-check"></i>Django/Flask APIs</li>
+                        <li><i class="fas fa-check feature-check"></i>Mobile Development</li>
+                        <li><i class="fas fa-check feature-check"></i>Cloud Architecture</li>
+                        <li><i class="fas fa-check feature-check"></i>DevOps & CI/CD</li>
+                    </ul>
+                    <a href="#" class="btn btn-success w-100">Build My App</a>
+                </div>
+            </div>
+            
+            <!-- Cloud Computing & Infrastructure -->
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card text-center">
+                    <div class="service-icon bg-info bg-opacity-10 mx-auto">
+                        <i class="fas fa-cloud text-info"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3">Cloud Computing</h4>
+                    <p class="text-muted mb-4">
+                        Scalable cloud infrastructure, serverless computing, and managed 
+                        services for your applications and AI workloads.
+                    </p>
+                    <ul class="list-unstyled text-start mb-4">
+                        <li><i class="fas fa-check feature-check"></i>AWS/Azure/GCP Setup</li>
+                        <li><i class="fas fa-check feature-check"></i>Kubernetes Orchestration</li>
+                        <li><i class="fas fa-check feature-check"></i>Serverless Functions</li>
+                        <li><i class="fas fa-check feature-check"></i>Database Management</li>
+                        <li><i class="fas fa-check feature-check"></i>Auto-Scaling</li>
+                    </ul>
+                    <a href="#" class="btn btn-info w-100">Deploy to Cloud</a>
+                </div>
+            </div>
+            
+            <!-- E-commerce Solutions -->
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card text-center">
+                    <div class="service-icon bg-warning bg-opacity-10 mx-auto">
+                        <i class="fas fa-shopping-cart text-warning"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3">E-commerce Platforms</h4>
+                    <p class="text-muted mb-4">
+                        Complete e-commerce solutions with AI-powered recommendations, 
+                        analytics, and automated customer service.
+                    </p>
+                    <ul class="list-unstyled text-start mb-4">
+                        <li><i class="fas fa-check feature-check"></i>Shopify/WooCommerce</li>
+                        <li><i class="fas fa-check feature-check"></i>Custom E-commerce</li>
+                        <li><i class="fas fa-check feature-check"></i>AI Recommendations</li>
+                        <li><i class="fas fa-check feature-check"></i>Payment Integration</li>
+                        <li><i class="fas fa-check feature-check"></i>Inventory Management</li>
+                    </ul>
+                    <a href="#" class="btn btn-warning w-100">Launch Store</a>
+                </div>
+            </div>
+            
+            <!-- Data Analytics & BI -->
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card text-center">
+                    <div class="service-icon bg-danger bg-opacity-10 mx-auto">
+                        <i class="fas fa-chart-line text-danger"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3">Data Analytics & BI</h4>
+                    <p class="text-muted mb-4">
+                        Transform your data into actionable insights with advanced analytics, 
+                        real-time dashboards, and business intelligence.
+                    </p>
+                    <ul class="list-unstyled text-start mb-4">
+                        <li><i class="fas fa-check feature-check"></i>Real-time Dashboards</li>
+                        <li><i class="fas fa-check feature-check"></i>Data Visualization</li>
+                        <li><i class="fas fa-check feature-check"></i>Predictive Analytics</li>
+                        <li><i class="fas fa-check feature-check"></i>ETL Pipelines</li>
+                        <li><i class="fas fa-check feature-check"></i>Business Intelligence</li>
+                    </ul>
+                    <a href="#" class="btn btn-danger w-100">Analyze Data</a>
+                </div>
+            </div>
+            
+            <!-- Blockchain & Web3 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card text-center">
+                    <div class="service-icon bg-dark bg-opacity-10 mx-auto">
+                        <i class="fab fa-bitcoin text-dark"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3">Blockchain & Web3</h4>
+                    <p class="text-muted mb-4">
+                        Next-generation blockchain applications, smart contracts, DeFi platforms, 
+                        and Web3 integrations for the future.
+                    </p>
+                    <ul class="list-unstyled text-start mb-4">
+                        <li><i class="fas fa-check feature-check"></i>Smart Contracts</li>
+                        <li><i class="fas fa-check feature-check"></i>DApp Development</li>
+                        <li><i class="fas fa-check feature-check"></i>NFT Marketplaces</li>
+                        <li><i class="fas fa-check feature-check"></i>DeFi Platforms</li>
+                        <li><i class="fas fa-check feature-check"></i>Crypto Integration</li>
+                    </ul>
+                    <a href="#" class="btn btn-dark w-100">Enter Web3</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Technology Showcase -->
+<section class="technology-showcase">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold">Cutting-Edge Technologies</h2>
+            <p class="lead text-muted">We use the latest and most advanced technologies to deliver exceptional results</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+                <div class="tech-item">
+                    <div class="tech-icon bg-primary mx-auto">
+                        <i class="fab fa-python"></i>
+                    </div>
+                    <h6>Python & Django</h6>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+                <div class="tech-item">
+                    <div class="tech-icon bg-success mx-auto">
+                        <i class="fab fa-node-js"></i>
+                    </div>
+                    <h6>Node.js & Express</h6>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+                <div class="tech-item">
+                    <div class="tech-icon bg-info mx-auto">
+                        <i class="fab fa-react"></i>
+                    </div>
+                    <h6>React & Next.js</h6>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+                <div class="tech-item">
+                    <div class="tech-icon bg-warning mx-auto">
+                        <i class="fab fa-aws"></i>
+                    </div>
+                    <h6>AWS Cloud</h6>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+                <div class="tech-item">
+                    <div class="tech-icon bg-danger mx-auto">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h6>TensorFlow & PyTorch</h6>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+                <div class="tech-item">
+                    <div class="tech-icon bg-dark mx-auto">
+                        <i class="fab fa-docker"></i>
+                    </div>
+                    <h6>Docker & Kubernetes</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing Plans -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold">Choose Your Development Plan</h2>
+            <p class="lead text-muted">Flexible pricing for every stage of your journey</p>
+        </div>
+        
+        <div class="row g-4">
+            <!-- Starter Plan -->
+            <div class="col-lg-4">
+                <div class="pricing-card text-center">
+                    <h4 class="fw-bold mb-3">Starter Kingdom</h4>
+                    <div class="mb-4">
+                        <span class="display-4 fw-bold">$99</span>
+                        <span class="text-muted">/month</span>
+                    </div>
+                    <ul class="list-unstyled mb-4">
+                        <li class="mb-2"><i class="fas fa-check feature-check"></i>Basic AI Assistant</li>
+                        <li class="mb-2"><i class="fas fa-check feature-check"></i>2D/3D Canvas Access</li>
+                        <li class="mb-2"><i class="fas fa-check feature-check"></i>5 Projects</li>
+                        <li class="mb-2"><i class="fas fa-check feature-check"></i>Community Support</li>
+                        <li class="mb-2"><i class="fas fa-check feature-check"></i>Basic Analytics</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline-primary w-100">Start Building</a>
+                </div>
+            </div>
+            
+            <!-- Professional Plan -->
+            <div class="col-lg-4">
+                <div class="pricing-card featured text-center">
+                    <div class="badge bg-warning position-absolute top-0 start-50 translate-middle px-3 py-2">
+                        Most Popular
+                    </div>
+                    <h4 class="fw-bold mb-3">Royal Crown</h4>
+                    <div class="mb-4">
+                        <span class="display-4 fw-bold">$299</span>
+                        <span class="text-muted">/month</span>
+                    </div>
+                    <ul class="list-unstyled mb-4">
+                        <li class="mb-2"><i class="fas fa-check feature-check"></i>Advanced AI Models</li>
+                        <li class="mb-2"><i class="fas fa-check feature-check"></i>Full Canvas Suite</li>
+                        <li class="mb-2"><i class="fas fa-check feature-check"></i>Unlimited Projects</li>
+                        <li class="mb-2"><i class="fas fa-check feature-check"></i>Priority Support</li>
+                        <li class="mb-2"><i class="fas fa-check feature-check"></i>Cloud Deployment</li>
+                        <li class="mb-2"><i class="fas fa-check feature-check"></i>Team Collaboration</li>
+                    </ul>
+                    <a href="#" class="btn btn-warning w-100">Claim Crown</a>
+                </div>
+            </div>
+            
+            <!-- Enterprise Plan -->
+            <div class="col-lg-4">
+                <div class="pricing-card text-center">
+                    <h4 class="fw-bold mb-3">Emperor's Throne</h4>
+                    <div class="mb-4">
+                        <span class="display-4 fw-bold">$999</span>
+                        <span class="text-muted">/month</span>
+                    </div>
+                    <ul class="list-unstyled mb-4">
+                        <li class="mb-2"><i class="fas fa-check feature-check"></i>Custom AI Training</li>
+                        <li class="mb-2"><i class="fas fa-check feature-check"></i>White-label Solutions</li>
+                        <li class="mb-2"><i class="fas fa-check feature-check"></i>Dedicated Infrastructure</li>
+                        <li class="mb-2"><i class="fas fa-check feature-check"></i>24/7 Expert Support</li>
+                        <li class="mb-2"><i class="fas fa-check feature-check"></i>Custom Integrations</li>
+                        <li class="mb-2"><i class="fas fa-check feature-check"></i>On-premise Deployment</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline-primary w-100">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Success Stories -->
+<section class="success-stories">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold">Success Stories</h2>
+            <p class="lead text-muted">See how businesses transformed with our AI-powered solutions</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="story-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="/static/img/client1.jpg" alt="TechCorp CEO" class="story-avatar">
+                        <div>
+                            <h6 class="mb-0">Sarah Johnson</h6>
+                            <small class="text-muted">CEO, TechCorp</small>
+                        </div>
+                    </div>
+                    <p class="text-muted">
+                        "The AI development platform reduced our time-to-market by 70%. 
+                        We launched our e-commerce platform in just 2 weeks!"
+                    </p>
+                    <div class="text-warning">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="story-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="/static/img/client2.jpg" alt="StartupX Founder" class="story-avatar">
+                        <div>
+                            <h6 class="mb-0">Mike Chen</h6>
+                            <small class="text-muted">Founder, StartupX</small>
+                        </div>
+                    </div>
+                    <p class="text-muted">
+                        "From idea to fully functioning mobile app in 10 days. 
+                        The AI assistant understood exactly what I needed!"
+                    </p>
+                    <div class="text-warning">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="story-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="/static/img/client3.jpg" alt="GlobalTech CTO" class="story-avatar">
+                        <div>
+                            <h6 class="mb-0">Emma Rodriguez</h6>
+                            <small class="text-muted">CTO, GlobalTech</small>
+                        </div>
+                    </div>
+                    <p class="text-muted">
+                        "The ML models we built here increased our customer satisfaction by 85%. 
+                        Absolutely game-changing technology!"
+                    </p>
+                    <div class="text-warning">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h2 class="display-4 fw-bold mb-4">Ready to Build Your Digital Empire?</h2>
+                <p class="lead mb-4">
+                    Join thousands of developers and businesses who trust us to transform their ideas into reality. 
+                    Start your journey to digital dominance today!
+                </p>
+                <div class="d-flex gap-3 justify-content-center flex-wrap">
+                    <a href="{% url 'users:register' %}" class="btn btn-warning btn-lg">
+                        <i class="fas fa-crown me-2"></i>Start Free Trial
+                    </a>
+                    <a href="#" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-calendar me-2"></i>Book Consultation
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Floating AI Assistant -->
+<div class="floating-ai-assistant" title="AI Assistant">
+    <i class="fas fa-robot"></i>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Animate service cards on scroll
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const serviceCards = document.querySelectorAll('.service-card');
+    const serviceObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }, index * 100);
+            }
+        });
+    }, observerOptions);
+    
+    serviceCards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        card.style.transition = 'all 0.6s ease';
+        serviceObserver.observe(card);
+    });
+    
+    // Animate stats counter
+    function animateStats() {
+        const statNumbers = document.querySelectorAll('.stat-number');
+        
+        statNumbers.forEach(stat => {
+            const finalValue = stat.textContent;
+            const numericValue = parseInt(finalValue.replace(/[^\d]/g, ''));
+            const suffix = finalValue.replace(/[\d]/g, '');
+            
+            let currentValue = 0;
+            const increment = numericValue / 50;
+            
+            const timer = setInterval(() => {
+                currentValue += increment;
+                if (currentValue >= numericValue) {
+                    currentValue = numericValue;
+                    clearInterval(timer);
+                }
+                
+                stat.textContent = Math.floor(currentValue) + suffix;
+            }, 50);
+        });
+    }
+    
+    // Trigger stats animation when in view
+    const statsSection = document.querySelector('.ai-stats');
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateStats();
+                statsObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    if (statsSection) {
+        statsObserver.observe(statsSection);
+    }
+    
+    // Terminal typing animation
+    const terminalText = document.querySelector('.typing-animation');
+    if (terminalText) {
+        const originalText = terminalText.innerHTML;
+        terminalText.innerHTML = '';
+        
+        let i = 0;
+        function typeWriter() {
+            if (i < originalText.length) {
+                terminalText.innerHTML += originalText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+        
+        // Start typing animation after a delay
+        setTimeout(typeWriter, 1000);
+    }
+    
+    // Floating AI Assistant
+    const aiAssistant = document.querySelector('.floating-ai-assistant');
+    if (aiAssistant) {
+        aiAssistant.addEventListener('click', function() {
+            // Show AI chat or help modal
+            alert('AI Assistant: How can I help you build your digital kingdom today? 🤖👑');
+        });
+    }
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+    
+    // Pricing card hover effects
+    const pricingCards = document.querySelectorAll('.pricing-card');
+    pricingCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            if (!this.classList.contains('featured')) {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            }
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            if (!this.classList.contains('featured')) {
+                this.style.transform = 'translateY(0) scale(1)';
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,1087 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Developer Community - Find Your Coding Tribe{% endblock %}
+
+{% block extra_css %}
+<style>
+    .developers-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 80px 0;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .developers-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dev-pattern" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="2" fill="rgba(255,255,255,0.1)"/><path d="M5 15h10M5 5h10" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23dev-pattern)"/></svg>');
+        opacity: 0.3;
+    }
+    
+    .search-filters {
+        background: white;
+        padding: 30px 0;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+    
+    .filter-chip {
+        display: inline-block;
+        padding: 8px 16px;
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 20px;
+        margin: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        color: #495057;
+    }
+    
+    .filter-chip:hover,
+    .filter-chip.active {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-color: #667eea;
+        text-decoration: none;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    }
+    
+    .developer-card {
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        transition: all 0.4s ease;
+        border: none;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .developer-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+    }
+    
+    .developer-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    }
+    
+    .developer-card:hover::before {
+        transform: scaleX(1);
+    }
+    
+    .developer-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 4px solid #f8f9fa;
+        margin: 0 auto 20px;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .developer-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .online-indicator {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        width: 16px;
+        height: 16px;
+        background: #28a745;
+        border: 3px solid white;
+        border-radius: 50%;
+    }
+    
+    .developer-name {
+        font-size: 1.25rem;
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #333;
+    }
+    
+    .developer-title {
+        color: #6c757d;
+        margin-bottom: 15px;
+        font-size: 0.9rem;
+    }
+    
+    .developer-location {
+        color: #6c757d;
+        font-size: 0.85rem;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+    }
+    
+    .skill-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 20px;
+        justify-content: center;
+    }
+    
+    .skill-tag {
+        background: #e3f2fd;
+        color: #1976d2;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+    
+    .developer-stats {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 20px;
+        padding: 15px 0;
+        border-top: 1px solid #f1f3f4;
+        border-bottom: 1px solid #f1f3f4;
+    }
+    
+    .stat-item {
+        text-align: center;
+    }
+    
+    .stat-number {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #667eea;
+        display: block;
+    }
+    
+    .stat-label {
+        font-size: 0.75rem;
+        color: #6c757d;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .social-link {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #6c757d;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+    
+    .social-link:hover {
+        color: white;
+        text-decoration: none;
+        transform: translateY(-2px);
+    }
+    
+    .social-link.github:hover { background: #333; }
+    .social-link.linkedin:hover { background: #0077b5; }
+    .social-link.twitter:hover { background: #1da1f2; }
+    .social-link.website:hover { background: #667eea; }
+    
+    .developer-actions {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .action-btn {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        background: white;
+        color: #495057;
+        text-decoration: none;
+        text-align: center;
+        transition: all 0.3s ease;
+        font-size: 0.85rem;
+    }
+    
+    .action-btn:hover {
+        background: #667eea;
+        color: white;
+        border-color: #667eea;
+        text-decoration: none;
+        transform: translateY(-2px);
+    }
+    
+    .featured-developer {
+        border: 2px solid #ffc107;
+        position: relative;
+    }
+    
+    .featured-badge {
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #ffc107;
+        color: #333;
+        padding: 5px 15px;
+        border-radius: 15px;
+        font-size: 0.7rem;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+    
+    .community-stats {
+        background: #f8f9fa;
+        padding: 60px 0;
+    }
+    
+    .community-stat {
+        text-align: center;
+        padding: 20px;
+    }
+    
+    .community-number {
+        font-size: 3rem;
+        font-weight: bold;
+        color: #667eea;
+        margin-bottom: 10px;
+    }
+    
+    .community-label {
+        color: #6c757d;
+        font-weight: 600;
+    }
+    
+    .search-bar {
+        max-width: 500px;
+        margin: 0 auto 30px;
+        position: relative;
+    }
+    
+    .search-input {
+        width: 100%;
+        padding: 15px 50px 15px 20px;
+        border: 2px solid #e9ecef;
+        border-radius: 50px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+    
+    .search-input:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 20px rgba(102, 126, 234, 0.2);
+        outline: none;
+    }
+    
+    .search-btn {
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        color: white;
+        cursor: pointer;
+    }
+    
+    .load-more-section {
+        text-align: center;
+        padding: 40px 0;
+    }
+    
+    .floating-connect {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        box-shadow: 0 10px 30px rgba(40, 167, 69, 0.3);
+        animation: pulse-connect 2s infinite;
+        z-index: 1000;
+    }
+    
+    @keyframes pulse-connect {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+    }
+    
+    .filter-dropdown {
+        position: relative;
+        display: inline-block;
+    }
+    
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background: white;
+        min-width: 200px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        border-radius: 10px;
+        z-index: 1;
+        top: 100%;
+        left: 0;
+        margin-top: 5px;
+        padding: 10px 0;
+    }
+    
+    .dropdown-content.show {
+        display: block;
+    }
+    
+    .dropdown-item {
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+    
+    .dropdown-item:hover {
+        background: #f8f9fa;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Developers Hero -->
+<section class="developers-hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">
+                    Developer <span class="text-warning">Community</span>
+                </h1>
+                <p class="lead mb-4">
+                    Connect with talented developers from around the world. Find collaborators, 
+                    mentors, and build amazing projects together in our thriving community.
+                </p>
+                <div class="d-flex gap-3 flex-wrap">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'users:profile' %}" class="btn btn-warning btn-lg">
+                            <i class="fas fa-user-edit me-2"></i>Update Profile
+                        </a>
+                    {% else %}
+                        <a href="{% url 'users:register' %}" class="btn btn-warning btn-lg">
+                            <i class="fas fa-user-plus me-2"></i>Join Community
+                        </a>
+                    {% endif %}
+                    <a href="{% url 'core:projects' %}" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-project-diagram me-2"></i>View Projects
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="community-stats-preview">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="community-number text-warning">5K+</div>
+                            <div class="community-label text-light">Developers</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="community-number text-warning">15K+</div>
+                            <div class="community-label text-light">Projects</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="community-number text-warning">50+</div>
+                            <div class="community-label text-light">Countries</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Search & Filters -->
+<section class="search-filters">
+    <div class="container">
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="Search developers by name, skills, or location..." id="searchInput">
+            <button class="search-btn" id="searchBtn">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+        
+        <!-- Filter Chips -->
+        <div class="text-center">
+            <div class="filter-dropdown d-inline-block me-3">
+                <button class="filter-chip" id="skillsFilter">
+                    <i class="fas fa-code me-2"></i>Skills <i class="fas fa-chevron-down ms-2"></i>
+                </button>
+                <div class="dropdown-content" id="skillsDropdown">
+                    <div class="dropdown-item" data-skill="javascript">JavaScript</div>
+                    <div class="dropdown-item" data-skill="python">Python</div>
+                    <div class="dropdown-item" data-skill="react">React</div>
+                    <div class="dropdown-item" data-skill="django">Django</div>
+                    <div class="dropdown-item" data-skill="ai">AI/ML</div>
+                    <div class="dropdown-item" data-skill="blockchain">Blockchain</div>
+                    <div class="dropdown-item" data-skill="webgl">WebGL/3D</div>
+                </div>
+            </div>
+            
+            <div class="filter-dropdown d-inline-block me-3">
+                <button class="filter-chip" id="experienceFilter">
+                    <i class="fas fa-medal me-2"></i>Experience <i class="fas fa-chevron-down ms-2"></i>
+                </button>
+                <div class="dropdown-content" id="experienceDropdown">
+                    <div class="dropdown-item" data-experience="junior">Junior (0-2 years)</div>
+                    <div class="dropdown-item" data-experience="mid">Mid-level (3-5 years)</div>
+                    <div class="dropdown-item" data-experience="senior">Senior (5+ years)</div>
+                    <div class="dropdown-item" data-experience="lead">Lead/Architect</div>
+                </div>
+            </div>
+            
+            <div class="filter-dropdown d-inline-block me-3">
+                <button class="filter-chip" id="locationFilter">
+                    <i class="fas fa-map-marker-alt me-2"></i>Location <i class="fas fa-chevron-down ms-2"></i>
+                </button>
+                <div class="dropdown-content" id="locationDropdown">
+                    <div class="dropdown-item" data-location="us">United States</div>
+                    <div class="dropdown-item" data-location="ca">Canada</div>
+                    <div class="dropdown-item" data-location="uk">United Kingdom</div>
+                    <div class="dropdown-item" data-location="de">Germany</div>
+                    <div class="dropdown-item" data-location="in">India</div>
+                    <div class="dropdown-item" data-location="remote">Remote</div>
+                </div>
+            </div>
+            
+            <a href="#" class="filter-chip" data-filter="available">
+                <i class="fas fa-check-circle me-2"></i>Available for Work
+            </a>
+            <a href="#" class="filter-chip" data-filter="online">
+                <i class="fas fa-circle me-2 text-success"></i>Online Now
+            </a>
+            <a href="#" class="filter-chip" data-filter="featured">
+                <i class="fas fa-star me-2"></i>Featured
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Community Stats -->
+<section class="community-stats">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6">
+                <div class="community-stat">
+                    <div class="community-number">5,247</div>
+                    <div class="community-label">Active Developers</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="community-stat">
+                    <div class="community-number">15,832</div>
+                    <div class="community-label">Projects Created</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="community-stat">
+                    <div class="community-number">3,456</div>
+                    <div class="community-label">Collaborations</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="community-stat">
+                    <div class="community-number">52</div>
+                    <div class="community-label">Countries</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Developers Grid -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4" id="developersGrid">
+            <!-- Featured Developer 1 -->
+            <div class="col-lg-3 col-md-4 col-sm-6 developer-item" data-skills="ai python tensorflow" data-experience="senior" data-location="us">
+                <div class="developer-card featured-developer text-center">
+                    <div class="featured-badge">Featured</div>
+                    <div class="developer-avatar">
+                        <img src="/static/img/dev-sarah.jpg" alt="Sarah Johnson">
+                        <div class="online-indicator"></div>
+                    </div>
+                    <h5 class="developer-name">Sarah Johnson</h5>
+                    <p class="developer-title">AI Research Engineer</p>
+                    <div class="developer-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        San Francisco, CA
+                    </div>
+                    
+                    <div class="skill-tags">
+                        <span class="skill-tag">AI/ML</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">TensorFlow</span>
+                        <span class="skill-tag">PyTorch</span>
+                    </div>
+                    
+                    <div class="developer-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">127</span>
+                            <span class="stat-label">Projects</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">2.3K</span>
+                            <span class="stat-label">Followers</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">8.5</span>
+                            <span class="stat-label">Rating</span>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="#" class="social-link github">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-link linkedin">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="social-link twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link website">
+                            <i class="fas fa-globe"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="developer-actions">
+                        <a href="#" class="action-btn">
+                            <i class="fas fa-envelope me-1"></i>Message
+                        </a>
+                        <a href="#" class="action-btn">
+                            <i class="fas fa-user-plus me-1"></i>Follow
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Developer 2 -->
+            <div class="col-lg-3 col-md-4 col-sm-6 developer-item" data-skills="react javascript webgl" data-experience="mid" data-location="ca">
+                <div class="developer-card text-center">
+                    <div class="developer-avatar">
+                        <img src="/static/img/dev-mike.jpg" alt="Mike Chen">
+                        <div class="online-indicator"></div>
+                    </div>
+                    <h5 class="developer-name">Mike Chen</h5>
+                    <p class="developer-title">Frontend 3D Specialist</p>
+                    <div class="developer-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Toronto, Canada
+                    </div>
+                    
+                    <div class="skill-tags">
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">WebGL</span>
+                        <span class="skill-tag">Three.js</span>
+                        <span class="skill-tag">JavaScript</span>
+                    </div>
+                    
+                    <div class="developer-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">89</span>
+                            <span class="stat-label">Projects</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">1.8K</span>
+                            <span class="stat-label">Followers</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">9.2</span>
+                            <span class="stat-label">Rating</span>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="#" class="social-link github">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-link linkedin">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="social-link website">
+                            <i class="fas fa-globe"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="developer-actions">
+                        <a href="#" class="action-btn">
+                            <i class="fas fa-envelope me-1"></i>Message
+                        </a>
+                        <a href="#" class="action-btn">
+                            <i class="fas fa-user-plus me-1"></i>Follow
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Developer 3 -->
+            <div class="col-lg-3 col-md-4 col-sm-6 developer-item" data-skills="blockchain solidity web3" data-experience="senior" data-location="uk">
+                <div class="developer-card text-center">
+                    <div class="developer-avatar">
+                        <img src="/static/img/dev-emma.jpg" alt="Emma Rodriguez">
+                    </div>
+                    <h5 class="developer-name">Emma Rodriguez</h5>
+                    <p class="developer-title">Blockchain Architect</p>
+                    <div class="developer-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        London, UK
+                    </div>
+                    
+                    <div class="skill-tags">
+                        <span class="skill-tag">Blockchain</span>
+                        <span class="skill-tag">Solidity</span>
+                        <span class="skill-tag">Web3</span>
+                        <span class="skill-tag">DeFi</span>
+                    </div>
+                    
+                    <div class="developer-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">156</span>
+                            <span class="stat-label">Projects</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">3.1K</span>
+                            <span class="stat-label">Followers</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">9.7</span>
+                            <span class="stat-label">Rating</span>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="#" class="social-link github">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-link linkedin">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="social-link twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="developer-actions">
+                        <a href="#" class="action-btn">
+                            <i class="fas fa-envelope me-1"></i>Message
+                        </a>
+                        <a href="#" class="action-btn">
+                            <i class="fas fa-user-plus me-1"></i>Follow
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Developer 4 -->
+            <div class="col-lg-3 col-md-4 col-sm-6 developer-item" data-skills="django python backend" data-experience="mid" data-location="de">
+                <div class="developer-card text-center">
+                    <div class="developer-avatar">
+                        <img src="/static/img/dev-alex.jpg" alt="Alex Mueller">
+                        <div class="online-indicator"></div>
+                    </div>
+                    <h5 class="developer-name">Alex Mueller</h5>
+                    <p class="developer-title">Backend Engineer</p>
+                    <div class="developer-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Berlin, Germany
+                    </div>
+                    
+                    <div class="skill-tags">
+                        <span class="skill-tag">Django</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">PostgreSQL</span>
+                        <span class="skill-tag">Docker</span>
+                    </div>
+                    
+                    <div class="developer-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">74</span>
+                            <span class="stat-label">Projects</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">1.2K</span>
+                            <span class="stat-label">Followers</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">8.9</span>
+                            <span class="stat-label">Rating</span>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="#" class="social-link github">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-link linkedin">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="developer-actions">
+                        <a href="#" class="action-btn">
+                            <i class="fas fa-envelope me-1"></i>Message
+                        </a>
+                        <a href="#" class="action-btn">
+                            <i class="fas fa-user-plus me-1"></i>Follow
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- More developers would be dynamically loaded here -->
+            <div class="col-lg-3 col-md-4 col-sm-6 developer-item" data-skills="react native mobile" data-experience="junior" data-location="in">
+                <div class="developer-card text-center">
+                    <div class="developer-avatar">
+                        <img src="/static/img/dev-priya.jpg" alt="Priya Sharma">
+                        <div class="online-indicator"></div>
+                    </div>
+                    <h5 class="developer-name">Priya Sharma</h5>
+                    <p class="developer-title">Mobile App Developer</p>
+                    <div class="developer-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Bangalore, India
+                    </div>
+                    
+                    <div class="skill-tags">
+                        <span class="skill-tag">React Native</span>
+                        <span class="skill-tag">Flutter</span>
+                        <span class="skill-tag">iOS</span>
+                        <span class="skill-tag">Android</span>
+                    </div>
+                    
+                    <div class="developer-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">42</span>
+                            <span class="stat-label">Projects</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">856</span>
+                            <span class="stat-label">Followers</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">8.3</span>
+                            <span class="stat-label">Rating</span>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="#" class="social-link github">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-link linkedin">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="social-link twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="developer-actions">
+                        <a href="#" class="action-btn">
+                            <i class="fas fa-envelope me-1"></i>Message
+                        </a>
+                        <a href="#" class="action-btn">
+                            <i class="fas fa-user-plus me-1"></i>Follow
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Continue with more developers... -->
+            <div class="col-lg-3 col-md-4 col-sm-6 developer-item" data-skills="nodejs typescript api" data-experience="senior" data-location="remote">
+                <div class="developer-card text-center">
+                    <div class="developer-avatar">
+                        <img src="/static/img/dev-carlos.jpg" alt="Carlos Rivera">
+                    </div>
+                    <h5 class="developer-name">Carlos Rivera</h5>
+                    <p class="developer-title">Full-Stack Architect</p>
+                    <div class="developer-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Remote Worldwide
+                    </div>
+                    
+                    <div class="skill-tags">
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">TypeScript</span>
+                        <span class="skill-tag">GraphQL</span>
+                        <span class="skill-tag">AWS</span>
+                    </div>
+                    
+                    <div class="developer-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">203</span>
+                            <span class="stat-label">Projects</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">4.5K</span>
+                            <span class="stat-label">Followers</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">9.4</span>
+                            <span class="stat-label">Rating</span>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="#" class="social-link github">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-link linkedin">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="social-link website">
+                            <i class="fas fa-globe"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="developer-actions">
+                        <a href="#" class="action-btn">
+                            <i class="fas fa-envelope me-1"></i>Message
+                        </a>
+                        <a href="#" class="action-btn">
+                            <i class="fas fa-user-plus me-1"></i>Follow
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Load More Section -->
+        <div class="load-more-section">
+            <button class="btn btn-outline-primary btn-lg" id="loadMoreBtn">
+                <i class="fas fa-users me-2"></i>Load More Developers
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- Floating Connect Button -->
+<div class="floating-connect" title="Start Networking">
+    <i class="fas fa-users"></i>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
+    const developerItems = document.querySelectorAll('.developer-item');
+    
+    function performSearch() {
+        const searchTerm = searchInput.value.toLowerCase();
+        
+        developerItems.forEach(item => {
+            const name = item.querySelector('.developer-name').textContent.toLowerCase();
+            const title = item.querySelector('.developer-title').textContent.toLowerCase();
+            const skills = item.dataset.skills.toLowerCase();
+            const location = item.querySelector('.developer-location').textContent.toLowerCase();
+            
+            const matches = name.includes(searchTerm) || 
+                          title.includes(searchTerm) || 
+                          skills.includes(searchTerm) ||
+                          location.includes(searchTerm);
+            
+            if (matches || searchTerm === '') {
+                item.style.display = 'block';
+                setTimeout(() => {
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, 100);
+            } else {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    item.style.display = 'none';
+                }, 300);
+            }
+        });
+    }
+    
+    searchBtn.addEventListener('click', performSearch);
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            performSearch();
+        }
+    });
+    
+    // Real-time search
+    searchInput.addEventListener('input', function() {
+        clearTimeout(this.searchTimeout);
+        this.searchTimeout = setTimeout(performSearch, 300);
+    });
+    
+    // Filter dropdowns
+    const filterButtons = document.querySelectorAll('[id$="Filter"]');
+    
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const dropdownId = this.id.replace('Filter', 'Dropdown');
+            const dropdown = document.getElementById(dropdownId);
+            
+            // Close other dropdowns
+            document.querySelectorAll('.dropdown-content').forEach(dd => {
+                if (dd.id !== dropdownId) {
+                    dd.classList.remove('show');
+                }
+            });
+            
+            dropdown.classList.toggle('show');
+        });
+    });
+    
+    // Filter by dropdown selections
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('dropdown-item')) {
+            const filterType = e.target.closest('.dropdown-content').id.replace('Dropdown', '');
+            const filterValue = e.target.dataset[filterType.replace('Filter', '').toLowerCase()];
+            
+            filterDevelopers(filterType.toLowerCase().replace('filter', ''), filterValue);
+            
+            // Close dropdown
+            e.target.closest('.dropdown-content').classList.remove('show');
+        }
+        
+        // Close dropdowns when clicking outside
+        if (!e.target.closest('.filter-dropdown')) {
+            document.querySelectorAll('.dropdown-content').forEach(dd => {
+                dd.classList.remove('show');
+            });
+        }
+    });
+    
+    function filterDevelopers(filterType, filterValue) {
+        developerItems.forEach(item => {
+            let shouldShow = true;
+            
+            if (filterType === 'skill') {
+                shouldShow = item.dataset.skills.includes(filterValue);
+            } else if (filterType === 'experience') {
+                shouldShow = item.dataset.experience === filterValue;
+            } else if (filterType === 'location') {
+                shouldShow = item.dataset.location === filterValue;
+            }
+            
+            if (shouldShow) {
+                item.style.display = 'block';
+                setTimeout(() => {
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, 100);
+            } else {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    item.style.display = 'none';
+                }, 300);
+            }
+        });
+    }
+    
+    // Action buttons
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.action-btn')) {
+            const btn = e.target.closest('.action-btn');
+            const action = btn.textContent.trim().toLowerCase();
+            
+            if (action.includes('message')) {
+                alert('Messaging feature coming soon!');
+            } else if (action.includes('follow')) {
+                btn.innerHTML = '<i class="fas fa-check me-1"></i>Following';
+                btn.style.background = '#28a745';
+                btn.style.color = 'white';
+                btn.style.borderColor = '#28a745';
+            }
+        }
+    });
+    
+    // Load more functionality
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    loadMoreBtn.addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Loading...';
+        this.disabled = true;
+        
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-users me-2"></i>Load More Developers';
+            this.disabled = false;
+            alert('More developers loaded! (In development)');
+        }, 2000);
+    });
+    
+    // Floating connect button
+    const floatingConnect = document.querySelector('.floating-connect');
+    floatingConnect.addEventListener('click', function() {
+        alert('Network with developers! Feature coming soon! 🚀');
+    });
+    
+    // Intersection Observer for animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const developerCards = document.querySelectorAll('.developer-card');
+    const cardObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }, index * 100);
+            }
+        });
+    }, observerOptions);
+    
+    developerCards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        card.style.transition = 'all 0.6s ease';
+        cardObserver.observe(card);
+    });
+    
+    // Initialize developer items for animations
+    developerItems.forEach(item => {
+        item.style.transition = 'all 0.3s ease';
+    });
+});
+</script>
+{% endblock %}
