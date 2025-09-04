@@ -1,0 +1,352 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="h-full scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title|default:"API Documentation - DevCrown" }}</title>
+    <meta name="description" content="{{ meta_description|default:'Complete API documentation for DevCrown platform' }}">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #111827;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #a78bfa, #f472b6, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-style {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+        }
+
+        .code-block {
+            font-family: 'Fira Code', monospace;
+            background: #1f2937;
+            border: 1px solid #374151;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+
+<body class="h-full bg-gray-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-gray-900/95 backdrop-blur-sm border-b border-gray-800 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-8">
+                    <a href="{% url 'core:index' %}" class="logo-style text-2xl font-bold text-white hover:text-blue-400 transition-colors">
+                        DevCrown
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-16">
+        <!-- Hero Section -->
+        <section class="py-20 bg-gradient-to-r from-purple-900/40 to-blue-900/40">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-4xl sm:text-5xl font-bold text-white mb-6">
+                    API <span class="text-gradient">Documentation</span>
+                </h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Complete guide to integrating DevCrown AI agents into your applications
+                </p>
+            </div>
+        </section>
+
+        <!-- Documentation Content -->
+        <section class="py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                    <!-- Sidebar Navigation -->
+                    <div class="lg:col-span-1">
+                        <div class="bg-gray-800/50 p-6 rounded-2xl border border-gray-700 sticky top-24">
+                            <h3 class="text-lg font-semibold text-white mb-4">Documentation</h3>
+                            <nav class="space-y-2">
+                                <a href="#getting-started" class="block text-gray-400 hover:text-purple-400 transition-colors">
+                                    Getting Started
+                                </a>
+                                <a href="#authentication" class="block text-gray-400 hover:text-purple-400 transition-colors">
+                                    Authentication
+                                </a>
+                                <a href="#agents" class="block text-gray-400 hover:text-purple-400 transition-colors">
+                                    AI Agents
+                                </a>
+                                <a href="#chat" class="block text-gray-400 hover:text-purple-400 transition-colors">
+                                    Chat API
+                                </a>
+                                <a href="#websocket" class="block text-gray-400 hover:text-purple-400 transition-colors">
+                                    WebSocket
+                                </a>
+                                <a href="#examples" class="block text-gray-400 hover:text-purple-400 transition-colors">
+                                    Examples
+                                </a>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <!-- Main Documentation -->
+                    <div class="lg:col-span-3 space-y-12">
+                        <!-- Getting Started -->
+                        <div id="getting-started" class="bg-gray-800/30 p-8 rounded-2xl border border-gray-700">
+                            <h2 class="text-2xl font-bold text-white mb-4">
+                                <i class="fas fa-rocket text-purple-400 mr-2"></i>
+                                Getting Started
+                            </h2>
+                            <p class="text-gray-400 mb-6">
+                                Welcome to the DevCrown API! Our RESTful API allows you to integrate 
+                                advanced AI agents into your applications with ease.
+                            </p>
+                            
+                            <h3 class="text-lg font-semibold text-white mb-3">Base URL</h3>
+                            <div class="code-block text-green-400 mb-6">
+                                https://api.devcrown.com/v1/
+                            </div>
+                            
+                            <h3 class="text-lg font-semibold text-white mb-3">Quick Start</h3>
+                            <div class="code-block text-gray-300">
+<pre>curl -X GET "https://api.devcrown.com/v1/agents/" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json"</pre>
+                            </div>
+                        </div>
+
+                        <!-- Authentication -->
+                        <div id="authentication" class="bg-gray-800/30 p-8 rounded-2xl border border-gray-700">
+                            <h2 class="text-2xl font-bold text-white mb-4">
+                                <i class="fas fa-key text-blue-400 mr-2"></i>
+                                Authentication
+                            </h2>
+                            <p class="text-gray-400 mb-6">
+                                DevCrown API uses API keys for authentication. Include your API key 
+                                in the Authorization header of all requests.
+                            </p>
+                            
+                            <h3 class="text-lg font-semibold text-white mb-3">Header Format</h3>
+                            <div class="code-block text-gray-300 mb-6">
+Authorization: Bearer YOUR_API_KEY
+                            </div>
+                            
+                            <div class="bg-yellow-900/20 border border-yellow-600 p-4 rounded-lg">
+                                <p class="text-yellow-300">
+                                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                                    Keep your API key secure and never expose it in client-side code.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- AI Agents -->
+                        <div id="agents" class="bg-gray-800/30 p-8 rounded-2xl border border-gray-700">
+                            <h2 class="text-2xl font-bold text-white mb-4">
+                                <i class="fas fa-robot text-green-400 mr-2"></i>
+                                AI Agents
+                            </h2>
+                            <p class="text-gray-400 mb-6">
+                                Access and interact with our 18 specialized AI agents, each with 
+                                unique personalities and capabilities.
+                            </p>
+                            
+                            <h3 class="text-lg font-semibold text-white mb-3">List All Agents</h3>
+                            <div class="code-block text-gray-300 mb-6">
+<pre>GET /agents/
+
+Response:
+{
+  "agents": [
+    {
+      "id": 1,
+      "name": "Aria",
+      "type": "assistant",
+      "description": "Helpful, friendly assistant",
+      "status": "active"
+    }
+  ]
+}</pre>
+                            </div>
+                            
+                            <h3 class="text-lg font-semibold text-white mb-3">Get Agent Details</h3>
+                            <div class="code-block text-gray-300">
+<pre>GET /agents/{agent_id}/
+
+Response:
+{
+  "id": 1,
+  "name": "Aria",
+  "type": "assistant",
+  "capabilities": ["general", "helpful"],
+  "personality": "friendly",
+  "status": "active"
+}</pre>
+                            </div>
+                        </div>
+
+                        <!-- Chat API -->
+                        <div id="chat" class="bg-gray-800/30 p-8 rounded-2xl border border-gray-700">
+                            <h2 class="text-2xl font-bold text-white mb-4">
+                                <i class="fas fa-comments text-yellow-400 mr-2"></i>
+                                Chat API
+                            </h2>
+                            <p class="text-gray-400 mb-6">
+                                Send messages to AI agents and receive intelligent responses with 
+                                context awareness and memory retention.
+                            </p>
+                            
+                            <h3 class="text-lg font-semibold text-white mb-3">Send Message</h3>
+                            <div class="code-block text-gray-300 mb-6">
+<pre>POST /agents/{agent_id}/chat/
+
+Request:
+{
+  "message": "Hello, can you help me with Python?",
+  "conversation_id": "optional-conversation-id"
+}
+
+Response:
+{
+  "response": "Hi! I'd be happy to help you with Python...",
+  "agent": "Aria",
+  "conversation_id": "conv_123",
+  "timestamp": "2024-01-15T10:30:00Z"
+}</pre>
+                            </div>
+                        </div>
+
+                        <!-- WebSocket -->
+                        <div id="websocket" class="bg-gray-800/30 p-8 rounded-2xl border border-gray-700">
+                            <h2 class="text-2xl font-bold text-white mb-4">
+                                <i class="fas fa-satellite-dish text-red-400 mr-2"></i>
+                                WebSocket Connection
+                            </h2>
+                            <p class="text-gray-400 mb-6">
+                                For real-time conversations, use our WebSocket API for instant 
+                                bidirectional communication with AI agents.
+                            </p>
+                            
+                            <h3 class="text-lg font-semibold text-white mb-3">Connection URL</h3>
+                            <div class="code-block text-green-400 mb-6">
+                                wss://api.devcrown.com/ws/chat/{agent_id}/
+                            </div>
+                            
+                            <h3 class="text-lg font-semibold text-white mb-3">Message Format</h3>
+                            <div class="code-block text-gray-300">
+<pre>// Send message
+{
+  "type": "message",
+  "content": "Hello, AI agent!",
+  "conversation_id": "conv_123"
+}
+
+// Receive response
+{
+  "type": "response",
+  "content": "Hello! How can I help you today?",
+  "agent": "Aria",
+  "timestamp": "2024-01-15T10:30:00Z"
+}</pre>
+                            </div>
+                        </div>
+
+                        <!-- Examples -->
+                        <div id="examples" class="bg-gray-800/30 p-8 rounded-2xl border border-gray-700">
+                            <h2 class="text-2xl font-bold text-white mb-4">
+                                <i class="fas fa-code text-indigo-400 mr-2"></i>
+                                Code Examples
+                            </h2>
+                            
+                            <h3 class="text-lg font-semibold text-white mb-3">Python Example</h3>
+                            <div class="code-block text-gray-300 mb-6">
+<pre>import requests
+
+API_KEY = "your_api_key_here"
+BASE_URL = "https://api.devcrown.com/v1"
+
+headers = {
+    "Authorization": f"Bearer {API_KEY}",
+    "Content-Type": "application/json"
+}
+
+# Send a message to Aria
+response = requests.post(
+    f"{BASE_URL}/agents/1/chat/",
+    headers=headers,
+    json={"message": "Hello, can you help me?"}
+)
+
+print(response.json())</pre>
+                            </div>
+                            
+                            <h3 class="text-lg font-semibold text-white mb-3">JavaScript Example</h3>
+                            <div class="code-block text-gray-300">
+<pre>const API_KEY = 'your_api_key_here';
+const BASE_URL = 'https://api.devcrown.com/v1';
+
+const chatWithAgent = async (agentId, message) => {
+  const response = await fetch(`${BASE_URL}/agents/${agentId}/chat/`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ message })
+  });
+  
+  return await response.json();
+};
+
+// Usage
+chatWithAgent(1, 'Hello!').then(console.log);</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="text-center text-gray-400">
+                <p>&copy; 2024 DevCrown. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

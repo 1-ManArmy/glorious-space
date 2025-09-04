@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas | Creative Solutions for Modern Teams</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'brand-blue': '#1a73e8',
+                        'brand-dark': '#202124',
+                        'brand-gray': '#f1f3f4',
+                        'brand-light-gray': '#e8eaed',
+                        'dark-bg': '#131314',
+                        'dark-card': '#1e1f20',
+                        'dark-border': '#3c4043',
+                        'dark-text-primary': '#e8eaed',
+                        'dark-text-secondary': '#969ba1',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* A little extra polish */
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 50%;
+            background-color: #1a73e8;
+            transition: all 0.3s ease-in-out;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .cta-button {
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+
+<body class="font-inter bg-dark-bg text-dark-text-primary antialiased">
+
+    <!-- Header -->
+
+    <main>
+        <!-- Hero Section -->
+
+        <!-- Updates Section -->
+        <section id="updates" class="py-20 bg-dark-bg">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-dark-text-primary">Latest Updates</h2>
+                    <p class="text-dark-text-secondary mt-2">Discover what's new and improved in the Canvas platform.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Update Card 1 -->
+                    <div
+                        class="bg-dark-card rounded-xl shadow-md overflow-hidden hover:shadow-2xl transition-shadow duration-300 border border-dark-border">
+                        <img class="h-48 w-full object-cover"
+                            src="https://placehold.co/600x400/1e1f20/e8eaed?text=Feature+Launch"
+                            alt="New feature illustration">
+                        <div class="p-6">
+                            <div class="uppercase tracking-wide text-sm text-brand-blue font-semibold">New Feature</div>
+                            <a href="#"
+                                class="block mt-1 text-lg leading-tight font-medium text-dark-text-primary hover:underline">Introducing
+                                Real-Time Collaboration</a>
+                            <p class="mt-2 text-dark-text-secondary">Work together with your team on the same canvas, at
+                                the same time. See changes live and leave feedback instantly.</p>
+                        </div>
+                    </div>
+                    <!-- Update Card 2 -->
+                    <div
+                        class="bg-dark-card rounded-xl shadow-md overflow-hidden hover:shadow-2xl transition-shadow duration-300 border border-dark-border">
+                        <img class="h-48 w-full object-cover"
+                            src="https://placehold.co/600x400/1e1f20/1a73e8?text=Integration"
+                            alt="Integration illustration">
+                        <div class="p-6">
+                            <div class="uppercase tracking-wide text-sm text-brand-blue font-semibold">Integration</div>
+                            <a href="#"
+                                class="block mt-1 text-lg leading-tight font-medium text-dark-text-primary hover:underline">Slack
+                                & Teams Integration Now Live</a>
+                            <p class="mt-2 text-dark-text-secondary">Receive project notifications and share your
+                                creations directly within your favorite communication tools.</p>
+                        </div>
+                    </div>
+                    <!-- Update Card 3 -->
+                    <div
+                        class="bg-dark-card rounded-xl shadow-md overflow-hidden hover:shadow-2xl transition-shadow duration-300 border border-dark-border">
+                        <img class="h-48 w-full object-cover"
+                            src="https://placehold.co/600x400/1e1f20/969ba1?text=Performance"
+                            alt="Performance update illustration">
+                        <div class="p-6">
+                            <div class="uppercase tracking-wide text-sm text-brand-blue font-semibold">Performance</div>
+                            <a href="#"
+                                class="block mt-1 text-lg leading-tight font-medium text-dark-text-primary hover:underline">Canvas
+                                is Now 50% Faster</a>
+                            <p class="mt-2 text-dark-text-secondary">We've rebuilt our rendering engine from the ground
+                                up to provide a smoother and more responsive experience.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- News Section -->
+        <section id="news" class="py-20 bg-dark-card">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-dark-text-primary">Canvas in the News</h2>
+                    <p class="text-dark-text-secondary mt-2">See what the world is saying about us.</p>
+                </div>
+                <div class="max-w-4xl mx-auto space-y-8">
+                    <!-- News Item 1 -->
+                    <a href="#"
+                        class="flex flex-col md:flex-row items-center bg-dark-bg rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 p-6 border border-dark-border">
+                        <div class="md:w-1/4 mb-4 md:mb-0 md:mr-6">
+                            <p class="font-bold text-2xl text-brand-blue">TechWeekly</p>
+                        </div>
+                        <div class="md:w-3/4">
+                            <h3 class="font-semibold text-lg text-dark-text-primary">"The collaboration tool that's
+                                actually a joy to use. Canvas is a game changer for creative agencies."</h3>
+                        </div>
+                    </a>
+                    <!-- News Item 2 -->
+                    <a href="#"
+                        class="flex flex-col md:flex-row items-center bg-dark-bg rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 p-6 border border-dark-border">
+                        <div class="md:w-1/4 mb-4 md:mb-0 md:mr-6">
+                            <p class="font-bold text-2xl text-dark-text-secondary">DesignHub</p>
+                        </div>
+                        <div class="md:w-3/4">
+                            <h3 class="font-semibold text-lg text-dark-text-primary">"We're impressed by the intuitive
+                                interface and powerful feature set. It has become essential to our workflow."</h3>
+                        </div>
+                    </a>
+                    <!-- News Item 3 -->
+                    <a href="#"
+                        class="flex flex-col md:flex-row items-center bg-dark-bg rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 p-6 border border-dark-border">
+                        <div class="md:w-1/4 mb-4 md:mb-0 md:mr-6">
+                            <p class="font-bold text-2xl text-red-500">StartupDaily</p>
+                        </div>
+                        <div class="md:w-3/4">
+                            <h3 class="font-semibold text-lg text-dark-text-primary">"One of the fastest-growing SaaS
+                                companies to watch this year. Canvas is solving a real problem for teams."</h3>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>

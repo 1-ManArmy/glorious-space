@@ -1,920 +1,400 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔒 Privacy Policy - Glorious Space Kingdom</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>{% block title %}Privacy Policy - DevCrown{% endblock %}</title>
+    <meta name="description" content="Learn how DevCrown protects your privacy and handles your data securely. Comprehensive privacy policy for our developer platform.">
+
+    <!-- SEO Meta Tags -->
+    <meta property="og:title" content="Privacy Policy - DevCrown">
+    <meta property="og:description" content="Your privacy and data protection on DevCrown platform">
+    <meta property="og:image" content="{% load static %}{% static 'img/og-image.jpg' %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Favicon -->
+    {% load static %}
+    <link rel="icon" href="{% static 'img/crown-favicon.ico' %}">
+    <link rel="apple-touch-icon" href="{% static 'img/crown-favicon.ico' %}">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            color: #333;
-            line-height: 1.8;
-        }
-
-        .animated-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7, #dda0dd);
-            background-size: 300% 300%;
-            animation: gradientShift 20s ease infinite;
-            z-index: -2;
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .floating-particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        .particle {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            animation: float 8s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-30px) rotate(180deg); }
-        }
-
-        .navbar {
-            background: rgba(255, 255, 255, 0.1);
-            -webkit-backdrop-filter: blur(20px);
-            backdrop-filter: blur(20px);
-            padding: 15px 0;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: white;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
-
-        .logo-icon {
-            font-size: 1.5rem;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            padding: 8px 15px;
-            border-radius: 20px;
-        }
-
-        .nav-links a:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .main-content {
-            margin-top: 80px;
-            padding: 60px 20px;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .document-container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 25px;
-            padding: 50px 40px;
-            -webkit-backdrop-filter: blur(20px);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            animation: slideUp 1s ease-out;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
             }
         }
-
-        .document-header {
-            text-align: center;
-            margin-bottom: 50px;
-            padding-bottom: 30px;
-            border-bottom: 2px solid #e0e0e0;
-        }
-
-        .document-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        .last-updated {
-            color: #666;
-            font-size: 1rem;
-            background: rgba(0, 123, 255, 0.1);
-            padding: 10px 20px;
-            border-radius: 20px;
-            display: inline-block;
-        }
-
-        .table-of-contents {
-            background: rgba(0, 123, 255, 0.05);
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 40px;
-            border-left: 5px solid #007bff;
-        }
-
-        .toc-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .toc-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .toc-list li {
-            margin-bottom: 8px;
-        }
-
-        .toc-list a {
-            color: #007bff;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            padding: 5px 10px;
-            border-radius: 8px;
-            display: block;
-        }
-
-        .toc-list a:hover {
-            background: rgba(0, 123, 255, 0.1);
-            transform: translateX(10px);
-        }
-
-        .section {
-            margin-bottom: 40px;
-            scroll-margin-top: 100px;
-        }
-
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid rgba(0, 123, 255, 0.2);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .section-content {
-            color: #555;
-            line-height: 1.8;
-        }
-
-        .section-content p {
-            margin-bottom: 15px;
-        }
-
-        .section-content ul,
-        .section-content ol {
-            margin: 15px 0;
-            padding-left: 25px;
-        }
-
-        .section-content li {
-            margin-bottom: 8px;
-        }
-
-        .highlight-box {
-            background: rgba(40, 167, 69, 0.1);
-            border: 1px solid rgba(40, 167, 69, 0.3);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-            border-left: 5px solid #28a745;
-        }
-
-        .warning-box {
-            background: rgba(255, 193, 7, 0.1);
-            border: 1px solid rgba(255, 193, 7, 0.3);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-            border-left: 5px solid #ffc107;
-        }
-
-        .info-box {
-            background: rgba(23, 162, 184, 0.1);
-            border: 1px solid rgba(23, 162, 184, 0.3);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-            border-left: 5px solid #17a2b8;
-        }
-
-        .contact-section {
-            background: linear-gradient(45deg, rgba(0, 123, 255, 0.1), rgba(0, 86, 179, 0.1));
-            border-radius: 20px;
-            padding: 30px;
-            margin-top: 50px;
-            text-align: center;
-        }
-
-        .contact-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 15px;
-        }
-
-        .contact-info {
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        .contact-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 12px 25px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(45deg, #007bff, #0056b3);
-            color: white;
-            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
-        }
-
-        .btn-secondary {
-            background: rgba(108, 117, 125, 0.1);
-            color: #6c757d;
-            border: 1px solid #6c757d;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(45deg, #007bff, #0056b3);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-            z-index: 1000;
-        }
-
-        .back-to-top:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 123, 255, 0.4);
-        }
-
-        .effective-date {
-            font-style: italic;
-            color: #666;
-            margin-bottom: 30px;
-            padding: 15px;
-            background: rgba(0, 123, 255, 0.05);
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .main-content {
-                padding: 40px 15px;
-            }
-
-            .document-container {
-                padding: 30px 20px;
-            }
-
-            .document-title {
-                font-size: 2rem;
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .contact-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .btn {
-                width: 100%;
-                max-width: 250px;
-                justify-content: center;
-            }
-
-            .back-to-top {
-                bottom: 20px;
-                right: 20px;
-            }
-        }
-    </style>
+    </script>
 </head>
-<body>
-    <div class="animated-bg"></div>
-    <div class="floating-particles"></div>
 
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="/" class="logo">
-                <span class="logo-icon">🏰</span>
-                Glorious Space
-            </a>
-            <ul class="nav-links">
-                <li><a href="/">Home</a></li>
-                <li><a href="/pricing">Pricing</a></li>
-                <li><a href="/docs">Docs</a></li>
-                <li><a href="/support">Support</a></li>
-                <li><a href="/legal">Legal</a></li>
-            </ul>
-        </div>
-    </nav>
+<body class="h-full bg-gray-900 text-white">
+    <div class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black py-16">
+        <!-- Navigation -->
+        <nav class="bg-gray-800/50 backdrop-blur-sm border-b border-gray-700 sticky top-0 z-40 mb-8">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16">
+                    <div class="flex items-center">
+                        <a href="{% url 'core:home' %}" class="flex items-center space-x-2 text-white hover:text-blue-400 transition-colors">
+                            <i class="fas fa-crown text-yellow-400"></i>
+                            <span class="font-bold text-xl">DevCrown</span>
+                        </a>
+                    </div>
+                    <div class="flex items-center space-x-6">
+                        <a href="{% url 'core:home' %}" class="text-gray-300 hover:text-white transition-colors">Home</a>
+                        <a href="{% url 'core:blog_index' %}" class="text-gray-300 hover:text-white transition-colors">Blog</a>
+                        <a href="{% url 'core:privacy_policy' %}" class="text-blue-400 font-semibold">Privacy</a>
+                        <a href="{% url 'core:terms_of_service' %}" class="text-gray-300 hover:text-white transition-colors">Terms</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
 
-    <main class="main-content">
-        <div class="document-container">
-            <div class="document-header">
-                <h1 class="document-title">
-                    <i class="fas fa-shield-alt"></i>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Header -->
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4">
                     Privacy Policy
                 </h1>
-                <div class="last-updated">Last Updated: January 15, 2024</div>
-            </div>
-
-            <div class="effective-date">
-                This Privacy Policy is effective as of January 15, 2024, and applies to all users of the Glorious Space Kingdom platform and services.
-            </div>
-
-            <div class="table-of-contents">
-                <h2 class="toc-title">
-                    <i class="fas fa-list"></i>
-                    Table of Contents
-                </h2>
-                <ul class="toc-list">
-                    <li><a href="#introduction">1. Introduction</a></li>
-                    <li><a href="#information-collection">2. Information We Collect</a></li>
-                    <li><a href="#information-use">3. How We Use Your Information</a></li>
-                    <li><a href="#information-sharing">4. Information Sharing and Disclosure</a></li>
-                    <li><a href="#data-security">5. Data Security</a></li>
-                    <li><a href="#your-rights">6. Your Rights and Choices</a></li>
-                    <li><a href="#cookies">7. Cookies and Tracking Technologies</a></li>
-                    <li><a href="#international-transfers">8. International Data Transfers</a></li>
-                    <li><a href="#children-privacy">9. Children's Privacy</a></li>
-                    <li><a href="#policy-changes">10. Changes to This Policy</a></li>
-                    <li><a href="#contact">11. Contact Information</a></li>
-                </ul>
-            </div>
-
-            <section id="introduction" class="section">
-                <h2 class="section-title">
-                    <i class="fas fa-info-circle"></i>
-                    1. Introduction
-                </h2>
-                <div class="section-content">
-                    <p>
-                        Welcome to Glorious Space Kingdom ("we," "our," or "us"). We are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our AI agent platform, website, mobile applications, and related services (collectively, the "Service").
-                    </p>
-                    <p>
-                        By accessing or using our Service, you agree to the collection and use of information in accordance with this Privacy Policy. If you do not agree with the terms of this Privacy Policy, please do not use our Service.
-                    </p>
-                    <div class="highlight-box">
-                        <strong>Key Principles:</strong>
-                        <ul>
-                            <li>We only collect information necessary to provide and improve our services</li>
-                            <li>We never sell your personal data to third parties</li>
-                            <li>We use industry-standard security measures to protect your information</li>
-                            <li>You have control over your data and can request its deletion at any time</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-            <section id="information-collection" class="section">
-                <h2 class="section-title">
-                    <i class="fas fa-database"></i>
-                    2. Information We Collect
-                </h2>
-                <div class="section-content">
-                    <p>We collect several types of information to provide and improve our Service:</p>
-                    
-                    <h3>2.1 Personal Information</h3>
-                    <ul>
-                        <li><strong>Account Information:</strong> Name, email address, username, password</li>
-                        <li><strong>Profile Information:</strong> Profile picture, bio, preferences</li>
-                        <li><strong>Payment Information:</strong> Billing address, payment method details (processed securely by our payment processors)</li>
-                        <li><strong>Contact Information:</strong> When you contact us for support</li>
-                    </ul>
-
-                    <h3>2.2 Usage Information</h3>
-                    <ul>
-                        <li><strong>Conversation Data:</strong> Messages sent to and received from AI agents</li>
-                        <li><strong>Usage Patterns:</strong> Features used, time spent, interaction frequency</li>
-                        <li><strong>Device Information:</strong> IP address, browser type, operating system</li>
-                        <li><strong>Performance Data:</strong> Error logs, crash reports, response times</li>
-                    </ul>
-
-                    <h3>2.3 Automatically Collected Information</h3>
-                    <ul>
-                        <li><strong>Log Data:</strong> Server logs, access times, pages viewed</li>
-                        <li><strong>Cookies and Tracking:</strong> Session cookies, analytics cookies, preference cookies</li>
-                        <li><strong>Location Data:</strong> General location based on IP address (not precise location)</li>
-                    </ul>
-
-                    <div class="info-box">
-                        <strong>Note:</strong> We do not access your device's microphone, camera, or contacts without explicit permission. Any voice data is processed locally on your device when possible.
-                    </div>
-                </div>
-            </section>
-
-            <section id="information-use" class="section">
-                <h2 class="section-title">
-                    <i class="fas fa-cogs"></i>
-                    3. How We Use Your Information
-                </h2>
-                <div class="section-content">
-                    <p>We use the collected information for the following purposes:</p>
-
-                    <h3>3.1 Service Provision</h3>
-                    <ul>
-                        <li>Provide access to AI agents and platform features</li>
-                        <li>Process and respond to your requests and conversations</li>
-                        <li>Maintain and improve AI model performance</li>
-                        <li>Personalize your experience and recommendations</li>
-                    </ul>
-
-                    <h3>3.2 Account Management</h3>
-                    <ul>
-                        <li>Create and manage your account</li>
-                        <li>Process payments and manage subscriptions</li>
-                        <li>Provide customer support and respond to inquiries</li>
-                        <li>Send important account notifications</li>
-                    </ul>
-
-                    <h3>3.3 Platform Improvement</h3>
-                    <ul>
-                        <li>Analyze usage patterns to improve our services</li>
-                        <li>Develop new features and AI capabilities</li>
-                        <li>Monitor and ensure platform security</li>
-                        <li>Conduct research and analytics (in aggregated, anonymized form)</li>
-                    </ul>
-
-                    <h3>3.4 Legal and Security</h3>
-                    <ul>
-                        <li>Comply with legal obligations and regulations</li>
-                        <li>Protect against fraud, abuse, and security threats</li>
-                        <li>Enforce our Terms of Service</li>
-                        <li>Respond to legal requests and prevent harm</li>
-                    </ul>
-
-                    <div class="warning-box">
-                        <strong>Important:</strong> We use your conversation data to improve our AI models, but this is done in a way that removes personally identifiable information. You can opt out of this in your privacy settings.
-                    </div>
-                </div>
-            </section>
-
-            <section id="information-sharing" class="section">
-                <h2 class="section-title">
-                    <i class="fas fa-share-alt"></i>
-                    4. Information Sharing and Disclosure
-                </h2>
-                <div class="section-content">
-                    <p>We do not sell your personal information. We may share your information in the following limited circumstances:</p>
-
-                    <h3>4.1 Service Providers</h3>
-                    <p>We work with trusted third-party service providers who help us operate our platform:</p>
-                    <ul>
-                        <li><strong>Cloud Infrastructure:</strong> AWS, Google Cloud for hosting and storage</li>
-                        <li><strong>Payment Processing:</strong> Stripe, PayPal for secure payment processing</li>
-                        <li><strong>Analytics:</strong> Google Analytics for usage statistics (anonymized)</li>
-                        <li><strong>Email Services:</strong> SendGrid for transactional emails</li>
-                        <li><strong>Customer Support:</strong> Intercom for support chat and tickets</li>
-                    </ul>
-
-                    <h3>4.2 Legal Requirements</h3>
-                    <p>We may disclose your information if required by law or to:</p>
-                    <ul>
-                        <li>Comply with legal process or government requests</li>
-                        <li>Protect the rights, property, or safety of our users</li>
-                        <li>Investigate potential violations of our Terms of Service</li>
-                        <li>Prevent fraud or security threats</li>
-                    </ul>
-
-                    <h3>4.3 Business Transfers</h3>
-                    <p>In the event of a merger, acquisition, or sale of assets, your information may be transferred to the new entity, subject to the same privacy protections.</p>
-
-                    <div class="highlight-box">
-                        <strong>Our Commitment:</strong> All third-party service providers are contractually required to protect your information and use it only for the specific services they provide to us.
-                    </div>
-                </div>
-            </section>
-
-            <section id="data-security" class="section">
-                <h2 class="section-title">
-                    <i class="fas fa-lock"></i>
-                    5. Data Security
-                </h2>
-                <div class="section-content">
-                    <p>We implement robust security measures to protect your information:</p>
-
-                    <h3>5.1 Technical Safeguards</h3>
-                    <ul>
-                        <li><strong>Encryption:</strong> All data is encrypted in transit (TLS 1.3) and at rest (AES-256)</li>
-                        <li><strong>Access Controls:</strong> Role-based access with multi-factor authentication</li>
-                        <li><strong>Regular Audits:</strong> Security assessments and penetration testing</li>
-                        <li><strong>Monitoring:</strong> 24/7 security monitoring and threat detection</li>
-                    </ul>
-
-                    <h3>5.2 Operational Security</h3>
-                    <ul>
-                        <li>Background checks for employees with data access</li>
-                        <li>Regular security training for all staff</li>
-                        <li>Incident response procedures</li>
-                        <li>Data backup and recovery systems</li>
-                    </ul>
-
-                    <h3>5.3 Compliance</h3>
-                    <ul>
-                        <li>GDPR compliance for European users</li>
-                        <li>CCPA compliance for California residents</li>
-                        <li>SOC 2 Type II certification</li>
-                        <li>Regular compliance audits</li>
-                    </ul>
-
-                    <div class="warning-box">
-                        <strong>Security Notice:</strong> While we implement strong security measures, no method of transmission over the internet is 100% secure. Please use strong passwords and enable two-factor authentication for additional security.
-                    </div>
-                </div>
-            </section>
-
-            <section id="your-rights" class="section">
-                <h2 class="section-title">
-                    <i class="fas fa-user-shield"></i>
-                    6. Your Rights and Choices
-                </h2>
-                <div class="section-content">
-                    <p>You have several rights regarding your personal information:</p>
-
-                    <h3>6.1 Access and Control</h3>
-                    <ul>
-                        <li><strong>Account Settings:</strong> Update your profile information at any time</li>
-                        <li><strong>Privacy Settings:</strong> Control how your data is used for AI training</li>
-                        <li><strong>Communication Preferences:</strong> Choose which emails you receive</li>
-                        <li><strong>Data Export:</strong> Download your conversation history and account data</li>
-                    </ul>
-
-                    <h3>6.2 Data Rights (GDPR/CCPA)</h3>
-                    <ul>
-                        <li><strong>Right to Access:</strong> Request a copy of your personal data</li>
-                        <li><strong>Right to Rectification:</strong> Correct inaccurate information</li>
-                        <li><strong>Right to Erasure:</strong> Delete your account and associated data</li>
-                        <li><strong>Right to Portability:</strong> Transfer your data to another service</li>
-                        <li><strong>Right to Object:</strong> Opt out of certain data processing activities</li>
-                    </ul>
-
-                    <h3>6.3 How to Exercise Your Rights</h3>
-                    <p>To exercise any of these rights:</p>
-                    <ol>
-                        <li>Log into your account and visit Privacy Settings</li>
-                        <li>Contact our support team at privacy@gloriousspace.com</li>
-                        <li>Use our automated data request form</li>
-                    </ol>
-
-                    <div class="info-box">
-                        <strong>Response Time:</strong> We will respond to your requests within 30 days (or as required by applicable law). Some requests may take longer if they are complex or numerous.
-                    </div>
-                </div>
-            </section>
-
-            <section id="cookies" class="section">
-                <h2 class="section-title">
-                    <i class="fas fa-cookie-bite"></i>
-                    7. Cookies and Tracking Technologies
-                </h2>
-                <div class="section-content">
-                    <p>We use cookies and similar technologies to enhance your experience:</p>
-
-                    <h3>7.1 Types of Cookies</h3>
-                    <ul>
-                        <li><strong>Essential Cookies:</strong> Required for basic platform functionality</li>
-                        <li><strong>Performance Cookies:</strong> Help us understand how you use our service</li>
-                        <li><strong>Functional Cookies:</strong> Remember your preferences and settings</li>
-                        <li><strong>Analytics Cookies:</strong> Provide insights into usage patterns</li>
-                    </ul>
-
-                    <h3>7.2 Managing Cookies</h3>
-                    <p>You can control cookies through:</p>
-                    <ul>
-                        <li>Your browser settings (disable all cookies)</li>
-                        <li>Our cookie preference center</li>
-                        <li>Opt-out links for analytics services</li>
-                    </ul>
-
-                    <div class="warning-box">
-                        <strong>Note:</strong> Disabling essential cookies may affect the functionality of our platform.
-                    </div>
-                </div>
-            </section>
-
-            <section id="international-transfers" class="section">
-                <h2 class="section-title">
-                    <i class="fas fa-globe"></i>
-                    8. International Data Transfers
-                </h2>
-                <div class="section-content">
-                    <p>Our service is global, and your information may be transferred to and processed in countries other than your own:</p>
-                    
-                    <ul>
-                        <li>Primary data centers are located in the United States and European Union</li>
-                        <li>We use Standard Contractual Clauses (SCCs) for EU data transfers</li>
-                        <li>All transfers comply with applicable data protection laws</li>
-                        <li>We maintain the same level of protection regardless of location</li>
-                    </ul>
-
-                    <div class="info-box">
-                        <strong>EU Users:</strong> For users in the European Economic Area, we ensure adequate protection through approved transfer mechanisms such as Standard Contractual Clauses.
-                    </div>
-                </div>
-            </section>
-
-            <section id="children-privacy" class="section">
-                <h2 class="section-title">
-                    <i class="fas fa-child"></i>
-                    9. Children's Privacy
-                </h2>
-                <div class="section-content">
-                    <p>Our service is not intended for children under 13 years of age:</p>
-                    
-                    <ul>
-                        <li>We do not knowingly collect personal information from children under 13</li>
-                        <li>If we discover we have collected such information, we will delete it promptly</li>
-                        <li>Parents or guardians can contact us to request deletion of their child's information</li>
-                        <li>Users between 13-18 should have parental consent to use our service</li>
-                    </ul>
-
-                    <div class="warning-box">
-                        <strong>Important:</strong> If you are under 18, please ensure you have permission from a parent or guardian before using our service.
-                    </div>
-                </div>
-            </section>
-
-            <section id="policy-changes" class="section">
-                <h2 class="section-title">
-                    <i class="fas fa-edit"></i>
-                    10. Changes to This Policy
-                </h2>
-                <div class="section-content">
-                    <p>We may update this Privacy Policy from time to time:</p>
-                    
-                    <ul>
-                        <li>Material changes will be posted prominently on our website</li>
-                        <li>We will notify users via email for significant changes</li>
-                        <li>The "Last Updated" date will reflect the most recent revision</li>
-                        <li>Continued use of our service constitutes acceptance of changes</li>
-                    </ul>
-
-                    <div class="highlight-box">
-                        <strong>Stay Informed:</strong> We recommend reviewing this policy periodically to stay informed about how we protect your information.
-                    </div>
-                </div>
-            </section>
-
-            <section id="contact" class="section">
-                <h2 class="section-title">
-                    <i class="fas fa-envelope"></i>
-                    11. Contact Information
-                </h2>
-                <div class="section-content">
-                    <p>If you have any questions about this Privacy Policy or our data practices, please contact us:</p>
-                    
-                    <ul>
-                        <li><strong>Email:</strong> privacy@gloriousspace.com</li>
-                        <li><strong>Address:</strong> Glorious Space Kingdom, 123 AI Avenue, Tech City, TC 12345</li>
-                        <li><strong>Phone:</strong> +1 (555) 123-4567</li>
-                        <li><strong>Data Protection Officer:</strong> dpo@gloriousspace.com</li>
-                    </ul>
-                </div>
-            </section>
-
-            <div class="contact-section">
-                <h3 class="contact-title">Questions About Your Privacy?</h3>
-                <p class="contact-info">
-                    Our privacy team is here to help. Reach out with any questions or concerns about how we handle your data.
+                <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+                    Your privacy is our priority. Learn how we collect, use, and protect your information on DevCrown.
                 </p>
-                <div class="contact-buttons">
-                    <a href="mailto:privacy@gloriousspace.com" class="btn btn-primary">
-                        <i class="fas fa-envelope"></i>
-                        Email Privacy Team
-                    </a>
-                    <a href="/support/privacy" class="btn btn-secondary">
-                        <i class="fas fa-life-ring"></i>
-                        Privacy Support
-                    </a>
+                <div class="mt-4 text-sm text-gray-400">
+                    Last Updated: September 3, 2025
                 </div>
+            </div>
+
+            <!-- Content -->
+            <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700 p-8 md:p-12">
+                <div class="prose prose-invert prose-blue max-w-none">
+
+                    <!-- Quick Navigation -->
+                    <div class="bg-gray-900/50 rounded-lg p-6 mb-8 border border-gray-600">
+                        <h3 class="text-lg font-semibold text-white mb-4">Quick Navigation</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                            <a href="#information-collection" class="text-blue-400 hover:text-blue-300 transition-colors">1. Information We Collect</a>
+                            <a href="#how-we-use" class="text-blue-400 hover:text-blue-300 transition-colors">2. How We Use Information</a>
+                            <a href="#data-sharing" class="text-blue-400 hover:text-blue-300 transition-colors">3. Data Sharing</a>
+                            <a href="#data-security" class="text-blue-400 hover:text-blue-300 transition-colors">4. Data Security</a>
+                            <a href="#your-rights" class="text-blue-400 hover:text-blue-300 transition-colors">5. Your Rights</a>
+                            <a href="#contact-us" class="text-blue-400 hover:text-blue-300 transition-colors">6. Contact Us</a>
+                        </div>
+                    </div>
+
+                    <!-- Section 1: Information Collection -->
+                    <section id="information-collection" class="mb-12">
+                        <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                            <span class="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm mr-3">1</span>
+                            Information We Collect
+                        </h2>
+
+                        <div class="space-y-6">
+                            <div>
+                                <h3 class="text-xl font-semibold text-blue-400 mb-3">Personal Information</h3>
+                                <ul class="space-y-2 text-gray-300">
+                                    <li class="flex items-start space-x-2">
+                                        <span class="text-blue-400 mt-2">•</span>
+                                        <span><strong>Account Information:</strong> Name, email address, password, profile information</span>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <span class="text-blue-400 mt-2">•</span>
+                                        <span><strong>Contact Information:</strong> Phone number, company name, job title</span>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <span class="text-blue-400 mt-2">•</span>
+                                        <span><strong>Payment Information:</strong> Billing address, payment method details (processed securely)</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <h3 class="text-xl font-semibold text-blue-400 mb-3">Usage Information</h3>
+                                <ul class="space-y-2 text-gray-300">
+                                    <li class="flex items-start space-x-2">
+                                        <span class="text-blue-400 mt-2">•</span>
+                                        <span><strong>AI Interactions:</strong> Messages sent to our AI agents, responses generated</span>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <span class="text-blue-400 mt-2">•</span>
+                                        <span><strong>Platform Usage:</strong> Features used, time spent, navigation patterns</span>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <span class="text-blue-400 mt-2">•</span>
+                                        <span><strong>Technical Data:</strong> IP address, browser type, device information, cookies</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Section 2: How We Use Information -->
+                    <section id="how-we-use" class="mb-12">
+                        <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                            <span class="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm mr-3">2</span>
+                            How We Use Your Information
+                        </h2>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-gray-900/30 rounded-lg p-6 border border-gray-600">
+                                <h3 class="text-lg font-semibold text-purple-400 mb-3">🤖 AI Services</h3>
+                                <ul class="space-y-2 text-gray-300 text-sm">
+                                    <li>• Provide AI agent responses</li>
+                                    <li>• Improve AI model accuracy</li>
+                                    <li>• Personalize user experience</li>
+                                    <li>• Generate analytics and insights</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-gray-900/30 rounded-lg p-6 border border-gray-600">
+                                <h3 class="text-lg font-semibold text-purple-400 mb-3">📊 Platform Operations</h3>
+                                <ul class="space-y-2 text-gray-300 text-sm">
+                                    <li>• Account management</li>
+                                    <li>• Payment processing</li>
+                                    <li>• Customer support</li>
+                                    <li>• Security monitoring</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-gray-900/30 rounded-lg p-6 border border-gray-600">
+                                <h3 class="text-lg font-semibold text-purple-400 mb-3">📈 Improvements</h3>
+                                <ul class="space-y-2 text-gray-300 text-sm">
+                                    <li>• Platform optimization</li>
+                                    <li>• Feature development</li>
+                                    <li>• Bug fixes and updates</li>
+                                    <li>• Performance monitoring</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-gray-900/30 rounded-lg p-6 border border-gray-600">
+                                <h3 class="text-lg font-semibold text-purple-400 mb-3">📧 Communications</h3>
+                                <ul class="space-y-2 text-gray-300 text-sm">
+                                    <li>• Service announcements</li>
+                                    <li>• Product updates</li>
+                                    <li>• Marketing communications</li>
+                                    <li>• Security alerts</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Section 3: Data Sharing -->
+                    <section id="data-sharing" class="mb-12">
+                        <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                            <span class="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm mr-3">3</span>
+                            Data Sharing and Disclosure
+                        </h2>
+
+                        <div class="bg-red-900/20 border border-red-500/30 rounded-lg p-6 mb-6">
+                            <h3 class="text-lg font-semibold text-red-400 mb-2">🛡️ We Do NOT Sell Your Data</h3>
+                            <p class="text-gray-300">OneLastAI never sells, rents, or trades your personal information to third parties for marketing purposes.</p>
+                        </div>
+
+                        <div class="space-y-4">
+                            <h3 class="text-xl font-semibold text-blue-400 mb-3">Limited Sharing Scenarios:</h3>
+                            <div class="grid grid-cols-1 gap-4">
+                                <div class="bg-gray-900/30 rounded-lg p-4 border border-gray-600">
+                                    <h4 class="font-semibold text-white mb-2">🔧 Service Providers</h4>
+                                    <p class="text-gray-300 text-sm">Trusted third-party services that help us operate our platform (hosting, analytics, payment processing)</p>
+                                </div>
+                                <div class="bg-gray-900/30 rounded-lg p-4 border border-gray-600">
+                                    <h4 class="font-semibold text-white mb-2">⚖️ Legal Requirements</h4>
+                                    <p class="text-gray-300 text-sm">When required by law, court order, or to protect our rights and safety</p>
+                                </div>
+                                <div class="bg-gray-900/30 rounded-lg p-4 border border-gray-600">
+                                    <h4 class="font-semibold text-white mb-2">🏢 Business Transfers</h4>
+                                    <p class="text-gray-300 text-sm">In case of merger, acquisition, or sale of assets (with notice to users)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Section 4: Data Security -->
+                    <section id="data-security" class="mb-12">
+                        <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                            <span class="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm mr-3">4</span>
+                            Data Security
+                        </h2>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                            <div class="bg-green-900/20 border border-green-500/30 rounded-lg p-6 text-center">
+                                <div class="text-3xl mb-3">🔒</div>
+                                <h3 class="font-semibold text-green-400 mb-2">Encryption</h3>
+                                <p class="text-gray-300 text-sm">End-to-end encryption for all data transmission and storage</p>
+                            </div>
+                            <div class="bg-green-900/20 border border-green-500/30 rounded-lg p-6 text-center">
+                                <div class="text-3xl mb-3">🛡️</div>
+                                <h3 class="font-semibold text-green-400 mb-2">Access Control</h3>
+                                <p class="text-gray-300 text-sm">Strict access controls and regular security audits</p>
+                            </div>
+                            <div class="bg-green-900/20 border border-green-500/30 rounded-lg p-6 text-center">
+                                <div class="text-3xl mb-3">🔐</div>
+                                <h3 class="font-semibold text-green-400 mb-2">Compliance</h3>
+                                <p class="text-gray-300 text-sm">SOC 2, GDPR, and industry standard compliance</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-blue-900/20 border border-blue-500/30 rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-blue-400 mb-3">🔍 Additional Security Measures:</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-300">
+                                <ul class="space-y-2">
+                                    <li>• Multi-factor authentication</li>
+                                    <li>• Regular security assessments</li>
+                                    <li>• Incident response procedures</li>
+                                    <li>• Employee security training</li>
+                                </ul>
+                                <ul class="space-y-2">
+                                    <li>• Data backup and recovery</li>
+                                    <li>• Network security monitoring</li>
+                                    <li>• Vulnerability management</li>
+                                    <li>• Privacy by design principles</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Section 5: Your Rights -->
+                    <section id="your-rights" class="mb-12">
+                        <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                            <span class="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm mr-3">5</span>
+                            Your Privacy Rights
+                        </h2>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-4">
+                                <div class="bg-gray-900/30 rounded-lg p-4 border border-gray-600">
+                                    <h3 class="font-semibold text-purple-400 mb-2">📋 Access & Portability</h3>
+                                    <p class="text-gray-300 text-sm">Request a copy of your personal data in a portable format</p>
+                                </div>
+                                <div class="bg-gray-900/30 rounded-lg p-4 border border-gray-600">
+                                    <h3 class="font-semibold text-purple-400 mb-2">✏️ Correction</h3>
+                                    <p class="text-gray-300 text-sm">Update or correct inaccurate personal information</p>
+                                </div>
+                                <div class="bg-gray-900/30 rounded-lg p-4 border border-gray-600">
+                                    <h3 class="font-semibold text-purple-400 mb-2">🗑️ Deletion</h3>
+                                    <p class="text-gray-300 text-sm">Request deletion of your personal data (subject to legal requirements)</p>
+                                </div>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="bg-gray-900/30 rounded-lg p-4 border border-gray-600">
+                                    <h3 class="font-semibold text-purple-400 mb-2">⏸️ Processing Restriction</h3>
+                                    <p class="text-gray-300 text-sm">Limit how we process your personal information</p>
+                                </div>
+                                <div class="bg-gray-900/30 rounded-lg p-4 border border-gray-600">
+                                    <h3 class="font-semibold text-purple-400 mb-2">🚫 Objection</h3>
+                                    <p class="text-gray-300 text-sm">Object to processing for direct marketing or legitimate interests</p>
+                                </div>
+                                <div class="bg-gray-900/30 rounded-lg p-4 border border-gray-600">
+                                    <h3 class="font-semibold text-purple-400 mb-2">📧 Opt-out</h3>
+                                    <p class="text-gray-300 text-sm">Unsubscribe from marketing communications at any time</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 bg-blue-900/20 border border-blue-500/30 rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-blue-400 mb-3">How to Exercise Your Rights:</h3>
+                            <p class="text-gray-300 mb-4">Contact us at <a href="mailto:privacy@onelastai.com" class="text-blue-400 hover:text-blue-300">privacy@onelastai.com</a> or through your account settings.</p>
+                            <p class="text-gray-300 text-sm">We will respond to your request within 30 days and may require identity verification for security purposes.</p>
+                        </div>
+                    </section>
+
+                    <!-- Section 6: Contact -->
+                    <section id="contact-us" class="mb-12">
+                        <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                            <span class="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm mr-3">6</span>
+                            Contact Information
+                        </h2>
+
+                        <div class="bg-gradient-to-r from-blue-900/30 to-purple-900/30 rounded-lg p-8 border border-gray-600">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div>
+                                    <h3 class="text-xl font-semibold text-white mb-4">Privacy Questions?</h3>
+                                    <div class="space-y-3">
+                                        <div class="flex items-center space-x-3">
+                                            <span class="text-blue-400">📧</span>
+                                            <a href="mailto:privacy@onelastai.com" class="text-blue-400 hover:text-blue-300">privacy@onelastai.com</a>
+                                        </div>
+                                        <div class="flex items-center space-x-3">
+                                            <span class="text-blue-400">🌐</span>
+                                            <span class="text-gray-300">www.onelastai.com/privacy</span>
+                                        </div>
+                                        <div class="flex items-center space-x-3">
+                                            <span class="text-blue-400">📍</span>
+                                            <span class="text-gray-300">123 AI Street, Tech City, TC 12345</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-semibold text-white mb-4">Data Protection Officer</h3>
+                                    <div class="space-y-3">
+                                        <div class="flex items-center space-x-3">
+                                            <span class="text-purple-400">📧</span>
+                                            <a href="mailto:dpo@onelastai.com" class="text-purple-400 hover:text-purple-300">dpo@onelastai.com</a>
+                                        </div>
+                                        <div class="flex items-center space-x-3">
+                                            <span class="text-purple-400">⏰</span>
+                                            <span class="text-gray-300">Response within 48 hours</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Footer Notice -->
+                    <div class="bg-gray-900/50 rounded-lg p-6 border border-gray-600 text-center">
+                        <p class="text-gray-400 text-sm mb-2">
+                            This privacy policy is effective as of September 3, 2025 and applies to all users of OneLastAI services.
+                        </p>
+                        <p class="text-gray-400 text-sm">
+                            We may update this policy periodically. Material changes will be communicated via email and platform notifications.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Back to Top -->
+            <div class="text-center mt-8">
+                <a href="#top" class="inline-flex items-center space-x-2 text-blue-400 hover:text-blue-300 transition-colors">
+                    <span>Back to Top</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                    </svg>
+                </a>
             </div>
         </div>
-    </main>
+    </div>
 
-    <button class="back-to-top" id="backToTop">
-        <i class="fas fa-chevron-up"></i>
-    </button>
-
+    <!-- JavaScript for smooth scrolling -->
     <script>
-        // Create floating particles
-        function createParticles() {
-            const container = document.querySelector('.floating-particles');
-            for (let i = 0; i < 15; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = Math.random() * 100 + '%';
-                particle.style.width = particle.style.height = Math.random() * 6 + 2 + 'px';
-                particle.style.animationDelay = Math.random() * 8 + 's';
-                container.appendChild(particle);
-            }
-        }
-
-        // Smooth scroll for table of contents links
-        document.querySelectorAll('.toc-list a').forEach(link => {
-            link.addEventListener('click', function(e) {
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                const targetId = this.getAttribute('href').substring(1);
-                const targetElement = document.getElementById(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
                         behavior: 'smooth',
                         block: 'start'
                     });
                 }
             });
-        });
-
-        // Back to top button
-        const backToTopBtn = document.getElementById('backToTop');
-        
-        window.addEventListener('scroll', function() {
-            if (window.pageYOffset > 300) {
-                backToTopBtn.style.display = 'flex';
-            } else {
-                backToTopBtn.style.display = 'none';
-            }
-        });
-
-        backToTopBtn.addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-
-        // Highlight current section in table of contents
-        function highlightCurrentSection() {
-            const sections = document.querySelectorAll('.section');
-            const tocLinks = document.querySelectorAll('.toc-list a');
-            
-            let currentSection = '';
-            
-            sections.forEach(section => {
-                const rect = section.getBoundingClientRect();
-                if (rect.top <= 150 && rect.bottom >= 150) {
-                    currentSection = section.id;
-                }
-            });
-            
-            tocLinks.forEach(link => {
-                link.style.background = '';
-                link.style.color = '#007bff';
-                if (link.getAttribute('href') === '#' + currentSection) {
-                    link.style.background = 'rgba(0, 123, 255, 0.1)';
-                    link.style.color = '#0056b3';
-                }
-            });
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            createParticles();
-        });
-
-        window.addEventListener('scroll', highlightCurrentSection);
-
-        // Add reading progress indicator
-        const progressBar = document.createElement('div');
-        progressBar.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 3px;
-            background: linear-gradient(45deg, #007bff, #0056b3);
-            z-index: 1001;
-            transition: width 0.1s ease;
-        `;
-        document.body.appendChild(progressBar);
-
-        window.addEventListener('scroll', function() {
-            const scrollPercent = (window.pageYOffset / (document.body.scrollHeight - window.innerHeight)) * 100;
-            progressBar.style.width = scrollPercent + '%';
         });
     </script>
 </body>

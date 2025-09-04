@@ -71,6 +71,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     # Our Magnificent Applications
     'hello_world.core.apps.CoreConfig',
+    'backend.apps.agents.apps.AgentsConfig',
 ]
 
 # 👑 The Complete Royal Application Suite
@@ -101,9 +102,12 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
+            BASE_DIR / 'templates',
+            BASE_DIR / 'templates' / 'sections',
             BASE_DIR / 'hello_world' / 'templates',
             BASE_DIR / 'hello_world' / 'templates' / 'core',
             BASE_DIR / 'hello_world' / 'templates' / 'users',
+            BASE_DIR / 'backend' / 'apps' / 'agents' / 'templates',
         ],
         'APP_DIRS': True,
         'OPTIONS': {

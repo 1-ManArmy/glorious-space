@@ -1,0 +1,203 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="h-full scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title|default:"About DevCrown" }}</title>
+    <meta name="description" content="{{ meta_description|default:'Learn about DevCrown AI platform' }}">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #111827;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #a78bfa, #f472b6, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-style {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+        }
+    </style>
+</head>
+
+<body class="h-full bg-gray-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-gray-900/95 backdrop-blur-sm border-b border-gray-800 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-8">
+                    <a href="{% url 'core:index' %}" class="logo-style text-2xl font-bold text-white hover:text-blue-400 transition-colors">
+                        DevCrown
+                    </a>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="{% url 'core:index' %}" class="text-gray-300 hover:text-white transition-colors">
+                            <i class="fas fa-home mr-2"></i>Home
+                        </a>
+                        <a href="{% url 'agents:dashboard' %}" class="text-gray-300 hover:text-white transition-colors">
+                            <i class="fas fa-robot mr-2"></i>AI Agents
+                        </a>
+                        <a href="{% url 'core:blog' %}" class="text-gray-300 hover:text-white transition-colors">
+                            <i class="fas fa-blog mr-2"></i>Blog
+                        </a>
+                        <a href="{% url 'core:projects' %}" class="text-gray-300 hover:text-white transition-colors">
+                            <i class="fas fa-code mr-2"></i>Projects
+                        </a>
+                        <a href="{% url 'core:about' %}" class="text-white font-semibold">
+                            <i class="fas fa-info-circle mr-2"></i>About
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-16">
+        <!-- Hero Section -->
+        <section class="py-20 bg-gradient-to-r from-purple-900/40 to-blue-900/40">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-4xl sm:text-5xl font-bold text-white mb-6">
+                    About <span class="text-gradient">DevCrown</span>
+                </h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Pioneering the future of AI interaction through advanced conversation systems and intelligent automation
+                </p>
+            </div>
+        </section>
+
+        <!-- Mission Section -->
+        <section class="py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h2 class="text-3xl font-bold text-white mb-6">Our Mission</h2>
+                        <p class="text-gray-400 text-lg mb-6">
+                            DevCrown is dedicated to democratizing artificial intelligence through intuitive, 
+                            powerful conversation systems. We believe AI should enhance human capabilities, 
+                            not replace them.
+                        </p>
+                        <p class="text-gray-400 text-lg">
+                            Our platform provides 18 specialized AI agents, each with unique personalities 
+                            and expertise, enabling businesses and developers to create meaningful, 
+                            engaging user experiences.
+                        </p>
+                    </div>
+                    <div class="bg-gray-800/50 p-8 rounded-2xl border border-gray-700">
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-purple-400 mb-2">12K+</div>
+                                <div class="text-gray-400">Active Users</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-blue-400 mb-2">150K+</div>
+                                <div class="text-gray-400">Conversations</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-green-400 mb-2">18</div>
+                                <div class="text-gray-400">AI Agents</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-yellow-400 mb-2">99.9%</div>
+                                <div class="text-gray-400">Uptime</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        {% if team_members %}
+        <section class="py-20 bg-gray-800/30">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-bold text-white mb-4">Our Team</h2>
+                    <p class="text-gray-400">Meet the innovators behind DevCrown</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    {% for member in team_members %}
+                    <div class="bg-gray-800/50 p-6 rounded-2xl border border-gray-700 text-center hover:border-purple-500 transition-all">
+                        <div class="w-20 h-20 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                            <span class="text-white text-2xl font-bold">{{ member.name|slice:":1" }}</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">{{ member.name }}</h3>
+                        <p class="text-purple-400 mb-3">{{ member.role }}</p>
+                        <p class="text-gray-400 text-sm">{{ member.bio }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- Values Section -->
+        <section class="py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-bold text-white mb-4">Our Values</h2>
+                    <p class="text-gray-400">The principles that guide our innovation</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-gray-800/50 p-8 rounded-2xl border border-gray-700 text-center hover:border-purple-500 transition-all">
+                        <div class="text-purple-400 text-4xl mb-4">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-4">Innovation</h3>
+                        <p class="text-gray-400">
+                            Constantly pushing the boundaries of what's possible with AI technology
+                        </p>
+                    </div>
+                    
+                    <div class="bg-gray-800/50 p-8 rounded-2xl border border-gray-700 text-center hover:border-blue-500 transition-all">
+                        <div class="text-blue-400 text-4xl mb-4">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-4">Security</h3>
+                        <p class="text-gray-400">
+                            Ensuring the highest standards of data protection and privacy
+                        </p>
+                    </div>
+                    
+                    <div class="bg-gray-800/50 p-8 rounded-2xl border border-gray-700 text-center hover:border-green-500 transition-all">
+                        <div class="text-green-400 text-4xl mb-4">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-4">Community</h3>
+                        <p class="text-gray-400">
+                            Building tools that bring people together and enhance collaboration
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="text-center text-gray-400">
+                <p>&copy; 2024 DevCrown. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

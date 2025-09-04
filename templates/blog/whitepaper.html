@@ -1,0 +1,726 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Research Whitepapers & Technical Reports - DevCrown</title>
+    <meta name="description" content="Access cutting-edge AI research whitepapers, technical reports, and in-depth analysis from DevCrown's research team and industry partners.">
+
+    <!-- SEO Meta Tags -->
+    <meta property="og:title" content="AI Research Whitepapers & Technical Reports - DevCrown">
+    <meta property="og:description" content="Cutting-edge AI research papers and technical insights">
+    <meta property="og:image" content="{% static 'images/devcrown-research-og.png' %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'favicon.ico' %}">
+    <link rel="apple-touch-icon" href="{% static 'apple-touch-icon.png' %}">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="h-full bg-gray-900 text-white">
+    <div class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black">
+
+        <!-- Header -->
+                <!-- Header -->
+        <div class="bg-gray-800/50 backdrop-blur-sm border-b border-gray-700">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                <!-- Navigation -->
+                <nav class="flex items-center justify-between">
+                    <div class="flex items-center space-x-8">
+                        <a href="{% url 'core:index' %}" class="text-xl font-bold text-white hover:text-indigo-400 transition-colors">
+                            DevCrown
+                        </a>
+                        <div class="hidden md:flex space-x-6">
+                            <a href="{% url 'core:index' %}" class="text-gray-300 hover:text-white transition-colors">
+                                <i class="fas fa-home mr-2"></i>Home
+                            </a>
+                            <a href="{% url 'core:blog' %}" class="text-gray-300 hover:text-white transition-colors">
+                                <i class="fas fa-blog mr-2"></i>Blog
+                            </a>
+                            <a href="{% url 'core:projects' %}" class="text-gray-300 hover:text-white transition-colors">
+                                <i class="fas fa-code mr-2"></i>Projects
+                            </a>
+                            <a href="{% url 'core:dashboard' %}" class="text-gray-300 hover:text-white transition-colors">
+                                <i class="fas fa-chart-bar mr-2"></i>Dashboard
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile menu button -->
+                    <button class="md:hidden text-gray-300 hover:text-white" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </nav>
+
+                <!-- Mobile menu -->
+                <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4 border-t border-gray-700 pt-4">
+                    <div class="flex flex-col space-y-2">
+                        <a href="{% url 'core:index' %}" class="text-gray-300 hover:text-white px-3 py-2 rounded transition-colors">
+                            <i class="fas fa-home mr-2"></i>Home
+                        </a>
+                        <a href="{% url 'core:blog' %}" class="text-gray-300 hover:text-white px-3 py-2 rounded transition-colors">
+                            <i class="fas fa-blog mr-2"></i>Blog
+                        </a>
+                        <a href="{% url 'core:projects' %}" class="text-gray-300 hover:text-white px-3 py-2 rounded transition-colors">
+                            <i class="fas fa-code mr-2"></i>Projects
+                        </a>
+                        <a href="{% url 'core:dashboard' %}" class="text-gray-300 hover:text-white px-3 py-2 rounded transition-colors">
+                            <i class="fas fa-chart-bar mr-2"></i>Dashboard
+                        </a>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                    </div>
+
+                    <!-- Research Stats -->
+                    <div class="hidden md:flex items-center space-x-8 text-sm">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+            <!-- Hero Section -->
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+                    Advancing the Future of
+                    <span class="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">Artificial Intelligence</span>
+                </h2>
+                <p class="text-xl text-gray-300 max-w-4xl mx-auto mb-8">
+                    Explore groundbreaking research, technical innovations, and comprehensive analysis
+                    from DevCrown's research team and leading AI scientists worldwide.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#latest" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                        Latest Research
+                    </a>
+                    <a href="#featured" class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                        Featured Papers
+                    </a>
+                    <a href="#subscribe" class="border border-gray-600 hover:border-gray-500 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                        Subscribe to Updates
+                    </a>
+                </div>
+            </div>
+
+            <!-- Research Categories -->
+            <div class="mb-12">
+                <div class="flex flex-wrap gap-3 justify-center">
+                    <button class="bg-indigo-600 text-white px-4 py-2 rounded-full text-sm font-semibold">All Research</button>
+                    <button class="bg-gray-700 hover:bg-gray-600 text-gray-300 px-4 py-2 rounded-full text-sm transition-colors">Multimodal AI</button>
+                    <button class="bg-gray-700 hover:bg-gray-600 text-gray-300 px-4 py-2 rounded-full text-sm transition-colors">Natural Language</button>
+                    <button class="bg-gray-700 hover:bg-gray-600 text-gray-300 px-4 py-2 rounded-full text-sm transition-colors">Computer Vision</button>
+                    <button class="bg-gray-700 hover:bg-gray-600 text-gray-300 px-4 py-2 rounded-full text-sm transition-colors">Neural Architecture</button>
+                    <button class="bg-gray-700 hover:bg-gray-600 text-gray-300 px-4 py-2 rounded-full text-sm transition-colors">Ethics & Safety</button>
+                    <button class="bg-gray-700 hover:bg-gray-600 text-gray-300 px-4 py-2 rounded-full text-sm transition-colors">Industry Applications</button>
+                    <button class="bg-gray-700 hover:bg-gray-600 text-gray-300 px-4 py-2 rounded-full text-sm transition-colors">Benchmarks</button>
+                </div>
+            </div>
+
+            <!-- Featured Whitepaper -->
+            <section id="featured" class="mb-16">
+                <div class="bg-gradient-to-br from-indigo-900/50 to-purple-900/50 rounded-xl border border-indigo-500/30 p-8">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <span class="bg-indigo-600 text-white px-3 py-1 rounded-full text-xs font-bold">FEATURED RESEARCH</span>
+                        <span class="text-indigo-400 text-sm font-semibold">September 2025 • Peer Reviewed</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-2">
+                            <h3 class="text-3xl font-bold text-white mb-4">
+                                Unified Multimodal Architecture for Real-Time AI: Breaking the 100ms Barrier
+                            </h3>
+                            <p class="text-gray-300 text-lg mb-6">
+                                This comprehensive study presents a novel unified architecture that enables real-time processing
+                                of text, image, audio, and video inputs with sub-100ms latency, revolutionizing interactive AI applications.
+                            </p>
+
+                            <!-- Research Highlights -->
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                                <div class="bg-gray-800/50 rounded-lg p-4">
+                                    <div class="text-lg font-bold text-indigo-400">67ms</div>
+                                    <div class="text-gray-400 text-sm">Average Latency</div>
+                                </div>
+                                <div class="bg-gray-800/50 rounded-lg p-4">
+                                    <div class="text-lg font-bold text-purple-400">94.7%</div>
+                                    <div class="text-gray-400 text-sm">Accuracy Maintained</div>
+                                </div>
+                                <div class="bg-gray-800/50 rounded-lg p-4">
+                                    <div class="text-lg font-bold text-blue-400">78%</div>
+                                    <div class="text-gray-400 text-sm">Efficiency Gain</div>
+                                </div>
+                            </div>
+
+                            <!-- Authors -->
+                            <div class="mb-6">
+                                <h4 class="text-sm font-semibold text-gray-400 mb-2">Authors</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-xs">Dr. Sarah Chen - OneLastAI</span>
+                                    <span class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-xs">Prof. Michael Rodriguez - MIT</span>
+                                    <span class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-xs">Dr. Yuki Tanaka - Stanford</span>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-wrap gap-4">
+                                <a href="/research/unified-multimodal-architecture.pdf" class="inline-flex items-center space-x-2 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                    </svg>
+                                    <span>Download PDF (47 pages)</span>
+                                </a>
+                                <a href="/research/unified-multimodal-code" class="inline-flex items-center space-x-2 bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                                    </svg>
+                                    <span>View Code</span>
+                                </a>
+                                <a href="/research/unified-multimodal-demo" class="inline-flex items-center space-x-2 border border-gray-600 hover:border-gray-500 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293H15M9 10V9a2 2 0 012-2h2a2 2 0 012 2v1M9 10H7a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2h-2"></path>
+                                    </svg>
+                                    <span>Interactive Demo</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="space-y-6">
+                            <!-- Research Metrics -->
+                            <div class="bg-gray-800/50 rounded-lg p-4">
+                                <h4 class="text-white font-semibold mb-3">Research Impact</h4>
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Downloads</span>
+                                        <span class="text-indigo-400">24,567</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Citations</span>
+                                        <span class="text-purple-400">147</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">GitHub Stars</span>
+                                        <span class="text-blue-400">3,892</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Industry Adoption</span>
+                                        <span class="text-green-400">23 companies</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Related Topics -->
+                            <div class="bg-gray-800/50 rounded-lg p-4">
+                                <h4 class="text-white font-semibold mb-3">Related Topics</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-indigo-600/20 text-indigo-300 px-2 py-1 rounded text-xs">Real-time AI</span>
+                                    <span class="bg-purple-600/20 text-purple-300 px-2 py-1 rounded text-xs">Multimodal</span>
+                                    <span class="bg-blue-600/20 text-blue-300 px-2 py-1 rounded text-xs">Architecture</span>
+                                    <span class="bg-green-600/20 text-green-300 px-2 py-1 rounded text-xs">Performance</span>
+                                    <span class="bg-yellow-600/20 text-yellow-300 px-2 py-1 rounded text-xs">Optimization</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Research Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+
+                <!-- Main Content -->
+                <div class="lg:col-span-3">
+
+                    <!-- Latest Research Section -->
+                    <section id="latest" class="mb-12">
+                        <h2 class="text-2xl font-bold text-white mb-8 flex items-center">
+                            <svg class="w-6 h-6 text-indigo-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Latest Research Publications
+                        </h2>
+
+                        <div class="space-y-6">
+
+                            <!-- Research Paper 1 -->
+                            <article class="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700 p-6 hover:border-blue-500 transition-colors">
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="flex items-center space-x-3">
+                                        <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-semibold">NATURAL LANGUAGE</span>
+                                        <span class="text-blue-400 text-sm">August 2025</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2 text-gray-400 text-sm">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                        </svg>
+                                        <span>12.4K views</span>
+                                    </div>
+                                </div>
+
+                                <h3 class="text-xl font-bold text-white mb-3">
+                                    Advanced Context-Aware Language Models: Understanding Implicit Reasoning Patterns
+                                </h3>
+
+                                <p class="text-gray-300 text-sm mb-4">
+                                    This research introduces a novel approach to context-aware language understanding that significantly
+                                    improves implicit reasoning capabilities in large language models through dynamic attention mechanisms.
+                                </p>
+
+                                <div class="flex items-center space-x-4 text-xs text-gray-400 mb-4">
+                                    <span>Authors: Dr. Elena Vasquez, Dr. James Park</span>
+                                    <span>•</span>
+                                    <span>32 pages</span>
+                                    <span>•</span>
+                                    <span>Peer reviewed</span>
+                                </div>
+
+                                <div class="flex items-center justify-between">
+                                    <div class="flex space-x-3">
+                                        <a href="/research/context-aware-language-models.pdf" class="text-blue-400 hover:text-blue-300 font-semibold text-sm transition-colors">
+                                            Download PDF →
+                                        </a>
+                                        <a href="/research/context-aware-code" class="text-gray-400 hover:text-gray-300 text-sm transition-colors">
+                                            Code
+                                        </a>
+                                        <a href="/research/context-aware-demo" class="text-gray-400 hover:text-gray-300 text-sm transition-colors">
+                                            Demo
+                                        </a>
+                                    </div>
+                                    <span class="text-blue-400 text-sm font-semibold">3.2K downloads</span>
+                                </div>
+                            </article>
+
+                            <!-- Research Paper 2 -->
+                            <article class="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700 p-6 hover:border-green-500 transition-colors">
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="flex items-center space-x-3">
+                                        <span class="bg-green-600 text-white px-3 py-1 rounded-full text-xs font-semibold">COMPUTER VISION</span>
+                                        <span class="text-green-400 text-sm">August 2025</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2 text-gray-400 text-sm">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                        </svg>
+                                        <span>8.9K views</span>
+                                    </div>
+                                </div>
+
+                                <h3 class="text-xl font-bold text-white mb-3">
+                                    Zero-Shot Video Understanding Through Temporal-Spatial Feature Fusion
+                                </h3>
+
+                                <p class="text-gray-300 text-sm mb-4">
+                                    A groundbreaking approach to video analysis that achieves state-of-the-art performance in zero-shot
+                                    scenarios by intelligently combining temporal and spatial features without task-specific training.
+                                </p>
+
+                                <div class="flex items-center space-x-4 text-xs text-gray-400 mb-4">
+                                    <span>Authors: Dr. Raj Patel, Dr. Lisa Wong, Dr. Alex Müller</span>
+                                    <span>•</span>
+                                    <span>28 pages</span>
+                                    <span>•</span>
+                                    <span>Peer reviewed</span>
+                                </div>
+
+                                <div class="flex items-center justify-between">
+                                    <div class="flex space-x-3">
+                                        <a href="/research/zero-shot-video-understanding.pdf" class="text-green-400 hover:text-green-300 font-semibold text-sm transition-colors">
+                                            Download PDF →
+                                        </a>
+                                        <a href="/research/zero-shot-code" class="text-gray-400 hover:text-gray-300 text-sm transition-colors">
+                                            Code
+                                        </a>
+                                        <a href="/research/zero-shot-dataset" class="text-gray-400 hover:text-gray-300 text-sm transition-colors">
+                                            Dataset
+                                        </a>
+                                    </div>
+                                    <span class="text-green-400 text-sm font-semibold">2.8K downloads</span>
+                                </div>
+                            </article>
+
+                            <!-- Research Paper 3 -->
+                            <article class="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700 p-6 hover:border-purple-500 transition-colors">
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="flex items-center space-x-3">
+                                        <span class="bg-purple-600 text-white px-3 py-1 rounded-full text-xs font-semibold">ETHICS & SAFETY</span>
+                                        <span class="text-purple-400 text-sm">July 2025</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2 text-gray-400 text-sm">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                        </svg>
+                                        <span>15.7K views</span>
+                                    </div>
+                                </div>
+
+                                <h3 class="text-xl font-bold text-white mb-3">
+                                    Bias Mitigation in Multimodal AI Systems: A Comprehensive Framework
+                                </h3>
+
+                                <p class="text-gray-300 text-sm mb-4">
+                                    Comprehensive analysis of bias sources in multimodal AI systems with practical frameworks for
+                                    detection, measurement, and mitigation across different modalities and application domains.
+                                </p>
+
+                                <div class="flex items-center space-x-4 text-xs text-gray-400 mb-4">
+                                    <span>Authors: Dr. Amara Johnson, Dr. Chen Liu, Prof. David Thompson</span>
+                                    <span>•</span>
+                                    <span>45 pages</span>
+                                    <span>•</span>
+                                    <span>Policy impact</span>
+                                </div>
+
+                                <div class="flex items-center justify-between">
+                                    <div class="flex space-x-3">
+                                        <a href="/research/bias-mitigation-framework.pdf" class="text-purple-400 hover:text-purple-300 font-semibold text-sm transition-colors">
+                                            Download PDF →
+                                        </a>
+                                        <a href="/research/bias-toolkit" class="text-gray-400 hover:text-gray-300 text-sm transition-colors">
+                                            Toolkit
+                                        </a>
+                                        <a href="/research/bias-guidelines" class="text-gray-400 hover:text-gray-300 text-sm transition-colors">
+                                            Guidelines
+                                        </a>
+                                    </div>
+                                    <span class="text-purple-400 text-sm font-semibold">5.1K downloads</span>
+                                </div>
+                            </article>
+
+                            <!-- Research Paper 4 -->
+                            <article class="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700 p-6 hover:border-yellow-500 transition-colors">
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="flex items-center space-x-3">
+                                        <span class="bg-yellow-600 text-white px-3 py-1 rounded-full text-xs font-semibold">NEURAL ARCHITECTURE</span>
+                                        <span class="text-yellow-400 text-sm">July 2025</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2 text-gray-400 text-sm">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                        </svg>
+                                        <span>6.3K views</span>
+                                    </div>
+                                </div>
+
+                                <h3 class="text-xl font-bold text-white mb-3">
+                                    Adaptive Neural Architecture Search for Edge Computing Applications
+                                </h3>
+
+                                <p class="text-gray-300 text-sm mb-4">
+                                    Novel approach to automatically design efficient neural architectures optimized for edge computing
+                                    constraints while maintaining high performance across diverse deployment scenarios.
+                                </p>
+
+                                <div class="flex items-center space-x-4 text-xs text-gray-400 mb-4">
+                                    <span>Authors: Dr. Kumar Singh, Dr. Maria Garcia</span>
+                                    <span>•</span>
+                                    <span>23 pages</span>
+                                    <span>•</span>
+                                    <span>Open source</span>
+                                </div>
+
+                                <div class="flex items-center justify-between">
+                                    <div class="flex space-x-3">
+                                        <a href="/research/adaptive-nas-edge.pdf" class="text-yellow-400 hover:text-yellow-300 font-semibold text-sm transition-colors">
+                                            Download PDF →
+                                        </a>
+                                        <a href="/research/nas-code" class="text-gray-400 hover:text-gray-300 text-sm transition-colors">
+                                            Code
+                                        </a>
+                                        <a href="/research/nas-benchmark" class="text-gray-400 hover:text-gray-300 text-sm transition-colors">
+                                            Benchmark
+                                        </a>
+                                    </div>
+                                    <span class="text-yellow-400 text-sm font-semibold">1.9K downloads</span>
+                                </div>
+                            </article>
+                        </div>
+
+                        <!-- Load More -->
+                        <div class="text-center mt-8">
+                            <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors">
+                                Load More Research
+                            </button>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="space-y-8">
+
+                    <!-- Research Stats -->
+                    <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700 p-6">
+                        <h3 class="text-lg font-bold text-white mb-6 flex items-center">
+                            <svg class="w-5 h-5 text-indigo-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                            Research Impact
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Total Citations</span>
+                                <span class="text-indigo-400 font-semibold">47,892</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">H-Index</span>
+                                <span class="text-purple-400 font-semibold">127</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Total Downloads</span>
+                                <span class="text-blue-400 font-semibold">1.2M</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">GitHub Stars</span>
+                                <span class="text-green-400 font-semibold">28.4K</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Industry Adoptions</span>
+                                <span class="text-yellow-400 font-semibold">156</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Top Categories -->
+                    <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700 p-6">
+                        <h3 class="text-lg font-bold text-white mb-4">Popular Categories</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-300 text-sm">Multimodal AI</span>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-16 bg-gray-700 rounded-full h-2">
+                                        <div class="bg-indigo-500 h-2 rounded-full" style="width: 78%"></div>
+                                    </div>
+                                    <span class="text-indigo-400 text-xs">78</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-300 text-sm">Natural Language</span>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-16 bg-gray-700 rounded-full h-2">
+                                        <div class="bg-blue-500 h-2 rounded-full" style="width: 65%"></div>
+                                    </div>
+                                    <span class="text-blue-400 text-xs">65</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-300 text-sm">Computer Vision</span>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-16 bg-gray-700 rounded-full h-2">
+                                        <div class="bg-green-500 h-2 rounded-full" style="width: 52%"></div>
+                                    </div>
+                                    <span class="text-green-400 text-xs">52</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-300 text-sm">Ethics & Safety</span>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-16 bg-gray-700 rounded-full h-2">
+                                        <div class="bg-purple-500 h-2 rounded-full" style="width: 34%"></div>
+                                    </div>
+                                    <span class="text-purple-400 text-xs">34</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-300 text-sm">Neural Architecture</span>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-16 bg-gray-700 rounded-full h-2">
+                                        <div class="bg-yellow-500 h-2 rounded-full" style="width: 28%"></div>
+                                    </div>
+                                    <span class="text-yellow-400 text-xs">28</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Research Alerts -->
+                    <div id="subscribe" class="bg-gradient-to-br from-blue-900/50 to-indigo-900/50 rounded-xl border border-blue-500/30 p-6">
+                        <h3 class="text-lg font-bold text-white mb-3">Research Alerts</h3>
+                        <p class="text-gray-300 text-sm mb-4">
+                            Stay updated with the latest AI research and breakthroughs.
+                        </p>
+                        <div class="space-y-3">
+                            <input type="email" placeholder="Enter your email"
+                                   class="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 text-sm focus:outline-none focus:border-blue-500">
+                            <div class="space-y-2">
+                                <label class="flex items-center space-x-2 text-sm text-gray-300">
+                                    <input type="checkbox" class="rounded bg-gray-800 border-gray-600 text-blue-600 focus:ring-blue-500">
+                                    <span>Weekly research digest</span>
+                                </label>
+                                <label class="flex items-center space-x-2 text-sm text-gray-300">
+                                    <input type="checkbox" class="rounded bg-gray-800 border-gray-600 text-blue-600 focus:ring-blue-500">
+                                    <span>New paper notifications</span>
+                                </label>
+                                <label class="flex items-center space-x-2 text-sm text-gray-300">
+                                    <input type="checkbox" class="rounded bg-gray-800 border-gray-600 text-blue-600 focus:ring-blue-500">
+                                    <span>Conference announcements</span>
+                                </label>
+                            </div>
+                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold text-sm transition-colors">
+                                Subscribe to Alerts
+                            </button>
+                        </div>
+                        <p class="text-gray-400 text-xs mt-2">Join 15K+ researchers</p>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700 p-6">
+                        <h3 class="text-lg font-bold text-white mb-4">Quick Access</h3>
+                        <div class="space-y-3">
+                            <a href="/research/submit" class="flex items-center space-x-2 text-indigo-400 hover:text-indigo-300 transition-colors">
+                                <span class="text-sm">📝 Submit Research</span>
+                            </a>
+                            <a href="/research/peer-review" class="flex items-center space-x-2 text-purple-400 hover:text-purple-300 transition-colors">
+                                <span class="text-sm">👥 Peer Review</span>
+                            </a>
+                            <a href="/research/collaboration" class="flex items-center space-x-2 text-blue-400 hover:text-blue-300 transition-colors">
+                                <span class="text-sm">🤝 Collaboration</span>
+                            </a>
+                            <a href="/research/datasets" class="flex items-center space-x-2 text-green-400 hover:text-green-300 transition-colors">
+                                <span class="text-sm">💾 Open Datasets</span>
+                            </a>
+                            <a href="/research/tools" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300 transition-colors">
+                                <span class="text-sm">🔧 Research Tools</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        // Category filter functionality
+        document.querySelectorAll('button').forEach(button => {
+            if (button.textContent.includes('All Research') || button.textContent.includes('Multimodal')) {
+                button.addEventListener('click', function() {
+                    // Remove active class from all category buttons
+                    document.querySelectorAll('button').forEach(btn => {
+                        if (btn.classList.contains('bg-indigo-600')) {
+                            btn.classList.remove('bg-indigo-600');
+                            btn.classList.add('bg-gray-700', 'hover:bg-gray-600');
+                        }
+                    });
+
+                    // Add active class to clicked button
+                    this.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                    this.classList.add('bg-indigo-600');
+
+                    console.log('Research category filter:', this.textContent);
+                    filterResearch(this.textContent);
+                });
+            }
+        });
+
+        // Filter research papers by category
+        function filterResearch(category) {
+            const articles = document.querySelectorAll('article');
+            articles.forEach(article => {
+                const categoryTag = article.querySelector('span');
+                if (category === 'All Research' || categoryTag.textContent.includes(category.toUpperCase())) {
+                    article.style.display = 'block';
+                    article.style.opacity = '1';
+                } else {
+                    article.style.opacity = '0.3';
+                }
+            });
+        }
+
+        // Research alerts subscription
+        document.querySelector('button').addEventListener('click', function() {
+            if (this.textContent.includes('Subscribe to Alerts')) {
+                const email = document.querySelector('input[type="email"]').value;
+                const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+
+                if (email && checkboxes.length > 0) {
+                    alert('Thank you for subscribing to research alerts! You will receive updates based on your preferences.');
+                    document.querySelector('input[type="email"]').value = '';
+                    checkboxes.forEach(cb => cb.checked = false);
+                } else {
+                    alert('Please enter your email and select at least one alert preference.');
+                }
+            }
+        });
+
+        // Load more functionality
+        document.querySelector('button').addEventListener('click', function() {
+            if (this.textContent.includes('Load More Research')) {
+                alert('Loading more research papers... This would fetch additional publications from the server.');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Research paper tracking
+        function trackPaperView(paperTitle) {
+            console.log(`Viewing research paper: ${paperTitle}`);
+            // Implement analytics tracking here
+        }
+
+        // Add click tracking to research paper links
+        document.querySelectorAll('a[href^="/research/"]').forEach(link => {
+            link.addEventListener('click', function() {
+                const paperTitle = this.closest('article').querySelector('h3').textContent.trim();
+                trackPaperView(paperTitle);
+            });
+        });
+
+        // Download tracking
+        document.querySelectorAll('a[href$=".pdf"]').forEach(link => {
+            link.addEventListener('click', function() {
+                const paperTitle = this.closest('article').querySelector('h3').textContent.trim();
+                console.log(`Downloading PDF: ${paperTitle}`);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,626 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resources & Learning Hub - DevCrown</title>
+    <meta name="description" content="Comprehensive AI resources, tutorials, documentation, tools, and learning materials for developers, researchers, and businesses exploring artificial intelligence.">
+
+    <!-- SEO Meta Tags -->
+    <meta property="og:title" content="AI Resources & Learning Hub - DevCrown">
+    <meta property="og:description" content="Comprehensive AI resources, tutorials, and learning materials">
+    <meta property="og:image" content="{% static 'images/devcrown-resources-og.png' %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'favicon.ico' %}">
+    <link rel="apple-touch-icon" href="{% static 'apple-touch-icon.png' %}">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="h-full bg-gray-900 text-white">
+    <div class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black">
+
+        <!-- Header -->
+        <div class="bg-gray-800/50 backdrop-blur-sm border-b border-gray-700">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-600 rounded-full flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                                AI Resources Hub
+                            </h1>
+                            <p class="text-gray-400 text-sm">Learn, Build, and Innovate with AI</p>
+                        </div>
+                    </div>
+
+                    <!-- Search Bar -->
+                    <div class="hidden md:flex items-center space-x-4">
+                        <div class="relative">
+                            <input type="text" placeholder="Search resources..."
+                                   class="w-80 px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 text-sm focus:outline-none focus:border-purple-500">
+                            <svg class="absolute right-3 top-2.5 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </div>
+                        <span class="text-gray-400 text-sm">2,847 resources</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+            <!-- Hero Section -->
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+                    Everything You Need to Build with
+                    <span class="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">AI</span>
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+                    From beginner tutorials to advanced documentation, find all the resources you need
+                    to master artificial intelligence and build amazing applications.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#tutorials" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                        Start Learning
+                    </a>
+                    <a href="#documentation" class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                        View Documentation
+                    </a>
+                    <a href="#tools" class="border border-gray-600 hover:border-gray-500 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                        Explore Tools
+                    </a>
+                </div>
+            </div>
+
+            <!-- Resource Categories -->
+            <div class="mb-12">
+                <div class="flex flex-wrap gap-3 justify-center">
+                    <button class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold">All Resources</button>
+                    <button class="bg-gray-700 hover:bg-gray-600 text-gray-300 px-4 py-2 rounded-full text-sm transition-colors">Tutorials</button>
+                    <button class="bg-gray-700 hover:bg-gray-600 text-gray-300 px-4 py-2 rounded-full text-sm transition-colors">Documentation</button>
+                    <button class="bg-gray-700 hover:bg-gray-600 text-gray-300 px-4 py-2 rounded-full text-sm transition-colors">Tools & Libraries</button>
+                    <button class="bg-gray-700 hover:bg-gray-600 text-gray-300 px-4 py-2 rounded-full text-sm transition-colors">Code Examples</button>
+                    <button class="bg-gray-700 hover:bg-gray-600 text-gray-300 px-4 py-2 rounded-full text-sm transition-colors">Research Papers</button>
+                    <button class="bg-gray-700 hover:bg-gray-600 text-gray-300 px-4 py-2 rounded-full text-sm transition-colors">Datasets</button>
+                    <button class="bg-gray-700 hover:bg-gray-600 text-gray-300 px-4 py-2 rounded-full text-sm transition-colors">Templates</button>
+                </div>
+            </div>
+
+            <!-- Featured Resources Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+
+                <!-- Quick Start Guide -->
+                <div class="bg-gradient-to-br from-green-900/50 to-emerald-900/50 rounded-xl border border-green-500/30 p-6">
+                    <div class="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-3">Quick Start Guide</h3>
+                    <p class="text-gray-300 text-sm mb-4">
+                        Get up and running with OneLastAI in under 10 minutes. Perfect for beginners.
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <a href="/resources/quickstart" class="text-green-400 hover:text-green-300 font-semibold text-sm transition-colors">
+                            Start Here →
+                        </a>
+                        <span class="text-green-400 text-xs">5 min read</span>
+                    </div>
+                </div>
+
+                <!-- API Documentation -->
+                <div class="bg-gradient-to-br from-blue-900/50 to-indigo-900/50 rounded-xl border border-blue-500/30 p-6">
+                    <div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-3">API Documentation</h3>
+                    <p class="text-gray-300 text-sm mb-4">
+                        Complete reference for all OneLastAI APIs with examples and interactive testing.
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <a href="/resources/api-docs" class="text-blue-400 hover:text-blue-300 font-semibold text-sm transition-colors">
+                            View Docs →
+                        </a>
+                        <span class="text-blue-400 text-xs">Updated daily</span>
+                    </div>
+                </div>
+
+                <!-- Video Tutorials -->
+                <div class="bg-gradient-to-br from-red-900/50 to-pink-900/50 rounded-xl border border-red-500/30 p-6">
+                    <div class="w-12 h-12 bg-red-600 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293H15M9 10V9a2 2 0 012-2h2a2 2 0 012 2v1M9 10H7a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2h-2"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-3">Video Tutorials</h3>
+                    <p class="text-gray-300 text-sm mb-4">
+                        Step-by-step video guides covering everything from basics to advanced techniques.
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <a href="/resources/videos" class="text-red-400 hover:text-red-300 font-semibold text-sm transition-colors">
+                            Watch Now →
+                        </a>
+                        <span class="text-red-400 text-xs">47 videos</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+
+                <!-- Main Resources -->
+                <div class="lg:col-span-3">
+
+                    <!-- Tutorials Section -->
+                    <section id="tutorials" class="mb-12">
+                        <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                            <svg class="w-6 h-6 text-purple-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                            </svg>
+                            Learning Tutorials
+                        </h2>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                            <!-- Tutorial 1 -->
+                            <div class="bg-gray-800/50 backdrop-blur-sm rounded-lg border border-gray-700 p-6 hover:border-purple-500 transition-colors">
+                                <div class="flex items-start space-x-4">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                                        <span class="text-white font-bold text-lg">01</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="text-lg font-bold text-white mb-2">Getting Started with AI APIs</h3>
+                                        <p class="text-gray-300 text-sm mb-3">
+                                            Learn the fundamentals of integrating AI capabilities into your applications.
+                                        </p>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-purple-400 text-xs font-semibold">BEGINNER • 15 MIN</span>
+                                            <a href="/tutorials/ai-apis-basics" class="text-purple-400 hover:text-purple-300 font-semibold text-sm transition-colors">
+                                                Start →
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tutorial 2 -->
+                            <div class="bg-gray-800/50 backdrop-blur-sm rounded-lg border border-gray-700 p-6 hover:border-green-500 transition-colors">
+                                <div class="flex items-start space-x-4">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-green-600 to-teal-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                                        <span class="text-white font-bold text-lg">02</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="text-lg font-bold text-white mb-2">Building Your First Chatbot</h3>
+                                        <p class="text-gray-300 text-sm mb-3">
+                                            Create an intelligent conversational AI using natural language processing.
+                                        </p>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-green-400 text-xs font-semibold">BEGINNER • 25 MIN</span>
+                                            <a href="/tutorials/first-chatbot" class="text-green-400 hover:text-green-300 font-semibold text-sm transition-colors">
+                                                Start →
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tutorial 3 -->
+                            <div class="bg-gray-800/50 backdrop-blur-sm rounded-lg border border-gray-700 p-6 hover:border-yellow-500 transition-colors">
+                                <div class="flex items-start space-x-4">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-yellow-600 to-orange-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                                        <span class="text-white font-bold text-lg">03</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="text-lg font-bold text-white mb-2">Computer Vision Fundamentals</h3>
+                                        <p class="text-gray-300 text-sm mb-3">
+                                            Understand image recognition, object detection, and visual AI concepts.
+                                        </p>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-yellow-400 text-xs font-semibold">INTERMEDIATE • 35 MIN</span>
+                                            <a href="/tutorials/computer-vision" class="text-yellow-400 hover:text-yellow-300 font-semibold text-sm transition-colors">
+                                                Start →
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tutorial 4 -->
+                            <div class="bg-gray-800/50 backdrop-blur-sm rounded-lg border border-gray-700 p-6 hover:border-red-500 transition-colors">
+                                <div class="flex items-start space-x-4">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-red-600 to-pink-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                                        <span class="text-white font-bold text-lg">04</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="text-lg font-bold text-white mb-2">Advanced Multimodal AI</h3>
+                                        <p class="text-gray-300 text-sm mb-3">
+                                            Combine text, image, and audio processing for sophisticated AI applications.
+                                        </p>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-red-400 text-xs font-semibold">ADVANCED • 45 MIN</span>
+                                            <a href="/tutorials/multimodal-ai" class="text-red-400 hover:text-red-300 font-semibold text-sm transition-colors">
+                                                Start →
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Documentation Section -->
+                    <section id="documentation" class="mb-12">
+                        <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                            <svg class="w-6 h-6 text-blue-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            Technical Documentation
+                        </h2>
+
+                        <div class="space-y-4">
+
+                            <!-- Doc Item 1 -->
+                            <div class="bg-gray-800/30 rounded-lg p-6 border border-gray-700 hover:border-blue-500 transition-colors">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-lg font-bold text-white">REST API Reference</h3>
+                                            <p class="text-gray-300 text-sm">Complete reference for all API endpoints with examples</p>
+                                        </div>
+                                    </div>
+                                    <a href="/docs/api-reference" class="text-blue-400 hover:text-blue-300 font-semibold transition-colors">
+                                        View →
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Doc Item 2 -->
+                            <div class="bg-gray-800/30 rounded-lg p-6 border border-gray-700 hover:border-green-500 transition-colors">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center">
+                                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-lg font-bold text-white">SDKs & Libraries</h3>
+                                            <p class="text-gray-300 text-sm">Client libraries for Python, JavaScript, Go, and more</p>
+                                        </div>
+                                    </div>
+                                    <a href="/docs/sdks" class="text-green-400 hover:text-green-300 font-semibold transition-colors">
+                                        View →
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Doc Item 3 -->
+                            <div class="bg-gray-800/30 rounded-lg p-6 border border-gray-700 hover:border-purple-500 transition-colors">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center">
+                                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-lg font-bold text-white">Model Specifications</h3>
+                                            <p class="text-gray-300 text-sm">Detailed information about AI models and capabilities</p>
+                                        </div>
+                                    </div>
+                                    <a href="/docs/models" class="text-purple-400 hover:text-purple-300 font-semibold transition-colors">
+                                        View →
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Code Examples Section -->
+                    <section id="examples" class="mb-12">
+                        <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                            <svg class="w-6 h-6 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                            </svg>
+                            Code Examples & Templates
+                        </h2>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                            <!-- Example 1 -->
+                            <div class="bg-gray-800/50 backdrop-blur-sm rounded-lg border border-gray-700 overflow-hidden">
+                                <div class="bg-gray-900/50 px-4 py-3 border-b border-gray-700">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-green-400 text-sm font-mono">Python</span>
+                                        <button class="text-gray-400 hover:text-white text-sm">Copy</button>
+                                    </div>
+                                </div>
+                                <div class="p-4">
+                                    <h3 class="text-white font-semibold mb-2">Text Generation Example</h3>
+                                    <pre class="text-sm text-gray-300 bg-gray-900 p-3 rounded overflow-x-auto"><code>import onelastai
+
+client = onelastai.Client(api_key="your-key")
+
+response = client.generate_text(
+    prompt="Write a creative story about AI",
+    max_tokens=500,
+    temperature=0.8
+)
+
+print(response.text)</code></pre>
+                                    <a href="/examples/text-generation" class="text-green-400 hover:text-green-300 text-sm font-semibold mt-3 inline-block">
+                                        View Full Example →
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Example 2 -->
+                            <div class="bg-gray-800/50 backdrop-blur-sm rounded-lg border border-gray-700 overflow-hidden">
+                                <div class="bg-gray-900/50 px-4 py-3 border-b border-gray-700">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-yellow-400 text-sm font-mono">JavaScript</span>
+                                        <button class="text-gray-400 hover:text-white text-sm">Copy</button>
+                                    </div>
+                                </div>
+                                <div class="p-4">
+                                    <h3 class="text-white font-semibold mb-2">Image Analysis Example</h3>
+                                    <pre class="text-sm text-gray-300 bg-gray-900 p-3 rounded overflow-x-auto"><code>const oneLastAI = require('onelastai');
+
+const client = new oneLastAI.Client({
+  apiKey: process.env.ONELASTAI_API_KEY
+});
+
+const result = await client.analyzeImage({
+  imageUrl: 'https://example.com/image.jpg',
+  features: ['objects', 'text', 'faces']
+});
+
+console.log(result.analysis);</code></pre>
+                                    <a href="/examples/image-analysis" class="text-yellow-400 hover:text-yellow-300 text-sm font-semibold mt-3 inline-block">
+                                        View Full Example →
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="space-y-8">
+
+                    <!-- Quick Access -->
+                    <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700 p-6">
+                        <h3 class="text-lg font-bold text-white mb-4 flex items-center">
+                            <svg class="w-5 h-5 text-purple-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                            Quick Access
+                        </h3>
+                        <div class="space-y-3">
+                            <a href="/playground" class="flex items-center space-x-2 text-purple-400 hover:text-purple-300 transition-colors">
+                                <span class="text-sm">🎮 AI Playground</span>
+                            </a>
+                            <a href="/dashboard" class="flex items-center space-x-2 text-blue-400 hover:text-blue-300 transition-colors">
+                                <span class="text-sm">📊 API Dashboard</span>
+                            </a>
+                            <a href="/console" class="flex items-center space-x-2 text-green-400 hover:text-green-300 transition-colors">
+                                <span class="text-sm">💻 Developer Console</span>
+                            </a>
+                            <a href="/status" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300 transition-colors">
+                                <span class="text-sm">🟢 System Status</span>
+                            </a>
+                            <a href="/support" class="flex items-center space-x-2 text-red-400 hover:text-red-300 transition-colors">
+                                <span class="text-sm">🎧 Get Support</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Popular Resources -->
+                    <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700 p-6">
+                        <h3 class="text-lg font-bold text-white mb-4 flex items-center">
+                            <svg class="w-5 h-5 text-red-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                            </svg>
+                            Popular This Week
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-3">
+                                <span class="bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">1</span>
+                                <div>
+                                    <h4 class="text-white text-sm font-semibold mb-1">API Authentication Guide</h4>
+                                    <p class="text-gray-400 text-xs">2.3K views</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <span class="bg-orange-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">2</span>
+                                <div>
+                                    <h4 class="text-white text-sm font-semibold mb-1">Rate Limiting Best Practices</h4>
+                                    <p class="text-gray-400 text-xs">1.8K views</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <span class="bg-yellow-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">3</span>
+                                <div>
+                                    <h4 class="text-white text-sm font-semibold mb-1">Error Handling Patterns</h4>
+                                    <p class="text-gray-400 text-xs">1.5K views</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Community Resources -->
+                    <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700 p-6">
+                        <h3 class="text-lg font-bold text-white mb-4 flex items-center">
+                            <svg class="w-5 h-5 text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                            Community
+                        </h3>
+                        <div class="space-y-3">
+                            <a href="/community" class="flex items-center justify-between text-green-400 hover:text-green-300 transition-colors">
+                                <span class="text-sm">💬 Discussion Forum</span>
+                                <span class="text-xs text-gray-400">15.2K</span>
+                            </a>
+                            <a href="/discord" class="flex items-center justify-between text-blue-400 hover:text-blue-300 transition-colors">
+                                <span class="text-sm">🎮 Discord Server</span>
+                                <span class="text-xs text-gray-400">8.7K</span>
+                            </a>
+                            <a href="/github" class="flex items-center justify-between text-purple-400 hover:text-purple-300 transition-colors">
+                                <span class="text-sm">📚 GitHub Examples</span>
+                                <span class="text-xs text-gray-400">3.2K</span>
+                            </a>
+                            <a href="/stackoverflow" class="flex items-center justify-between text-orange-400 hover:text-orange-300 transition-colors">
+                                <span class="text-sm">❓ Stack Overflow</span>
+                                <span class="text-xs text-gray-400">1.9K</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Resource Stats -->
+                    <div class="bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-xl border border-gray-700 p-6">
+                        <h3 class="text-lg font-bold text-white mb-4">Resource Statistics</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Total Resources</span>
+                                <span class="text-purple-400 font-semibold">2,847</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Tutorials</span>
+                                <span class="text-blue-400 font-semibold">342</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Code Examples</span>
+                                <span class="text-green-400 font-semibold">1,156</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Documentation Pages</span>
+                                <span class="text-yellow-400 font-semibold">489</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Video Tutorials</span>
+                                <span class="text-red-400 font-semibold">47</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Search functionality
+        document.querySelector('input[type="text"]').addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            console.log('Searching resources for:', query);
+            // Implement search logic here
+        });
+
+        // Category filter functionality
+        document.querySelectorAll('button').forEach(button => {
+            if (button.textContent.includes('All Resources') || button.textContent.includes('Tutorials')) {
+                button.addEventListener('click', function() {
+                    // Remove active class from all category buttons
+                    document.querySelectorAll('button').forEach(btn => {
+                        if (btn.classList.contains('bg-purple-600')) {
+                            btn.classList.remove('bg-purple-600');
+                            btn.classList.add('bg-gray-700', 'hover:bg-gray-600');
+                        }
+                    });
+
+                    // Add active class to clicked button
+                    this.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                    this.classList.add('bg-purple-600');
+
+                    console.log('Resource category filter:', this.textContent);
+                });
+            }
+        });
+
+        // Copy code functionality
+        document.querySelectorAll('button').forEach(button => {
+            if (button.textContent.includes('Copy')) {
+                button.addEventListener('click', function() {
+                    const codeBlock = this.closest('.bg-gray-800\\/50').querySelector('code');
+                    if (codeBlock) {
+                        navigator.clipboard.writeText(codeBlock.textContent);
+                        this.textContent = 'Copied!';
+                        setTimeout(() => {
+                            this.textContent = 'Copy';
+                        }, 2000);
+                    }
+                });
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Resource tracking
+        function trackResourceView(resourceType, resourceName) {
+            console.log(`Viewing ${resourceType}: ${resourceName}`);
+            // Implement analytics tracking here
+        }
+
+        // Add click tracking to resource links
+        document.querySelectorAll('a[href^="/"]').forEach(link => {
+            link.addEventListener('click', function() {
+                const resourceType = this.closest('section')?.id || 'unknown';
+                const resourceName = this.textContent.trim();
+                trackResourceView(resourceType, resourceName);
+            });
+        });
+    </script>
+</body>
+</html>
