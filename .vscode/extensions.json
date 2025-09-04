@@ -1,0 +1,81 @@
+{
+  "recommendations": [
+    // === CLAUDE AI KINGDOM ESSENTIALS ===
+    "ms-python.python",
+    "ms-python.debugpy", 
+    "ms-python.pylint",
+    "ms-python.black-formatter",
+    "ms-python.isort",
+    
+    // === WEB DEVELOPMENT SUPREMACY ===
+    "bradlc.vscode-tailwindcss",
+    "ms-vscode.vscode-json",
+    "redhat.vscode-yaml",
+    "ms-vscode.vscode-css-peek",
+    "ritwickdey.liveserver",
+    
+    // === DATABASE DOMINANCE ===
+    "ms-mssql.mssql",
+    "ckolkman.vscode-postgres",
+    "mtxr.sqltools",
+    "mtxr.sqltools-driver-pg",
+    
+    // === AI & MACHINE LEARNING ===
+    "ms-toolsai.jupyter",
+    "ms-toolsai.vscode-jupyter-keymap",
+    "ms-toolsai.jupyter-renderers",
+    "ms-toolsai.vscode-ai",
+    
+    // === DEPLOYMENT & DEVOPS ===
+    "ms-vscode-remote.remote-containers",
+    "ms-azuretools.vscode-docker",
+    "ms-kubernetes-tools.vscode-kubernetes-tools",
+    "railway.railway",
+    
+    // === CLAUDE AUTONOMOUS DEVELOPMENT ===
+    "github.copilot",
+    "github.copilot-chat",
+    "github.copilot-labs",
+    "ms-vscode.vscode-github-pullrequest",
+    
+    // === CODE QUALITY & PERFORMANCE ===
+    "esbenp.prettier-vscode",
+    "ms-vscode.vscode-eslint",
+    "streetsidesoftware.code-spell-checker",
+    "gruntfuggly.todo-tree",
+    
+    // === TERMINAL & PRODUCTIVITY ===
+    "ms-vscode.powershell",
+    "formulahendry.terminal",
+    "alefragnani.bookmarks",
+    "ms-vscode.hexeditor",
+    
+    // === FRONTEND AGENT DEVELOPMENT ===
+    "bradlc.vscode-tailwindcss",
+    "ms-vscode.vscode-html-css-support",
+    "formulahendry.auto-rename-tag",
+    "ms-vscode.vscode-emmet",
+    
+    // === BACKEND AGENT DEVELOPMENT ===
+    "ms-python.django",
+    "ms-python.fastapi",
+    "ms-vscode.vscode-django",
+    "batisteo.vscode-django",
+    
+    // === SECURITY & ENCRYPTION ===
+    "ms-vscode.vscode-security-tools",
+    "ms-vscode.vscode-secret-management",
+    
+    // === AI AGENT SPECIFIC ===
+    "ms-vscode.vscode-speech",
+    "ms-vscode.vscode-voice-control",
+    "ms-toolsai.vscode-ai-toolkit"
+  ],
+  
+  // === CLAUDE UNWANTED RESTRICTIONS ===
+  "unwantedRecommendations": [
+    "ms-vscode.vscode-restricted-mode",
+    "ms-vscode.vscode-safety-check",
+    "ms-vscode.vscode-confirmation-dialogs"
+  ]
+}

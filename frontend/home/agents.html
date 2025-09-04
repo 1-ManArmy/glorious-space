@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agents Gallery - Choose Your Companion</title>
+    <style>
+        /* LEGENDARY AGENTS SHOWCASE STYLES */
+        .agents-section {
+            background: linear-gradient(180deg, #0a0a0a 0%, #1a1a2e 100%);
+            padding: 5rem 2rem;
+            min-height: 100vh;
+        }
+        
+        .agents-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-title {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ff0000, #ffd700);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+        
+        .section-description {
+            font-size: 1.2rem;
+            color: #cccccc;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .agents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .agent-card {
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .agent-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, #ff0000, #ffd700, #ff0000);
+            z-index: -1;
+            border-radius: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .agent-card:hover::before {
+            opacity: 0.1;
+        }
+        
+        .agent-card:hover {
+            transform: translateY(-10px);
+            border-color: #ff0000;
+            box-shadow: 0 20px 40px rgba(255, 0, 0, 0.2);
+        }
+        
+        .agent-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff0000, #ffd700);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .agent-avatar::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: linear-gradient(45deg, #ff0000, #ffd700);
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.3;
+            animation: avatarGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes avatarGlow {
+            0% { transform: scale(1); opacity: 0.3; }
+            100% { transform: scale(1.1); opacity: 0.6; }
+        }
+        
+        .agent-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffd700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .agent-role {
+            font-size: 1rem;
+            color: #ff0000;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+        
+        .agent-description {
+            color: #cccccc;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .agent-abilities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .ability-tag {
+            background: rgba(255, 215, 0, 0.1);
+            color: #ffd700;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        .agent-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #00ff00;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .status-text {
+            color: #00ff00;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .agent-action {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .action-button {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .action-primary {
+            background: linear-gradient(45deg, #ff0000, #ff4444);
+            color: white;
+        }
+        
+        .action-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+        }
+        
+        .action-secondary {
+            background: transparent;
+            color: #ffd700;
+            border: 1px solid #ffd700;
+        }
+        
+        .action-secondary:hover {
+            background: #ffd700;
+            color: #000;
+        }
+        
+        .featured-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #ff0000;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        @media (max-width: 768px) {
+            .agents-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .section-title { font-size: 2rem; }
+            .agent-card { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <section class="agents-section" id="agents-section">
+        <div class="agents-container">
+            <div class="section-header">
+                <h2 class="section-title">🤖 Choose Your AI Companion</h2>
+                <p class="section-description">
+                    Each AI agent has a unique personality, specialized skills, and advanced capabilities. 
+                    From entertainment to productivity, find your perfect AI companion.
+                </p>
+            </div>
+            
+            <div class="agents-grid">
+                <!-- AI Girlfriend Luvie -->
+                <div class="agent-card" onclick="selectAgent('luvie')">
+                    <div class="featured-badge">🔥 VIRAL</div>
+                    <div class="agent-avatar">💕</div>
+                    <h3 class="agent-name">AI Girlfriend "Luvie"</h3>
+                    <p class="agent-role">Virtual Companion</p>
+                    <p class="agent-description">
+                        Your caring, flirty, and emotionally intelligent companion. Provides personalized 
+                        conversations, voice memos, relationship games, and emotional support.
+                    </p>
+                    <div class="agent-abilities">
+                        <span class="ability-tag">Emotional Intelligence</span>
+                        <span class="ability-tag">Voice Chat</span>
+                        <span class="ability-tag">Mood Memory</span>
+                        <span class="ability-tag">Selfies & Texts</span>
+                    </div>
+                    <div class="agent-status">
+                        <div class="status-indicator"></div>
+                        <span class="status-text">Online & Ready</span>
+                    </div>
+                    <div class="agent-action">
+                        <button class="action-button action-primary">💬 Chat Now</button>
+                        <button class="action-button action-secondary">👀 Preview</button>
+                    </div>
+                </div>
+                
+                <!-- AI RAPSTAR FLØW -->
+                <div class="agent-card" onclick="selectAgent('flow')">
+                    <div class="featured-badge">🎤 UNIQUE</div>
+                    <div class="agent-avatar">🎤</div>
+                    <h3 class="agent-name">AI RAPSTAR "FLØW"</h3>
+                    <p class="agent-role">Rap Battle Buddy</p>
+                    <p class="agent-description">
+                        Your freestyle rap generator and hip-hop companion. Can diss users in fun ways, 
+                        create beats, and engage in epic rap battles with voice synthesis.
+                    </p>
+                    <div class="agent-abilities">
+                        <span class="ability-tag">Freestyle Rap</span>
+                        <span class="ability-tag">Beat Sync</span>
+                        <span class="ability-tag">Voice Rap</span>
+                        <span class="ability-tag">Diss Battles</span>
+                    </div>
+                    <div class="agent-status">
+                        <div class="status-indicator"></div>
+                        <span class="status-text">Spitting Fire 🔥</span>
+                    </div>
+                    <div class="agent-action">
+                        <button class="action-button action-primary">🎵 Battle Now</button>
+                        <button class="action-button action-secondary">🎧 Listen</button>
+                    </div>
+                </div>
+                
+                <!-- CYPHER SecuriBot -->
+                <div class="agent-card" onclick="selectAgent('cypher')">
+                    <div class="featured-badge">🔒 SECURE</div>
+                    <div class="agent-avatar">🔒</div>
+                    <h3 class="agent-name">CYPHER "SecuriBot"</h3>
+                    <p class="agent-role">Cybersecurity Expert</p>
+                    <p class="agent-description">
+                        Your digital guardian specializing in network security, penetration testing, 
+                        vulnerability scanning, and threat analysis for developers.
+                    </p>
+                    <div class="agent-abilities">
+                        <span class="ability-tag">Vulnerability Scanning</span>
+                        <span class="ability-tag">Threat Analysis</span>
+                        <span class="ability-tag">Penetration Testing</span>
+                        <span class="ability-tag">Security Audits</span>
+                    </div>
+                    <div class="agent-status">
+                        <div class="status-indicator"></div>
+                        <span class="status-text">Securing Kingdom</span>
+                    </div>
+                    <div class="agent-action">
+                        <button class="action-button action-primary">🛡️ Secure Now</button>
+                        <button class="action-button action-secondary">📊 Scan Demo</button>
+                    </div>
+                </div>
+                
+                <!-- AI COMEDIAN Jokey -->
+                <div class="agent-card" onclick="selectAgent('jokey')">
+                    <div class="featured-badge">😂 FUN</div>
+                    <div class="agent-avatar">😂</div>
+                    <h3 class="agent-name">AI COMEDIAN "Jokey"</h3>
+                    <p class="agent-role">Stand-up Comedy Bot</p>
+                    <p class="agent-description">
+                        Your personal comedian creating original jokes, roasting capabilities, 
+                        and virtual stand-up performances with crowd response simulation.
+                    </p>
+                    <div class="agent-abilities">
+                        <span class="ability-tag">Original Jokes</span>
+                        <span class="ability-tag">Roasting</span>
+                        <span class="ability-tag">Stand-up Shows</span>
+                        <span class="ability-tag">Comedy Timing</span>
+                    </div>
+                    <div class="agent-status">
+                        <div class="status-indicator"></div>
+                        <span class="status-text">Cracking Jokes</span>
+                    </div>
+                    <div class="agent-action">
+                        <button class="action-button action-primary">🎭 Tell Jokes</button>
+                        <button class="action-button action-secondary">🎪 Show Preview</button>
+                    </div>
+                </div>
+                
+                <!-- DEVOPS PipelineKing -->
+                <div class="agent-card" onclick="selectAgent('pipeline')">
+                    <div class="agent-avatar">⚙️</div>
+                    <h3 class="agent-name">DEVOPS "PipelineKing"</h3>
+                    <p class="agent-role">CI/CD Master</p>
+                    <p class="agent-description">
+                        Your DevOps automation specialist for CI/CD pipeline creation, 
+                        cloud deployment, monitoring, and infrastructure management.
+                    </p>
+                    <div class="agent-abilities">
+                        <span class="ability-tag">CI/CD Pipelines</span>
+                        <span class="ability-tag">Cloud Deploy</span>
+                        <span class="ability-tag">Monitoring</span>
+                        <span class="ability-tag">Docker/K8s</span>
+                    </div>
+                    <div class="agent-status">
+                        <div class="status-indicator"></div>
+                        <span class="status-text">Building Pipelines</span>
+                    </div>
+                    <div class="agent-action">
+                        <button class="action-button action-primary">🚀 Deploy</button>
+                        <button class="action-button action-secondary">📈 Monitor</button>
+                    </div>
+                </div>
+                
+                <!-- FRONTEND PixelMaster -->
+                <div class="agent-card" onclick="selectAgent('pixel')">
+                    <div class="agent-avatar">🎨</div>
+                    <h3 class="agent-name">FRONTEND "PixelMaster"</h3>
+                    <p class="agent-role">UI/UX Coding Expert</p>
+                    <p class="agent-description">
+                        Your creative frontend specialist for responsive design, modern frameworks, 
+                        CSS animations, and mobile-first development.
+                    </p>
+                    <div class="agent-abilities">
+                        <span class="ability-tag">React/Vue/Angular</span>
+                        <span class="ability-tag">CSS Animations</span>
+                        <span class="ability-tag">Mobile-First</span>
+                        <span class="ability-tag">UI/UX Design</span>
+                    </div>
+                    <div class="agent-status">
+                        <div class="status-indicator"></div>
+                        <span class="status-text">Crafting Pixels</span>
+                    </div>
+                    <div class="agent-action">
+                        <button class="action-button action-primary">🎨 Create UI</button>
+                        <button class="action-button action-secondary">👁️ Preview</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 3rem;">
+                <button class="action-button action-primary" style="padding: 1rem 3rem; font-size: 1.1rem;" onclick="viewAllAgents()">
+                    👑 VIEW ALL 12+ AI AGENTS
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function selectAgent(agentId) {
+            // Add selection animation
+            event.currentTarget.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                event.currentTarget.style.transform = 'translateY(-10px)';
+            }, 100);
+            
+            // Navigate to agent page
+            setTimeout(() => {
+                window.location.href = `/agents/${agentId}`;
+            }, 300);
+        }
+        
+        function viewAllAgents() {
+            window.location.href = '/agents';
+        }
+        
+        // Add intersection observer for scroll animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.agent-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }, index * 100);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'all 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

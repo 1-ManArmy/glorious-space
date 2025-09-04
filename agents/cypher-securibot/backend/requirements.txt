@@ -1,0 +1,38 @@
+# CYPHER SecuriBot - Security Agent Requirements
+# Advanced Cybersecurity AI with Real-time Threat Detection
+
+# Core Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+websockets==12.0
+
+# Security & Network Analysis
+python-nmap==0.7.1
+psutil==5.9.6
+requests==2.31.0
+scapy==2.5.0
+
+# Data Processing
+pydantic==2.5.0
+python-multipart==0.0.6
+
+# AI & Machine Learning (for threat analysis)
+transformers==4.36.0
+torch==2.1.0
+numpy==1.24.3
+
+# Logging & Monitoring
+python-json-logger==2.0.7
+
+# Security Tools
+cryptography==41.0.7
+paramiko==3.3.1
+pyopenssl==23.3.0
+
+# Database (for threat intelligence)
+sqlalchemy==2.0.23
+sqlite3
+
+# Additional Security Libraries
+yara-python==4.3.1
+volatility3==2.5.0

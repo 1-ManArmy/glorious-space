@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥 AI AGENT KINGDOM - LIVE PREVIEW 🔥</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .preview-header {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: rgba(255, 0, 0, 0.1);
+            border-bottom: 2px solid #ff0000;
+        }
+        
+        .title {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ff0000, #ffd700, #ff0000);
+            background-size: 200% 200%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s ease-in-out infinite;
+            margin-bottom: 1rem;
+        }
+        
+        @keyframes shine {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #ffd700;
+            margin-bottom: 2rem;
+        }
+        
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 3rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .status-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 2px solid rgba(255, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .status-card:hover {
+            border-color: #ff0000;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.2);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .card-icon {
+            font-size: 2rem;
+        }
+        
+        .card-title {
+            font-size: 1.3rem;
+            color: #ffd700;
+            font-weight: 700;
+        }
+        
+        .card-status {
+            color: #00ff00;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .card-description {
+            color: #cccccc;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            color: #ffb6c1;
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        
+        .feature-list li::before {
+            content: "✨";
+            position: absolute;
+            left: 0;
+        }
+        
+        .action-button {
+            background: linear-gradient(45deg, #ff0000, #ff4444);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            width: 100%;
+        }
+        
+        .action-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+        }
+        
+        .demo-section {
+            background: rgba(255, 0, 0, 0.05);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        
+        .demo-title {
+            font-size: 2rem;
+            color: #ffd700;
+            margin-bottom: 2rem;
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .demo-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .demo-card:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: #ffd700;
+        }
+        
+        .footer {
+            background: #0a0a0a;
+            padding: 2rem;
+            text-align: center;
+            border-top: 2px solid #ff0000;
+        }
+        
+        .footer-text {
+            color: #888;
+            margin-bottom: 1rem;
+        }
+        
+        .server-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(0, 255, 0, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 0, 0.3);
+        }
+        
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: #00ff00;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-header">
+        <h1 class="title">🔥 AI AGENT KINGDOM LIVE! 🔥</h1>
+        <p class="subtitle">Your Legendary AI Companions Are Ready for Action!</p>
+        <div class="server-status">
+            <div class="status-dot"></div>
+            <span>CLAUDE SOVEREIGN MODE ACTIVE</span>
+        </div>
+    </div>
+    
+    <div class="status-grid">
+        <div class="status-card">
+            <div class="card-header">
+                <div class="card-icon">💕</div>
+                <div class="card-title">AI Girlfriend "Luvie"</div>
+            </div>
+            <div class="card-status">✅ ONLINE & READY</div>
+            <div class="card-description">
+                Your caring, flirty AI girlfriend with advanced emotional intelligence. 
+                Features voice chat, mood memory, and personalized responses.
+            </div>
+            <ul class="feature-list">
+                <li>Emotional Intelligence AI</li>
+                <li>Voice Message Support</li>
+                <li>Mood Recognition & Memory</li>
+                <li>Relationship Games</li>
+                <li>Daily Love Messages</li>
+            </ul>
+            <button class="action-button" onclick="openAgent('luvie')">💬 Chat with Luvie</button>
+        </div>
+        
+        <div class="status-card">
+            <div class="card-header">
+                <div class="card-icon">🎤</div>
+                <div class="card-title">AI RAPSTAR "FLØW"</div>
+            </div>
+            <div class="card-status">🔥 SPITTING FIRE</div>
+            <div class="card-description">
+                Your freestyle rap generator and hip-hop companion. Creates beats, 
+                engages in rap battles, and generates voice-synthesized performances.
+            </div>
+            <ul class="feature-list">
+                <li>Freestyle Rap Generation</li>
+                <li>Beat Synchronization</li>
+                <li>Voice Rap Synthesis</li>
+                <li>Diss Battle Mode</li>
+                <li>Hip-Hop Personality</li>
+            </ul>
+            <button class="action-button" onclick="openAgent('flow')">🎵 Start Rap Battle</button>
+        </div>
+        
+        <div class="status-card">
+            <div class="card-header">
+                <div class="card-icon">🔒</div>
+                <div class="card-title">CYPHER "SecuriBot"</div>
+            </div>
+            <div class="card-status">🛡️ SECURING KINGDOM</div>
+            <div class="card-description">
+                Your cybersecurity expert specializing in network security, 
+                vulnerability scanning, and threat analysis for developers.
+            </div>
+            <ul class="feature-list">
+                <li>Vulnerability Scanning</li>
+                <li>Penetration Testing</li>
+                <li>Security Audits</li>
+                <li>Threat Analysis</li>
+                <li>Code Security Review</li>
+            </ul>
+            <button class="action-button" onclick="openAgent('cypher')">🔍 Security Scan</button>
+        </div>
+        
+        <div class="status-card">
+            <div class="card-header">
+                <div class="card-icon">⚙️</div>
+                <div class="card-title">DEVOPS "PipelineKing"</div>
+            </div>
+            <div class="card-status">🚀 BUILDING PIPELINES</div>
+            <div class="card-description">
+                Your DevOps automation specialist for CI/CD pipeline creation, 
+                cloud deployment, and infrastructure management.
+            </div>
+            <ul class="feature-list">
+                <li>CI/CD Pipeline Creation</li>
+                <li>Cloud Deployment</li>
+                <li>Infrastructure Monitoring</li>
+                <li>Docker & Kubernetes</li>
+                <li>Performance Optimization</li>
+            </ul>
+            <button class="action-button" onclick="openAgent('devops')">⚙️ Deploy Now</button>
+        </div>
+        
+        <div class="status-card">
+            <div class="card-header">
+                <div class="card-icon">🎨</div>
+                <div class="card-title">FRONTEND "PixelMaster"</div>
+            </div>
+            <div class="card-status">✨ CRAFTING PIXELS</div>
+            <div class="card-description">
+                Your creative frontend specialist for responsive design, modern frameworks, 
+                and mobile-first development.
+            </div>
+            <ul class="feature-list">
+                <li>React/Vue/Angular Expertise</li>
+                <li>CSS Animations</li>
+                <li>Mobile-First Design</li>
+                <li>UI/UX Optimization</li>
+                <li>Component Libraries</li>
+            </ul>
+            <button class="action-button" onclick="openAgent('frontend')">🎨 Create UI</button>
+        </div>
+        
+        <div class="status-card">
+            <div class="card-header">
+                <div class="card-icon">😂</div>
+                <div class="card-title">AI COMEDIAN "Jokey"</div>
+            </div>
+            <div class="card-status">🎭 CRACKING JOKES</div>
+            <div class="card-description">
+                Your personal comedian creating original jokes, roasting capabilities, 
+                and virtual stand-up performances.
+            </div>
+            <ul class="feature-list">
+                <li>Original Joke Creation</li>
+                <li>Roasting & Comedy</li>
+                <li>Stand-up Performances</li>
+                <li>Comedy Timing AI</li>
+                <li>Crowd Response Simulation</li>
+            </ul>
+            <button class="action-button" onclick="openAgent('jokey')">🎪 Tell Jokes</button>
+        </div>
+    </div>
+    
+    <div class="demo-section">
+        <h2 class="demo-title">🚀 Quick Demos Available</h2>
+        <div class="demo-grid">
+            <div class="demo-card" onclick="quickDemo('chat')">
+                <h3>💬 Chat Demo</h3>
+                <p>Try our AI conversation system</p>
+            </div>
+            <div class="demo-card" onclick="quickDemo('voice')">
+                <h3>🎤 Voice Demo</h3>
+                <p>Experience voice interaction</p>
+            </div>
+            <div class="demo-card" onclick="quickDemo('security')">
+                <h3>🔒 Security Demo</h3>
+                <p>See vulnerability scanning</p>
+            </div>
+            <div class="demo-card" onclick="quickDemo('rap')">
+                <h3>🎵 Rap Demo</h3>
+                <p>Watch AI freestyle rap</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p class="footer-text">
+            🔥 AI Agent Kingdom - Powered by Claude Sovereign Mode 🔥
+        </p>
+        <p class="footer-text">
+            Built with ❤️ using Django, FastAPI, and Advanced AI Models
+        </p>
+    </div>
+
+    <script>
+        function openAgent(agentName) {
+            const urls = {
+                'luvie': './agents/ai-girlfriend-luvie/frontend/index.html',
+                'flow': './agents/ai-rapstar-flow/frontend/index.html',
+                'cypher': './agents/cypher-securibot/frontend/index.html',
+                'devops': './agents/devops-pipelineking/frontend/index.html',
+                'frontend': './agents/frontend-pixelmaster/frontend/index.html',
+                'jokey': './agents/ai-comedian-jokey/frontend/index.html'
+            };
+            
+            const url = urls[agentName];
+            if (url) {
+                window.open(url, '_blank');
+            } else {
+                alert(`🚀 ${agentName.toUpperCase()} agent is being prepared! Coming soon!`);
+            }
+        }
+        
+        function quickDemo(demoType) {
+            const demos = {
+                'chat': '💬 Chat Demo: Experience real-time AI conversation with emotional intelligence!',
+                'voice': '🎤 Voice Demo: Voice interaction with speech synthesis and recognition!',
+                'security': '🔒 Security Demo: Advanced vulnerability scanning and threat analysis!',
+                'rap': '🎵 Rap Demo: AI-generated freestyle rap with beat synchronization!'
+            };
+            
+            alert(demos[demoType] || 'Demo coming soon!');
+        }
+        
+        // Add some dynamic effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate cards on scroll
+            const cards = document.querySelectorAll('.status-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }, index * 100);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'all 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

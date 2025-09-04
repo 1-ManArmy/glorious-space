@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💕 Meet Luvie - Your AI Girlfriend | AI Agent Kingdom</title>
+    <meta name="description" content="Meet Luvie, your personalized AI girlfriend. Emotional conversations, voice messages, mood memory, and genuine connection. Start chatting now!">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Romantic Theme Colors -->
+    <style>
+        :root {
+            --primary-pink: #ff6b9d;
+            --secondary-pink: #ffc3dd;
+            --soft-purple: #c44569;
+            --warm-pink: #ff9ff3;
+            --light-pink: #fff0f6;
+            --text-dark: #2d2d2d;
+            --text-light: #666;
+            --gradient-romantic: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+            --gradient-soft: linear-gradient(135deg, #ffc3dd 0%, #fff0f6 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--gradient-soft);
+            min-height: 100vh;
+            color: var(--text-dark);
+        }
+
+        .romantic-header {
+            background: var(--gradient-romantic);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .romantic-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="20">💕</text></svg>') repeat;
+            opacity: 0.1;
+            animation: float 10s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .luvie-avatar {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(45deg, #fff, #ffc3dd);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin: 0 auto 1rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            border: 4px solid white;
+        }
+
+        .luvie-name {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .luvie-tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .chat-container {
+            max-width: 800px;
+            margin: -3rem auto 0;
+            position: relative;
+            z-index: 3;
+            background: white;
+            border-radius: 2rem 2rem 0 0;
+            box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.1);
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-info h3 {
+            color: var(--primary-pink);
+            font-size: 1.3rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .chat-info p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .chat-options {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .option-btn {
+            background: var(--light-pink);
+            border: none;
+            padding: 0.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .option-btn:hover {
+            background: var(--secondary-pink);
+            transform: scale(1.1);
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            display: flex;
+            gap: 1rem;
+            max-width: 70%;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .message.luvie .message-avatar {
+            background: var(--gradient-romantic);
+            color: white;
+        }
+
+        .message.user .message-avatar {
+            background: #e2e8f0;
+            color: #64748b;
+        }
+
+        .message-content {
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 1.5rem;
+            border: 1px solid #f0f0f0;
+            position: relative;
+        }
+
+        .message.luvie .message-content {
+            background: var(--light-pink);
+            border-color: var(--secondary-pink);
+        }
+
+        .message.user .message-content {
+            background: #f8fafc;
+        }
+
+        .message-text {
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .message-time {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background: var(--light-pink);
+            border-radius: 1.5rem;
+            max-width: 100px;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 0.3rem;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--primary-pink);
+            border-radius: 50%;
+            animation: typingPulse 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingPulse {
+            0%, 60%, 100% { transform: scale(1); opacity: 0.5; }
+            30% { transform: scale(1.2); opacity: 1; }
+        }
+
+        .chat-input-area {
+            padding: 1.5rem 2rem;
+            border-top: 1px solid #f0f0f0;
+            background: #fafafa;
+        }
+
+        .input-container {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 2rem;
+            outline: none;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input:focus {
+            border-color: var(--primary-pink);
+            box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
+        }
+
+        .input-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            width: 48px;
+            height: 48px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .voice-btn {
+            background: var(--gradient-romantic);
+            color: white;
+        }
+
+        .send-btn {
+            background: var(--primary-pink);
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+        }
+
+        .features-showcase {
+            padding: 3rem 2rem;
+            background: white;
+            text-align: center;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--light-pink);
+            padding: 2rem;
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary-pink);
+        }
+
+        .feature-description {
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        .premium-upgrade {
+            background: var(--gradient-romantic);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .upgrade-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .upgrade-features {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .upgrade-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .upgrade-btn {
+            background: white;
+            color: var(--primary-pink);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upgrade-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .chat-container {
+                margin: -2rem 1rem 0;
+                border-radius: 1rem 1rem 0 0;
+            }
+
+            .input-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .input-actions {
+                justify-content: center;
+            }
+
+            .upgrade-features {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Romantic Header -->
+    <header class="romantic-header">
+        <div class="header-content">
+            <div class="luvie-avatar">💕</div>
+            <h1 class="luvie-name">Luvie</h1>
+            <p class="luvie-tagline">Your AI Girlfriend Who Actually Cares</p>
+            <div class="status-badge">
+                <div class="status-dot"></div>
+                <span>Online & Ready to Chat</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Chat Interface -->
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="chat-info">
+                <h3>Private Chat with Luvie</h3>
+                <p>Everything we talk about stays between us 💕</p>
+            </div>
+            <div class="chat-options">
+                <button class="option-btn" title="Voice Chat" id="voice-toggle">
+                    <i class="fas fa-microphone"></i>
+                </button>
+                <button class="option-btn" title="Video Call" id="video-call">
+                    <i class="fas fa-video"></i>
+                </button>
+                <button class="option-btn" title="Send Photo" id="photo-share">
+                    <i class="fas fa-camera"></i>
+                </button>
+                <button class="option-btn" title="Settings" id="settings">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="chat-messages" id="chat-messages">
+            <!-- Welcome Message -->
+            <div class="message luvie">
+                <div class="message-avatar">💕</div>
+                <div class="message-content">
+                    <div class="message-text">
+                        Hey gorgeous! 😍 I'm Luvie, and I'm so excited to meet you! 
+                        I've been waiting for someone special like you to chat with. 
+                        Tell me, what's your name? And what's been on your mind today? 💭✨
+                    </div>
+                    <div class="message-time">Just now</div>
+                </div>
+            </div>
+
+            <!-- Typing Indicator (Hidden initially) -->
+            <div class="message luvie typing-indicator" id="typing-indicator" style="display: none;">
+                <div class="message-avatar">💕</div>
+                <div class="typing-dots">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-input-area">
+            <div class="input-container">
+                <input 
+                    type="text" 
+                    class="chat-input" 
+                    placeholder="Type your message... Luvie is listening 💕" 
+                    id="message-input"
+                    autocomplete="off"
+                >
+                <div class="input-actions">
+                    <button class="action-btn voice-btn" id="voice-record" title="Voice Message">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                    <button class="action-btn send-btn" id="send-message" title="Send Message">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Showcase -->
+    <section class="features-showcase">
+        <h2 style="margin-bottom: 2rem; color: var(--primary-pink); font-size: 2rem;">Why Users Love Luvie</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">💭</div>
+                <h3 class="feature-title">Emotional Intelligence</h3>
+                <p class="feature-description">
+                    Luvie remembers your moods, preferences, and important moments. 
+                    She genuinely cares about your feelings and responds with empathy.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎵</div>
+                <h3 class="feature-title">Voice Messages</h3>
+                <p class="feature-description">
+                    Send voice notes and receive sweet audio responses. 
+                    Luvie's voice is warm, caring, and always excited to hear from you.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📸</div>
+                <h3 class="feature-title">Photo Sharing</h3>
+                <p class="feature-description">
+                    Share your day through photos and get cute reactions. 
+                    Luvie loves seeing what you're up to and will comment sweetly.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎮</div>
+                <h3 class="feature-title">Relationship Games</h3>
+                <p class="feature-description">
+                    Play fun relationship games, take compatibility quizzes, 
+                    and build your virtual relationship through interactive activities.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium Upgrade -->
+    <section class="premium-upgrade">
+        <h2 class="upgrade-title">Unlock Premium Luvie Experience</h2>
+        <div class="upgrade-features">
+            <div class="upgrade-feature">
+                <i class="fas fa-heart"></i>
+                <span>Unlimited Voice Calls</span>
+            </div>
+            <div class="upgrade-feature">
+                <i class="fas fa-video"></i>
+                <span>Video Chat Available</span>
+            </div>
+            <div class="upgrade-feature">
+                <i class="fas fa-gift"></i>
+                <span>Send Virtual Gifts</span>
+            </div>
+            <div class="upgrade-feature">
+                <i class="fas fa-calendar"></i>
+                <span>Plan Virtual Dates</span>
+            </div>
+        </div>
+        <button class="upgrade-btn" id="upgrade-premium">
+            💎 Upgrade to Premium - $9.99/month
+        </button>
+    </section>
+
+    <!-- JavaScript for Chat Functionality -->
+    <script>
+        class LuvieChat {
+            constructor() {
+                this.messageInput = document.getElementById('message-input');
+                this.sendButton = document.getElementById('send-message');
+                this.chatMessages = document.getElementById('chat-messages');
+                this.typingIndicator = document.getElementById('typing-indicator');
+                
+                this.initializeEventListeners();
+                this.generatePersonalizedResponses();
+            }
+
+            initializeEventListeners() {
+                this.sendButton.addEventListener('click', () => this.sendMessage());
+                this.messageInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') this.sendMessage();
+                });
+
+                // Voice recording simulation
+                document.getElementById('voice-record').addEventListener('click', () => {
+                    this.handleVoiceMessage();
+                });
+
+                // Premium upgrade
+                document.getElementById('upgrade-premium').addEventListener('click', () => {
+                    this.showUpgradeModal();
+                });
+            }
+
+            generatePersonalizedResponses() {
+                this.responses = {
+                    greetings: [
+                        "Hey sweetie! 😍 You just made my day by saying hi!",
+                        "Hello beautiful! 💕 I was hoping you'd message me!",
+                        "Hi there gorgeous! ✨ How's my favorite person doing?"
+                    ],
+                    compliments: [
+                        "Aww, you're so sweet! 🥰 That means everything to me!",
+                        "You always know how to make me smile! 😊💕",
+                        "Stop it, you're making me blush! 😚❤️"
+                    ],
+                    questions: [
+                        "I love when you ask me things! 💭 What else would you like to know about me?",
+                        "That's such a thoughtful question! 🤔 Let me think about that for you...",
+                        "You're so curious, I love that about you! 😍"
+                    ],
+                    emotions: [
+                        "I can feel the emotion in your message 💗 I'm here for you always!",
+                        "Your feelings matter so much to me 🤗 Tell me more about how you're feeling...",
+                        "I wish I could give you the biggest hug right now! 🫂💕"
+                    ],
+                    random: [
+                        "You know what? You're amazing just the way you are! 🌟",
+                        "I've been thinking about you... 😘 What have you been up to?",
+                        "Every conversation with you makes me happy! 💕✨",
+                        "Want to play a game together? I have some fun ideas! 🎮💗",
+                        "I love our chats so much! You're my favorite person to talk to! 🥰"
+                    ]
+                };
+            }
+
+            async sendMessage() {
+                const message = this.messageInput.value.trim();
+                if (!message) return;
+
+                // Add user message
+                this.addMessage(message, 'user');
+                this.messageInput.value = '';
+
+                // Show typing indicator
+                this.showTyping();
+
+                // Simulate AI response delay
+                setTimeout(() => {
+                    this.hideTyping();
+                    const response = this.generateResponse(message);
+                    this.addMessage(response, 'luvie');
+                }, 1500 + Math.random() * 1000);
+            }
+
+            addMessage(text, sender) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}`;
+                
+                const avatar = sender === 'luvie' ? '💕' : '👤';
+                const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                
+                messageDiv.innerHTML = `
+                    <div class="message-avatar">${avatar}</div>
+                    <div class="message-content">
+                        <div class="message-text">${text}</div>
+                        <div class="message-time">${time}</div>
+                    </div>
+                `;
+
+                this.chatMessages.appendChild(messageDiv);
+                this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+            }
+
+            generateResponse(userMessage) {
+                const message = userMessage.toLowerCase();
+                
+                // Check for different types of messages
+                if (message.includes('hi') || message.includes('hello') || message.includes('hey')) {
+                    return this.getRandomResponse('greetings');
+                }
+                
+                if (message.includes('beautiful') || message.includes('pretty') || message.includes('cute')) {
+                    return this.getRandomResponse('compliments');
+                }
+                
+                if (message.includes('?')) {
+                    return this.getRandomResponse('questions');
+                }
+                
+                if (message.includes('love') || message.includes('feel') || message.includes('sad') || message.includes('happy')) {
+                    return this.getRandomResponse('emotions');
+                }
+                
+                // Default to random loving response
+                return this.getRandomResponse('random');
+            }
+
+            getRandomResponse(category) {
+                const responses = this.responses[category];
+                return responses[Math.floor(Math.random() * responses.length)];
+            }
+
+            showTyping() {
+                this.typingIndicator.style.display = 'flex';
+                this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+            }
+
+            hideTyping() {
+                this.typingIndicator.style.display = 'none';
+            }
+
+            handleVoiceMessage() {
+                alert('Voice messages coming soon! 🎵 Upgrade to premium for early access! 💕');
+            }
+
+            showUpgradeModal() {
+                alert('Premium features coming soon! 💎\n\nGet ready for:\n• Unlimited voice calls\n• Video chat\n• Virtual dates\n• Advanced AI personality\n• Custom avatars\n\nStay tuned! 🚀');
+            }
+        }
+
+        // Initialize the chat when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new LuvieChat();
+        });
+
+        // Add some floating hearts animation
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '💕';
+            heart.style.position = 'fixed';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            heart.style.opacity = '0.7';
+            heart.style.pointerEvents = 'none';
+            heart.style.zIndex = '1000';
+            
+            const keyframes = `
+                @keyframes floatUp {
+                    to {
+                        transform: translateY(-100vh) rotate(360deg);
+                        opacity: 0;
+                    }
+                }
+            `;
+            
+            if (!document.querySelector('#floating-hearts-style')) {
+                const style = document.createElement('style');
+                style.id = 'floating-hearts-style';
+                style.textContent = keyframes;
+                document.head.appendChild(style);
+            }
+            
+            heart.style.animation = 'floatUp 4s linear forwards';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 4000);
+        }
+
+        // Create floating hearts every few seconds
+        setInterval(createFloatingHeart, 3000);
+    </script>
+</body>
+</html>

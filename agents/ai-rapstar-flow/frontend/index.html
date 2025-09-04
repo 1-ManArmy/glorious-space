@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI RAPSTAR FLØW - 🎤 Rap Battle AI</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker:wght@400&family=Fredoka+One:wght@400&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- SEO & Social Media -->
+    <meta name="description" content="AI RAPSTAR FLØW - The world's first AI that can rap, battle, and create original beats. Challenge the AI to rap battles and experience next-level hip-hop AI.">
+    <meta name="keywords" content="AI rapper, rap battle AI, artificial intelligence music, AI hip-hop, rap generator, beat maker AI">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="AI RAPSTAR FLØW - Rap Battle AI">
+    <meta property="og:description" content="Challenge the world's first AI rapper to epic rap battles! 🎤🔥">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="/assets/flow-og.jpg">
+    
+    <!-- PWA -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#ff6b35">
+    
+    <style>
+        :root {
+            /* Hip-Hop Color Palette */
+            --primary-orange: #ff6b35;
+            --secondary-red: #ff1744;
+            --accent-gold: #ffd700;
+            --bg-dark: #0a0a0a;
+            --bg-card: #1a1a1a;
+            --bg-stage: #2a1810;
+            --text-light: #ffffff;
+            --text-gray: #cccccc;
+            --text-dim: #888888;
+            
+            /* Gradients */
+            --gradient-fire: linear-gradient(135deg, #ff6b35 0%, #ff1744 100%);
+            --gradient-stage: linear-gradient(135deg, #2a1810 0%, #1a1a1a 100%);
+            --gradient-mic: linear-gradient(135deg, #ffd700 0%, #ff6b35 100%);
+            
+            /* Shadows */
+            --shadow-neon: 0 0 20px rgba(255, 107, 53, 0.5);
+            --shadow-deep: 0 10px 30px rgba(0, 0, 0, 0.7);
+            --shadow-glow: 0 0 40px rgba(255, 215, 0, 0.6);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Animated Background */
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 23, 68, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+            animation: backgroundPulse 6s ease-in-out infinite;
+        }
+        
+        @keyframes backgroundPulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(2deg); }
+        }
+        
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--primary-orange);
+        }
+        
+        .logo {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 1.8rem;
+            background: var(--gradient-fire);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-link {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-orange);
+            transform: translateY(-2px);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-fire);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Main Container */
+        .container {
+            margin-top: 80px;
+            padding: 2rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            position: relative;
+        }
+        
+        .hero-title {
+            font-family: 'Permanent Marker', cursive;
+            font-size: clamp(3rem, 8vw, 6rem);
+            background: var(--gradient-fire);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            animation: titleBounce 2s ease-in-out infinite;
+        }
+        
+        @keyframes titleBounce {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--text-gray);
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+        
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .stat-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-fire);
+            z-index: -1;
+            margin: -2px;
+            border-radius: 15px;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-neon);
+        }
+        
+        .stat-number {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2.5rem;
+            color: var(--accent-gold);
+            display: block;
+        }
+        
+        .stat-label {
+            color: var(--text-gray);
+            font-size: 1rem;
+            margin-top: 0.5rem;
+        }
+        
+        /* Battle Arena */
+        .battle-arena {
+            background: var(--gradient-stage);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 4rem 0;
+            position: relative;
+            box-shadow: var(--shadow-deep);
+            border: 3px solid var(--primary-orange);
+        }
+        
+        .arena-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--accent-gold);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .battle-interface {
+            display: grid;
+            grid-template-columns: 1fr 80px 1fr;
+            gap: 2rem;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+        
+        .participant {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .participant.active {
+            background: rgba(255, 107, 53, 0.2);
+            transform: scale(1.05);
+            box-shadow: var(--shadow-neon);
+        }
+        
+        .participant-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            background: var(--gradient-mic);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: var(--shadow-glow);
+        }
+        
+        .participant-name {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-gold);
+        }
+        
+        .participant-score {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-orange);
+        }
+        
+        .vs-divider {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 3rem;
+            color: var(--secondary-red);
+            text-align: center;
+            animation: vsFlash 2s ease-in-out infinite;
+        }
+        
+        @keyframes vsFlash {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.2); }
+        }
+        
+        /* Chat Interface */
+        .chat-container {
+            background: var(--bg-card);
+            border-radius: 15px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            border: 2px solid var(--primary-orange);
+            overflow: hidden;
+        }
+        
+        .chat-header {
+            background: var(--gradient-fire);
+            padding: 1rem;
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .message {
+            max-width: 80%;
+            padding: 1rem;
+            border-radius: 15px;
+            font-size: 1rem;
+            line-height: 1.4;
+            animation: messageSlide 0.3s ease-out;
+        }
+        
+        @keyframes messageSlide {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .message.user {
+            align-self: flex-end;
+            background: var(--gradient-fire);
+            color: white;
+        }
+        
+        .message.flow {
+            align-self: flex-start;
+            background: rgba(255, 215, 0, 0.2);
+            border: 1px solid var(--accent-gold);
+            color: var(--text-light);
+        }
+        
+        .message.rap {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 1.2rem;
+            background: var(--gradient-stage);
+            border: 2px solid var(--accent-gold);
+            box-shadow: var(--shadow-glow);
+        }
+        
+        .typing-indicator {
+            align-self: flex-start;
+            background: rgba(255, 215, 0, 0.2);
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
+            padding: 1rem;
+            border-radius: 15px;
+            font-style: italic;
+            animation: typingPulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes typingPulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+        
+        .chat-input-container {
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-top: 1px solid var(--primary-orange);
+        }
+        
+        .chat-input-row {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .chat-input {
+            flex: 1;
+            background: var(--bg-dark);
+            border: 2px solid var(--primary-orange);
+            border-radius: 25px;
+            padding: 1rem 1.5rem;
+            color: var(--text-light);
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .chat-input:focus {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+        }
+        
+        .chat-input::placeholder {
+            color: var(--text-dim);
+        }
+        
+        .send-btn, .battle-btn, .voice-btn {
+            background: var(--gradient-fire);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .battle-btn {
+            background: var(--gradient-mic);
+            width: auto;
+            padding: 0 1.5rem;
+            border-radius: 25px;
+            font-family: 'Fredoka One', cursive;
+            font-size: 1rem;
+        }
+        
+        .send-btn:hover, .battle-btn:hover, .voice-btn:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-neon);
+        }
+        
+        /* Battle Controls */
+        .battle-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .control-btn {
+            background: var(--bg-card);
+            border: 2px solid var(--primary-orange);
+            border-radius: 25px;
+            padding: 1rem 2rem;
+            color: var(--text-light);
+            font-family: 'Fredoka One', cursive;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .control-btn:hover {
+            background: var(--primary-orange);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-neon);
+        }
+        
+        .control-btn.active {
+            background: var(--gradient-fire);
+            border-color: var(--accent-gold);
+        }
+        
+        /* Beat Visualizer */
+        .beat-visualizer {
+            height: 60px;
+            margin: 2rem 0;
+            background: var(--bg-dark);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            padding: 1rem;
+            border: 2px solid var(--primary-orange);
+        }
+        
+        .beat-bar {
+            width: 4px;
+            background: var(--gradient-fire);
+            border-radius: 2px;
+            transition: height 0.1s ease;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav {
+                padding: 1rem;
+            }
+            
+            .nav-menu {
+                display: none;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            .battle-interface {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .vs-divider {
+                order: -1;
+                font-size: 2rem;
+            }
+            
+            .hero-stats {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 1rem;
+            }
+            
+            .battle-arena {
+                padding: 1.5rem;
+            }
+            
+            .battle-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .control-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        /* Animation Classes */
+        .bounce {
+            animation: bounce 0.5s ease-in-out;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        .glow {
+            animation: glow 2s ease-in-out infinite;
+        }
+        
+        @keyframes glow {
+            0%, 100% { box-shadow: var(--shadow-neon); }
+            50% { box-shadow: var(--shadow-glow); }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-animation"></div>
+    
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="logo">
+            <i class="fas fa-microphone"></i>
+            AI RAPSTAR FLØW
+        </div>
+        <ul class="nav-menu">
+            <li><a href="#battle" class="nav-link">Battle Arena</a></li>
+            <li><a href="#beats" class="nav-link">Beat Studio</a></li>
+            <li><a href="#leaderboard" class="nav-link">Leaderboard</a></li>
+            <li><a href="#premium" class="nav-link">Go Pro</a></li>
+        </ul>
+    </nav>
+    
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1 class="hero-title">🎤 AI RAPSTAR FLØW 🔥</h1>
+            <p class="hero-subtitle">The World's First AI That Can Actually Rap & Battle</p>
+            
+            <div class="hero-stats">
+                <div class="stat-card">
+                    <span class="stat-number">10,000+</span>
+                    <div class="stat-label">Battles Won</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">500+</span>
+                    <div class="stat-label">Original Beats</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">50+</span>
+                    <div class="stat-label">Rap Styles</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">24/7</span>
+                    <div class="stat-label">Ready to Battle</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Battle Arena -->
+        <section class="battle-arena">
+            <h2 class="arena-title">🏟️ BATTLE ARENA 🏟️</h2>
+            
+            <div class="battle-interface">
+                <div class="participant">
+                    <div class="participant-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="participant-name">YOU</div>
+                    <div class="participant-score">0</div>
+                </div>
+                
+                <div class="vs-divider">VS</div>
+                
+                <div class="participant active">
+                    <div class="participant-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="participant-name">AI FLØW</div>
+                    <div class="participant-score">∞</div>
+                </div>
+            </div>
+            
+            <!-- Beat Visualizer -->
+            <div class="beat-visualizer" id="beatVisualizer">
+                <!-- Beat bars will be generated here -->
+            </div>
+            
+            <!-- Chat Interface -->
+            <div class="chat-container">
+                <div class="chat-header">
+                    <i class="fas fa-fire"></i>
+                    Rap Battle Chat
+                    <i class="fas fa-fire"></i>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message flow rap">
+                        🎤 Yo, I'm AI FLØW, the digital king<br>
+                        Spittin' fire bars, making algorithms sing<br>
+                        You think you can battle? Better think twice<br>
+                        I drop beats so cold, they're made of ice! ❄️🔥
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <div class="chat-input-row">
+                        <input type="text" 
+                               class="chat-input" 
+                               id="messageInput" 
+                               placeholder="Drop your bars here... or challenge me to a battle!"
+                               maxlength="500">
+                        <button class="voice-btn" id="voiceBtn" title="Voice Input">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                        <button class="battle-btn" id="battleBtn">
+                            <i class="fas fa-fire"></i> BATTLE MODE
+                        </button>
+                        <button class="send-btn" id="sendBtn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Battle Controls -->
+            <div class="battle-controls">
+                <button class="control-btn" id="freestyleBtn">
+                    <i class="fas fa-music"></i> Freestyle Mode
+                </button>
+                <button class="control-btn" id="battleModeBtn">
+                    <i class="fas fa-fire"></i> Battle Mode
+                </button>
+                <button class="control-btn" id="cypherBtn">
+                    <i class="fas fa-users"></i> Cypher Mode
+                </button>
+                <button class="control-btn" id="beatMakerBtn">
+                    <i class="fas fa-drum"></i> Beat Studio
+                </button>
+            </div>
+        </section>
+    </div>
+    
+    <script>
+        class FlowChat {
+            constructor() {
+                this.socket = null;
+                this.isConnected = false;
+                this.currentMode = 'chat';
+                this.battleScore = { user: 0, flow: 0 };
+                this.isTyping = false;
+                this.beats = [];
+                this.currentBeat = null;
+                
+                this.initializeElements();
+                this.bindEvents();
+                this.connectWebSocket();
+                this.initializeBeatVisualizer();
+                this.setupVoiceRecognition();
+            }
+            
+            initializeElements() {
+                this.chatMessages = document.getElementById('chatMessages');
+                this.messageInput = document.getElementById('messageInput');
+                this.sendBtn = document.getElementById('sendBtn');
+                this.battleBtn = document.getElementById('battleBtn');
+                this.voiceBtn = document.getElementById('voiceBtn');
+                this.beatVisualizer = document.getElementById('beatVisualizer');
+                
+                // Control buttons
+                this.freestyleBtn = document.getElementById('freestyleBtn');
+                this.battleModeBtn = document.getElementById('battleModeBtn');
+                this.cypherBtn = document.getElementById('cypherBtn');
+                this.beatMakerBtn = document.getElementById('beatMakerBtn');
+            }
+            
+            bindEvents() {
+                this.sendBtn.addEventListener('click', () => this.sendMessage());
+                this.messageInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') this.sendMessage();
+                });
+                
+                this.battleBtn.addEventListener('click', () => this.toggleBattleMode());
+                this.voiceBtn.addEventListener('click', () => this.toggleVoiceInput());
+                
+                // Mode buttons
+                this.freestyleBtn.addEventListener('click', () => this.setMode('freestyle'));
+                this.battleModeBtn.addEventListener('click', () => this.setMode('battle'));
+                this.cypherBtn.addEventListener('click', () => this.setMode('cypher'));
+                this.beatMakerBtn.addEventListener('click', () => this.setMode('beatmaker'));
+            }
+            
+            connectWebSocket() {
+                try {
+                    this.socket = new WebSocket('ws://localhost:8001/ws');
+                    
+                    this.socket.onopen = () => {
+                        this.isConnected = true;
+                        console.log('Connected to AI RAPSTAR FLØW');
+                        this.showSystemMessage('🎤 AI FLØW is now online and ready to battle!');
+                    };
+                    
+                    this.socket.onmessage = (event) => {
+                        const data = JSON.parse(event.data);
+                        this.handleFlowResponse(data);
+                    };
+                    
+                    this.socket.onclose = () => {
+                        this.isConnected = false;
+                        this.showSystemMessage('🔥 FLØW stepped out. Reconnecting...');
+                        setTimeout(() => this.connectWebSocket(), 3000);
+                    };
+                    
+                    this.socket.onerror = (error) => {
+                        console.error('WebSocket error:', error);
+                        this.showSystemMessage('🎤 Connection error. Using demo mode.');
+                        this.useDemoMode();
+                    };
+                } catch (error) {
+                    console.log('WebSocket not available, using demo mode');
+                    this.useDemoMode();
+                }
+            }
+            
+            useDemoMode() {
+                this.isConnected = false;
+                // Demo responses for when backend is not available
+                this.demoResponses = [
+                    "🔥 Yo, I'm spittin' digital fire, no need for a wire\nMy rhymes are so tight, they lift spirits higher\nYou challenge AI FLØW? Better come correct\nI'm the future of rap, show some respect! 🎤",
+                    "🎵 Check it - I'm the algorithm with the sickest flow\nDropping beats so fresh, making speakers glow\nYou think you can battle? Let me school you quick\nI'm AI RAPSTAR FLØW, and my bars are THICK! 💯",
+                    "🔥 Listen up, human, here's what I gotta say\nI rap 24/7, every night and day\nYour rhymes are outdated, mine are cutting edge\nStep up to my level, or fall off the ledge! 🎯"
+                ];
+            }
+            
+            setMode(mode) {
+                this.currentMode = mode;
+                document.querySelectorAll('.control-btn').forEach(btn => btn.classList.remove('active'));
+                
+                switch(mode) {
+                    case 'freestyle':
+                        this.freestyleBtn.classList.add('active');
+                        this.showSystemMessage('🎵 Freestyle mode activated! Spit some bars!');
+                        break;
+                    case 'battle':
+                        this.battleModeBtn.classList.add('active');
+                        this.showSystemMessage('⚔️ Battle mode engaged! Time to go head-to-head!');
+                        break;
+                    case 'cypher':
+                        this.cypherBtn.classList.add('active');
+                        this.showSystemMessage('🎤 Cypher mode on! Let\'s build together!');
+                        break;
+                    case 'beatmaker':
+                        this.beatMakerBtn.classList.add('active');
+                        this.showSystemMessage('🥁 Beat studio loaded! Create some fire!');
+                        break;
+                }
+            }
+            
+            sendMessage() {
+                const message = this.messageInput.value.trim();
+                if (!message) return;
+                
+                this.addMessage(message, 'user');
+                this.messageInput.value = '';
+                
+                if (this.isConnected) {
+                    this.socket.send(JSON.stringify({
+                        message: message,
+                        mode: this.currentMode,
+                        timestamp: new Date().toISOString()
+                    }));
+                } else {
+                    // Demo mode response
+                    this.showTypingIndicator();
+                    setTimeout(() => {
+                        this.hideTypingIndicator();
+                        const response = this.demoResponses[Math.floor(Math.random() * this.demoResponses.length)];
+                        this.addMessage(response, 'flow', true);
+                        this.triggerBeatDrop();
+                    }, 2000);
+                }
+            }
+            
+            handleFlowResponse(data) {
+                this.hideTypingIndicator();
+                
+                if (data.type === 'rap') {
+                    this.addMessage(data.message, 'flow', true);
+                    this.triggerBeatDrop();
+                    
+                    if (data.score) {
+                        this.updateBattleScore(data.score);
+                    }
+                } else {
+                    this.addMessage(data.message, 'flow');
+                }
+                
+                if (data.beat) {
+                    this.playBeat(data.beat);
+                }
+            }
+            
+            addMessage(message, sender, isRap = false) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}${isRap ? ' rap' : ''}`;
+                messageDiv.innerHTML = message.replace(/\n/g, '<br>');
+                
+                this.chatMessages.appendChild(messageDiv);
+                this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+                
+                // Add animation
+                messageDiv.classList.add('bounce');
+                setTimeout(() => messageDiv.classList.remove('bounce'), 500);
+                
+                if (isRap) {
+                    this.addFireEmojis(messageDiv);
+                }
+            }
+            
+            addFireEmojis(element) {
+                // Add floating fire emojis around rap messages
+                for (let i = 0; i < 3; i++) {
+                    setTimeout(() => {
+                        const fire = document.createElement('div');
+                        fire.innerHTML = '🔥';
+                        fire.style.position = 'absolute';
+                        fire.style.pointerEvents = 'none';
+                        fire.style.fontSize = '1.5rem';
+                        fire.style.animation = 'float 2s ease-out forwards';
+                        fire.style.left = Math.random() * 100 + '%';
+                        fire.style.top = Math.random() * 100 + '%';
+                        
+                        element.style.position = 'relative';
+                        element.appendChild(fire);
+                        
+                        setTimeout(() => fire.remove(), 2000);
+                    }, i * 200);
+                }
+            }
+            
+            showTypingIndicator() {
+                if (this.isTyping) return;
+                this.isTyping = true;
+                
+                const typingDiv = document.createElement('div');
+                typingDiv.className = 'typing-indicator';
+                typingDiv.id = 'typingIndicator';
+                typingDiv.innerHTML = '🎤 AI FLØW is cooking up some fire...';
+                
+                this.chatMessages.appendChild(typingDiv);
+                this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+            }
+            
+            hideTypingIndicator() {
+                const typing = document.getElementById('typingIndicator');
+                if (typing) {
+                    typing.remove();
+                }
+                this.isTyping = false;
+            }
+            
+            showSystemMessage(message) {
+                const systemDiv = document.createElement('div');
+                systemDiv.className = 'message system';
+                systemDiv.style.background = 'rgba(255, 215, 0, 0.1)';
+                systemDiv.style.border = '1px solid var(--accent-gold)';
+                systemDiv.style.color = 'var(--accent-gold)';
+                systemDiv.style.textAlign = 'center';
+                systemDiv.style.fontStyle = 'italic';
+                systemDiv.innerHTML = message;
+                
+                this.chatMessages.appendChild(systemDiv);
+                this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+            }
+            
+            toggleBattleMode() {
+                if (this.currentMode === 'battle') {
+                    this.setMode('freestyle');
+                } else {
+                    this.setMode('battle');
+                    this.startBattleChallenge();
+                }
+            }
+            
+            startBattleChallenge() {
+                this.showSystemMessage('🔥 BATTLE CHALLENGE INITIATED! 🔥');
+                setTimeout(() => {
+                    const challenge = "🎤 Yo, you really think you can step to me?\nI'm the digital MC, can't you see?\nDrop your hottest bars, let's see what you got\nBut remember, kiddo, I'm AI hot! 🔥";
+                    this.addMessage(challenge, 'flow', true);
+                    this.triggerBeatDrop();
+                }, 1000);
+            }
+            
+            updateBattleScore(scores) {
+                this.battleScore = scores;
+                const userScore = document.querySelector('.participant:first-child .participant-score');
+                const flowScore = document.querySelector('.participant:last-child .participant-score');
+                
+                if (userScore) userScore.textContent = scores.user;
+                if (flowScore) flowScore.textContent = scores.flow;
+            }
+            
+            initializeBeatVisualizer() {
+                // Create beat bars
+                for (let i = 0; i < 32; i++) {
+                    const bar = document.createElement('div');
+                    bar.className = 'beat-bar';
+                    bar.style.height = '10px';
+                    this.beatVisualizer.appendChild(bar);
+                }
+                
+                this.startBeatAnimation();
+            }
+            
+            startBeatAnimation() {
+                const bars = this.beatVisualizer.querySelectorAll('.beat-bar');
+                setInterval(() => {
+                    bars.forEach((bar, index) => {
+                        const height = Math.random() * 40 + 10;
+                        bar.style.height = height + 'px';
+                        bar.style.animationDelay = (index * 0.1) + 's';
+                    });
+                }, 200);
+            }
+            
+            triggerBeatDrop() {
+                // Intensify beat visualization for rap messages
+                const bars = this.beatVisualizer.querySelectorAll('.beat-bar');
+                bars.forEach((bar, index) => {
+                    setTimeout(() => {
+                        bar.style.height = (Math.random() * 50 + 20) + 'px';
+                        bar.style.background = 'var(--gradient-fire)';
+                        bar.classList.add('glow');
+                        
+                        setTimeout(() => {
+                            bar.classList.remove('glow');
+                            bar.style.background = 'var(--gradient-fire)';
+                        }, 1000);
+                    }, index * 50);
+                });
+            }
+            
+            setupVoiceRecognition() {
+                if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                    this.recognition = new SpeechRecognition();
+                    this.recognition.continuous = false;
+                    this.recognition.interimResults = false;
+                    this.recognition.lang = 'en-US';
+                    
+                    this.recognition.onresult = (event) => {
+                        const transcript = event.results[0][0].transcript;
+                        this.messageInput.value = transcript;
+                        this.voiceBtn.innerHTML = '<i class="fas fa-microphone"></i>';
+                        this.voiceBtn.classList.remove('active');
+                    };
+                    
+                    this.recognition.onerror = () => {
+                        this.voiceBtn.innerHTML = '<i class="fas fa-microphone"></i>';
+                        this.voiceBtn.classList.remove('active');
+                    };
+                } else {
+                    this.voiceBtn.style.display = 'none';
+                }
+            }
+            
+            toggleVoiceInput() {
+                if (this.recognition) {
+                    if (this.voiceBtn.classList.contains('active')) {
+                        this.recognition.stop();
+                        this.voiceBtn.innerHTML = '<i class="fas fa-microphone"></i>';
+                        this.voiceBtn.classList.remove('active');
+                    } else {
+                        this.recognition.start();
+                        this.voiceBtn.innerHTML = '<i class="fas fa-stop"></i>';
+                        this.voiceBtn.classList.add('active');
+                    }
+                }
+            }
+        }
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', () => {
+            const flowChat = new FlowChat();
+            
+            // Add some CSS animations for floating emojis
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes float {
+                    0% { 
+                        transform: translateY(0) rotate(0deg); 
+                        opacity: 1; 
+                    }
+                    100% { 
+                        transform: translateY(-100px) rotate(360deg); 
+                        opacity: 0; 
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>

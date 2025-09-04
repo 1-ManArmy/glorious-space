@@ -1,0 +1,186 @@
+# AI RAPSTAR FLØW - Backend Dependencies
+# Advanced AI Rapper with Beat Synchronization & Voice Synthesis
+
+# FastAPI Core
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# WebSocket Support
+websockets==12.0
+python-socketio==5.10.0
+
+# AI & NLP Libraries
+transformers==4.36.0
+torch==2.1.0
+torchvision==0.16.0
+torchaudio==2.1.0
+sentencepiece==0.1.99
+tokenizers==0.15.0
+
+# Text Generation & Language Models
+openai==1.3.0
+anthropic==0.8.0
+huggingface-hub==0.19.4
+accelerate==0.25.0
+bitsandbytes==0.41.3
+
+# Speech & Audio Processing
+speechrecognition==3.10.0
+pydub==0.25.1
+librosa==0.10.1
+soundfile==0.12.1
+pyaudio==0.2.11
+whisper==1.1.10
+
+# Music & Beat Generation
+mido==1.3.0
+pretty-midi==0.2.10
+music21==9.1.0
+magenta==2.1.4
+tensorflow==2.15.0
+
+# Voice Synthesis
+pyttsx3==2.90
+gTTS==2.4.0
+espeak==1.48.15
+festival==2.5.0
+
+# Rhyme & Poetry Analysis
+pronouncing==0.2.0
+pyphen==0.14.0
+nltk==3.8.1
+spacy==3.7.2
+textblob==0.17.1
+
+# Real-time Audio
+realtime-tts==1.0.0
+voice-changer==1.0.0
+pitch-shifter==1.0.0
+
+# Database & Storage
+sqlalchemy==2.0.23
+psycopg2-binary==2.9.9
+alembic==1.13.0
+redis==5.0.1
+
+# Authentication & Security
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.6
+cryptography==41.0.8
+
+# HTTP & API
+httpx==0.25.2
+aiohttp==3.9.1
+requests==2.31.0
+
+# Data Processing
+pandas==2.1.4
+numpy==1.24.4
+scipy==1.11.4
+
+# JSON & Serialization
+orjson==3.9.10
+ujson==5.8.0
+
+# Environment & Configuration
+python-dotenv==1.0.0
+python-decouple==3.8
+
+# Logging & Monitoring
+loguru==0.7.2
+structlog==23.2.0
+
+# Testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+httpx==0.25.2
+
+# Development Tools
+black==23.11.0
+isort==5.12.0
+flake8==6.1.0
+mypy==1.7.1
+
+# Date & Time
+python-dateutil==2.8.2
+pytz==2023.3
+
+# Async Support
+asyncio==3.4.3
+aiofiles==23.2.1
+
+# CORS & Middleware
+python-cors==1.7.0
+
+# Image Processing (for album covers, avatars)
+Pillow==10.1.0
+opencv-python==4.8.1.78
+
+# Text Processing
+regex==2023.10.3
+unidecode==1.3.7
+
+# Math & Statistics
+sympy==1.12
+statsmodels==0.14.0
+
+# Utilities
+tqdm==4.66.1
+click==8.1.7
+rich==13.7.0
+
+# Performance & Caching
+cachetools==5.3.2
+memory-profiler==0.61.0
+
+# Web Scraping (for lyrics analysis)
+beautifulsoup4==4.12.2
+scrapy==2.11.0
+
+# Machine Learning
+scikit-learn==1.3.2
+xgboost==2.0.2
+
+# GPU Acceleration
+cupy-cuda12x==12.3.0
+
+# Audio Codecs
+ffmpeg-python==0.2.0
+
+# Poetry & Rhyme Analysis
+rhyming-dictionary==1.0.0
+syllables==1.0.6
+
+# Beat Detection
+aubio==0.4.9
+madmom==0.16.1
+
+# MIDI Processing
+python-rtmidi==1.5.6
+
+# Voice Effects
+pedalboard==0.8.7
+pysndfx==0.3.6
+
+# Real-time Communication
+aiortc==1.6.0
+websocket-client==1.6.4
+
+# File Format Support
+mutagen==1.47.0
+
+# Concurrent Processing
+asyncio-mqtt==0.13.0
+
+# Optional: Advanced AI Models (Comment out if not using GPU)
+# torch-audio==0.13.1+cu117
+# torchaudio==0.13.1+cu117
+
+# Production Server
+gunicorn==21.2.0
+
+# Health Monitoring
+psutil==5.9.6
