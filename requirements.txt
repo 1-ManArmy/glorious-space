@@ -38,7 +38,7 @@ psycopg2-binary~=2.9.9
 redis~=5.0.8
 
 # Security & Encryption
-cryptography~=42.0.5
+cryptography~=45.0.7
 
 # File Upload & Storage
 Pillow~=10.4.0
