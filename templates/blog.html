@@ -1,0 +1,205 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="h-full scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title|default:"DevCrown Blog" }}</title>
+    <meta name="description" content="{{ meta_description|default:'Latest insights and tutorials from DevCrown' }}">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #111827;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #a78bfa, #f472b6, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-style {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+        }
+    </style>
+</head>
+
+<body class="h-full bg-gray-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-gray-900/95 backdrop-blur-sm border-b border-gray-800 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-8">
+                    <a href="{% url 'core:index' %}" class="logo-style text-2xl font-bold text-white hover:text-blue-400 transition-colors">
+                        DevCrown
+                    </a>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="{% url 'core:index' %}" class="text-gray-300 hover:text-white transition-colors">
+                            <i class="fas fa-home mr-2"></i>Home
+                        </a>
+                        <a href="{% url 'agents:dashboard' %}" class="text-gray-300 hover:text-white transition-colors">
+                            <i class="fas fa-robot mr-2"></i>AI Agents
+                        </a>
+                        <a href="{% url 'core:blog' %}" class="text-white font-semibold">
+                            <i class="fas fa-blog mr-2"></i>Blog
+                        </a>
+                        <a href="{% url 'core:projects' %}" class="text-gray-300 hover:text-white transition-colors">
+                            <i class="fas fa-code mr-2"></i>Projects
+                        </a>
+                        <a href="{% url 'core:dashboard' %}" class="text-gray-300 hover:text-white transition-colors">
+                            <i class="fas fa-chart-bar mr-2"></i>Dashboard
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-16">
+        <!-- Hero Section -->
+        <section class="py-20 bg-gradient-to-r from-purple-900/40 to-blue-900/40">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-4xl sm:text-5xl font-bold text-white mb-6">
+                    DevCrown <span class="text-gradient">Blog</span>
+                </h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Insights, tutorials, and updates from the world of AI and conversation systems
+                </p>
+            </div>
+        </section>
+
+        <!-- Blog Content -->
+        <section class="py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Search and Filters -->
+                <div class="mb-12">
+                    <div class="flex flex-col md:flex-row gap-4 justify-between items-center">
+                        <!-- Search -->
+                        <form method="GET" class="flex flex-1 max-w-md">
+                            <input type="text" name="search" value="{{ search_query|default:'' }}" 
+                                   placeholder="Search articles..." 
+                                   class="flex-1 px-4 py-2 bg-gray-800 border border-gray-700 rounded-l-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-500">
+                            <button type="submit" class="px-6 py-2 bg-purple-600 text-white rounded-r-lg hover:bg-purple-700 transition-colors">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                        
+                        <!-- Categories -->
+                        <div class="flex flex-wrap gap-2">
+                            <a href="{% url 'core:blog' %}" 
+                               class="px-3 py-1 rounded-full text-sm {% if not current_category %}bg-purple-600 text-white{% else %}bg-gray-800 text-gray-300 hover:bg-gray-700{% endif %} transition-colors">
+                                All
+                            </a>
+                            {% for category in categories %}
+                            <a href="?category={{ category }}" 
+                               class="px-3 py-1 rounded-full text-sm {% if current_category == category %}bg-purple-600 text-white{% else %}bg-gray-800 text-gray-300 hover:bg-gray-700{% endif %} transition-colors">
+                                {{ category }}
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blog Posts Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {% for post in blog_posts %}
+                    <article class="bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700 hover:border-purple-500 transition-all overflow-hidden">
+                        <div class="aspect-video bg-gradient-to-br from-purple-900/50 to-blue-900/50 flex items-center justify-center">
+                            <i class="fas fa-blog text-4xl text-purple-400"></i>
+                        </div>
+                        
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="bg-purple-600/20 text-purple-300 px-2 py-1 rounded text-xs">
+                                    {{ post.category }}
+                                </span>
+                                <span class="text-gray-400 text-sm">{{ post.read_time }}</span>
+                            </div>
+                            
+                            <h3 class="text-xl font-bold text-white mb-3 hover:text-purple-400 transition-colors">
+                                <a href="#">{{ post.title }}</a>
+                            </h3>
+                            
+                            <p class="text-gray-400 mb-4 line-clamp-3">{{ post.excerpt }}</p>
+                            
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                                        <span class="text-white text-xs font-bold">{{ post.author|slice:":1" }}</span>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-white">{{ post.author }}</p>
+                                        <p class="text-xs text-gray-500">{{ post.date|date:"M d, Y" }}</p>
+                                    </div>
+                                </div>
+                                
+                                <a href="#" class="text-purple-400 hover:text-purple-300 text-sm font-semibold">
+                                    Read More <i class="fas fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                    {% empty %}
+                    <div class="col-span-full text-center py-16">
+                        <i class="fas fa-search text-6xl text-gray-600 mb-4"></i>
+                        <p class="text-gray-400 text-lg">No articles found matching your search.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Pagination -->
+                {% if blog_posts.has_other_pages %}
+                <div class="mt-12 flex justify-center">
+                    <nav class="flex space-x-2">
+                        {% if blog_posts.has_previous %}
+                        <a href="?page={{ blog_posts.previous_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}" 
+                           class="px-4 py-2 bg-gray-800 text-gray-300 rounded hover:bg-gray-700 transition-colors">
+                            Previous
+                        </a>
+                        {% endif %}
+                        
+                        <span class="px-4 py-2 bg-purple-600 text-white rounded">
+                            Page {{ blog_posts.number }} of {{ blog_posts.paginator.num_pages }}
+                        </span>
+                        
+                        {% if blog_posts.has_next %}
+                        <a href="?page={{ blog_posts.next_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}" 
+                           class="px-4 py-2 bg-gray-800 text-gray-300 rounded hover:bg-gray-700 transition-colors">
+                            Next
+                        </a>
+                        {% endif %}
+                    </nav>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="text-center text-gray-400">
+                <p>&copy; 2024 DevCrown. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

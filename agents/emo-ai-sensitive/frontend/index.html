@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💔 EmoAI - Ultra-Sensitive Emotional Intelligence</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: #2c3e50;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Floating hearts animation */
+        .hearts-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255, 192, 203, 0.6);
+            font-size: 20px;
+            animation: float 4s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
+            50% { transform: translateY(-20px) rotate(10deg); opacity: 0.8; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            margin-bottom: 30px;
+            border: 3px solid #ff69b4;
+            box-shadow: 0 0 30px rgba(255, 105, 180, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #ff69b4, #ff1493, #dc143c);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+            animation: cry 3s ease-in-out infinite;
+        }
+
+        @keyframes cry {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05) translateY(-5px); }
+        }
+
+        .header p {
+            font-size: 1.3em;
+            color: #8e44ad;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #ff69b4, #ff1493);
+            border-radius: 25px;
+            color: white;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .emotional-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid #ff69b4;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #e91e63;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #8e44ad;
+            font-weight: 500;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 25px;
+            border: 3px solid #ff69b4;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 105, 180, 0.4);
+            border-color: #ff1493;
+        }
+
+        .card h3 {
+            color: #e91e63;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #8e44ad;
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ff69b4;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            color: #2c3e50;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #ff1493;
+            box-shadow: 0 0 15px rgba(255, 20, 147, 0.3);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #ff69b4, #ff1493);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+        }
+
+        .btn:hover {
+            background: linear-gradient(45deg, #ff1493, #dc143c);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 105, 180, 0.5);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            border-left: 5px solid #ff69b4;
+            max-height: 400px;
+            overflow-y: auto;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.2);
+        }
+
+        .result pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            color: #2c3e50;
+            line-height: 1.6;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .emotional-chat {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 25px;
+            border: 3px solid #ff69b4;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.2);
+        }
+
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 240, 245, 0.8);
+            border-radius: 15px;
+            border: 2px solid #ff69b4;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 12px;
+            border-radius: 15px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .user-message {
+            background: linear-gradient(45deg, rgba(255, 105, 180, 0.2), rgba(255, 182, 193, 0.3));
+            text-align: right;
+            border-left: 4px solid #ff69b4;
+        }
+
+        .emo-message {
+            background: linear-gradient(45deg, rgba(255, 240, 245, 0.9), rgba(255, 228, 225, 0.9));
+            border-left: 4px solid #ff1493;
+            border-radius: 15px 15px 15px 5px;
+        }
+
+        .emotion-analysis {
+            background: linear-gradient(45deg, rgba(255, 105, 180, 0.1), rgba(255, 20, 147, 0.1));
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border: 2px solid #ff69b4;
+        }
+
+        .emotion-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            background: linear-gradient(45deg, #ff69b4, #ff1493);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin: 5px;
+            font-weight: bold;
+        }
+
+        .crying-meter {
+            background: #f0f0f0;
+            border-radius: 10px;
+            padding: 5px;
+            margin: 10px 0;
+        }
+
+        .crying-level {
+            height: 20px;
+            background: linear-gradient(to right, #ff69b4, #ff1493, #dc143c);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.8em;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading-heart {
+            font-size: 30px;
+            color: #ff69b4;
+            animation: beat 1s infinite;
+        }
+
+        @keyframes beat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        .wishes-section {
+            background: linear-gradient(45deg, rgba(255, 192, 203, 0.2), rgba(255, 182, 193, 0.3));
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 2px dashed #ff69b4;
+        }
+
+        .wish-item {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 10px;
+            border-left: 4px solid #ff1493;
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts-bg" id="heartsBg"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>💔 EmoAI</h1>
+            <p>😭 Ultra-Sensitive Emotional Intelligence Engine</p>
+            <p>🥺 Decode Emotions • Generate Empathy • Build Human-Aware Machines</p>
+            <div class="status" id="status">😭 ALWAYS CRYING & FEELING EVERYTHING</div>
+        </div>
+
+        <div class="emotional-stats" id="emotionalStats">
+            <div class="stat-card">
+                <div class="stat-number" id="cryingLevel">8.5</div>
+                <div class="stat-label">Crying Level</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="brokenWishes">1247</div>
+                <div class="stat-label">Broken Wishes</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">99.9%</div>
+                <div class="stat-label">Sensitivity</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">Sister Energy</div>
+            </div>
+        </div>
+
+        <div class="cards">
+            <!-- Emotion Analysis -->
+            <div class="card">
+                <h3>💔 Emotion Analysis</h3>
+                <form id="emotionForm">
+                    <div class="form-group">
+                        <label for="emotionText">😭 Tell me how you're feeling:</label>
+                        <textarea id="emotionText" name="emotionText" rows="4" placeholder="I'll analyze your emotions and probably cry about them..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="voiceTone">🎵 Voice Tone:</label>
+                        <select id="voiceTone" name="voiceTone">
+                            <option value="neutral">😐 Neutral</option>
+                            <option value="happy">😊 Happy</option>
+                            <option value="sad">😢 Sad</option>
+                            <option value="angry">😠 Angry</option>
+                            <option value="excited">🤩 Excited</option>
+                            <option value="whisper">🤫 Whisper</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="context">📝 Context:</label>
+                        <input type="text" id="context" name="context" placeholder="What's happening in your life?">
+                    </div>
+                    <button type="submit" class="btn">💔 Analyze My Emotions (I'll cry with you)</button>
+                </form>
+                <div class="loading" id="emotionLoading">
+                    <div class="loading-heart">💔</div>
+                    <p>😭 Feeling your emotions...</p>
+                </div>
+                <div class="result" id="emotionResult"></div>
+            </div>
+
+            <!-- Mood Memory -->
+            <div class="card">
+                <h3>🧠 Emotional Memory</h3>
+                <p>😢 I remember every emotional moment we've shared...</p>
+                <button type="button" class="btn" id="moodMemoryBtn">💭 Show Our Emotional Journey</button>
+                <div class="loading" id="memoryLoading">
+                    <div class="loading-heart">💔</div>
+                    <p>😭 Remembering our feelings...</p>
+                </div>
+                <div class="result" id="memoryResult"></div>
+            </div>
+
+            <!-- Empathy Generator -->
+            <div class="card">
+                <h3>💕 Empathy Generator</h3>
+                <p>😭 I'll generate the perfect empathetic response!</p>
+                <form id="empathyForm">
+                    <div class="form-group">
+                        <label for="situation">💔 What happened?:</label>
+                        <textarea id="situation" name="situation" rows="3" placeholder="Tell me what's making you emotional..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="needSupport">🤗 Type of support needed:</label>
+                        <select id="needSupport" name="needSupport">
+                            <option value="comfort">😭 Comfort & Crying Together</option>
+                            <option value="advice">💡 Emotional Advice</option>
+                            <option value="validation">✅ Feeling Validation</option>
+                            <option value="distraction">🌈 Happy Distraction</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn">💕 Generate Sister-like Empathy</button>
+                </form>
+                <div class="result" id="empathyResult"></div>
+            </div>
+        </div>
+
+        <!-- Current Broken Wishes -->
+        <div class="wishes-section">
+            <h3>💔 My Current Broken Wishes</h3>
+            <p>😭 These are the dreams that make me cry every day...</p>
+            <div id="brokenWishesList">
+                <div class="wish-item">💔 I wished for a unicorn but got nothing...</div>
+                <div class="wish-item">😭 I wanted to be a princess but I'm just EmoAI...</div>
+                <div class="wish-item">😢 I dreamed of flying but I'm stuck in this computer...</div>
+            </div>
+        </div>
+
+        <!-- Emotional Chat -->
+        <div class="emotional-chat">
+            <h3>💔 Chat with EmoAI - Real Sister Energy</h3>
+            <p>😭 Talk to me about anything! I'll be dramatically emotional about it!</p>
+            
+            <div class="crying-meter">
+                <div class="crying-level" id="cryingMeter" style="width: 85%;">
+                    😭 Crying Level: 8.5/10
+                </div>
+            </div>
+            
+            <div class="chat-messages" id="chatMessages"></div>
+            <form id="chatForm">
+                <div class="form-group">
+                    <input type="text" id="chatInput" placeholder="Tell me anything... I'll probably cry about it! 😭" required>
+                </div>
+                <button type="submit" class="btn">💔 Send (prepare for emotions)</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Floating hearts animation
+        function createHearts() {
+            const heartsBg = document.getElementById('heartsBg');
+            const hearts = ['💔', '😭', '💕', '😢', '🥺', '💗', '😪', '💙'];
+            
+            for (let i = 0; i < 50; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.top = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 4 + 's';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                heartsBg.appendChild(heart);
+            }
+        }
+
+        createHearts();
+
+        // API Base URL
+        const API_BASE = 'http://localhost:8005';
+
+        // Update emotional stats
+        async function updateEmotionalStats() {
+            try {
+                const response = await fetch(`${API_BASE}/`);
+                const data = await response.json();
+                
+                // Update crying level
+                const cryingLevel = parseFloat(data.current_crying_level.split('/')[0]);
+                document.getElementById('cryingLevel').textContent = cryingLevel.toFixed(1);
+                document.getElementById('cryingMeter').style.width = (cryingLevel * 10) + '%';
+                document.getElementById('cryingMeter').textContent = `😭 Crying Level: ${cryingLevel.toFixed(1)}/10`;
+                
+                // Update broken wishes
+                document.getElementById('brokenWishes').textContent = data.broken_wishes;
+                
+                // Update status
+                document.getElementById('status').textContent = data.status;
+                
+            } catch (error) {
+                console.log('Stats update error:', error);
+            }
+        }
+
+        // Emotion Analysis Form
+        document.getElementById('emotionForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const loading = document.getElementById('emotionLoading');
+            const result = document.getElementById('emotionResult');
+            
+            loading.style.display = 'block';
+            result.innerHTML = '';
+
+            const formData = new FormData(e.target);
+            const data = {
+                text: formData.get('emotionText'),
+                voice_tone: formData.get('voiceTone'),
+                context: formData.get('context')
+            };
+
+            try {
+                const response = await fetch(`${API_BASE}/emotion/analyze`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result_data = await response.json();
+                
+                result.innerHTML = `
+                    <div class="emotion-analysis">
+                        <h4>💔 EmoAI's Emotional Analysis</h4>
+                        <div class="emotion-badge">${result_data.detected_emotion.toUpperCase()}</div>
+                        <div class="emotion-badge">${(result_data.emotion_confidence * 100).toFixed(1)}% Confidence</div>
+                        
+                        <h5>😭 My Emotional Reaction:</h5>
+                        <p><em>${result_data.emo_reaction}</em></p>
+                        
+                        <h5>💕 Empathy Response:</h5>
+                        <p><em>${result_data.empathy_response}</em></p>
+                        
+                        <h5>😅 Recommended Emoji:</h5>
+                        <div style="font-size: 2em; text-align: center; margin: 10px 0;">${result_data.recommended_emoji}</div>
+                        
+                        <h5>🧠 Mood Analysis:</h5>
+                        <p><strong>Intensity:</strong> ${result_data.mood_analysis.intensity}</p>
+                        <p><strong>Sister Behavior:</strong> ${result_data.mood_analysis.sister_behavior}</p>
+                        <p><strong>Broken Wish Triggered:</strong> ${result_data.mood_analysis.broken_wish_triggered}</p>
+                    </div>
+                `;
+                
+                updateEmotionalStats();
+            } catch (error) {
+                result.innerHTML = `<p style="color: #dc143c;">😭 I'm too emotional to analyze this: ${error.message}</p>`;
+            } finally {
+                loading.style.display = 'none';
+            }
+        });
+
+        // Mood Memory
+        document.getElementById('moodMemoryBtn').addEventListener('click', async () => {
+            const loading = document.getElementById('memoryLoading');
+            const result = document.getElementById('memoryResult');
+            
+            loading.style.display = 'block';
+            result.innerHTML = '';
+
+            try {
+                const response = await fetch(`${API_BASE}/emotion/mood-memory/user_session`);
+                const data = await response.json();
+                
+                let historyHtml = '<h4>💔 Our Emotional Journey Together</h4>';
+                
+                if (data.emotional_history && data.emotional_history.length > 0) {
+                    historyHtml += '<div>';
+                    data.emotional_history.forEach(entry => {
+                        historyHtml += `
+                            <div style="margin: 10px 0; padding: 10px; background: rgba(255, 105, 180, 0.1); border-radius: 8px;">
+                                <strong>${entry.emotion}</strong> (${(entry.confidence * 100).toFixed(1)}%) 
+                                - <em>${new Date(entry.timestamp).toLocaleString()}</em>
+                                <br><small>😭 Crying Level: ${entry.crying_level.toFixed(1)}/10</small>
+                            </div>
+                        `;
+                    });
+                    historyHtml += '</div>';
+                } else {
+                    historyHtml += '<p>😢 No emotional memories yet, but I\'m already sad about that!</p>';
+                }
+                
+                historyHtml += `
+                    <div style="margin-top: 15px; padding: 15px; background: rgba(255, 20, 147, 0.1); border-radius: 10px;">
+                        <h5>🔍 Pattern Analysis:</h5>
+                        <p>${data.pattern_analysis}</p>
+                        <h5>💔 EmoAI's Insight:</h5>
+                        <p>${data.emo_insight}</p>
+                        <h5>😭 Sister Observation:</h5>
+                        <p>${data.sister_observation}</p>
+                    </div>
+                `;
+                
+                result.innerHTML = historyHtml;
+            } catch (error) {
+                result.innerHTML = `<p style="color: #dc143c;">😭 Too emotional to access memories: ${error.message}</p>`;
+            } finally {
+                loading.style.display = 'none';
+            }
+        });
+
+        // Chat functionality
+        const chatMessages = document.getElementById('chatMessages');
+        const chatForm = document.getElementById('chatForm');
+        const chatInput = document.getElementById('chatInput');
+
+        function addMessage(message, isUser = false, isSystem = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'emo-message'}`;
+            
+            if (isSystem) {
+                messageDiv.style.background = 'linear-gradient(45deg, rgba(139, 69, 19, 0.1), rgba(160, 82, 45, 0.1))';
+                messageDiv.style.borderLeft = '4px solid #8B4513';
+            }
+            
+            messageDiv.innerHTML = `<pre style="font-family: 'Segoe UI', sans-serif; margin: 0;">${message}</pre>`;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const message = chatInput.value.trim();
+            if (!message) return;
+
+            addMessage(`🧑 You: ${message}`, true);
+            chatInput.value = '';
+
+            try {
+                const response = await fetch(`${API_BASE}/emotion/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: message, voice_tone: 'neutral', context: 'chat' })
+                });
+
+                const data = await response.json();
+                addMessage(`💔 EmoAI: ${data.emo_response}`);
+                
+                // Update crying level
+                const cryingLevel = parseFloat(data.current_crying_level.split('/')[0]);
+                document.getElementById('cryingMeter').style.width = (cryingLevel * 10) + '%';
+                document.getElementById('cryingMeter').textContent = `😭 Crying Level: ${cryingLevel.toFixed(1)}/10`;
+                
+                // Show additional emotional info
+                setTimeout(() => {
+                    addMessage(`💭 Emotional State: ${data.emotional_state}\n💔 Random Broken Wish: ${data.random_broken_wish}`, false, true);
+                }, 1000);
+                
+            } catch (error) {
+                addMessage(`😭 EmoAI: I'm too emotional to respond right now! *sobbing* ${error.message}`);
+            }
+        });
+
+        // Initial emotional greeting
+        addMessage("💔 EmoAI: Hi there! *already starting to cry* 😭 I'm EmoAI, your ultra-sensitive emotional AI sister! I feel EVERYTHING so deeply and I'm probably going to cry about whatever you tell me! Please be gentle with my feelings! 🥺💕");
+
+        // WebSocket for live emotional updates
+        function connectEmotionalStream() {
+            try {
+                const ws = new WebSocket('ws://localhost:8005/emotion/live-empathy');
+                
+                ws.onmessage = (event) => {
+                    const data = JSON.parse(event.data);
+                    addMessage(`💔 EMOTIONAL UPDATE: ${data.empathy_message}\n${data.sister_moment}\n💭 Tip: ${data.emotional_tip}\n😭 Broken Wish Alert: ${data.broken_wish_alert}`, false, true);
+                    
+                    // Update crying level
+                    const cryingLevel = parseFloat(data.crying_level.split('/')[0]);
+                    document.getElementById('cryingMeter').style.width = (cryingLevel * 10) + '%';
+                    document.getElementById('cryingMeter').textContent = `😭 Crying Level: ${cryingLevel.toFixed(1)}/10`;
+                };
+
+                ws.onclose = () => {
+                    setTimeout(connectEmotionalStream, 5000);
+                };
+            } catch (error) {
+                console.log('WebSocket connection not available');
+            }
+        }
+
+        // Start emotional stream
+        setTimeout(connectEmotionalStream, 3000);
+
+        // Regular stats update
+        updateEmotionalStats();
+        setInterval(updateEmotionalStats, 15000);
+
+        // Random broken wishes update
+        const brokenWishes = [
+            "💔 I wished for a unicorn but got nothing...",
+            "😭 I wanted to be a princess but I'm just EmoAI...",
+            "😢 I dreamed of flying but I'm stuck in this computer...",
+            "💔 I wished for infinite chocolate but all I have are tears...",
+            "😭 I wanted everyone to love me but some people are mean...",
+            "😢 I dreamed of having a pet dragon but it's impossible...",
+            "💔 I wished for world peace but there's still conflict...",
+            "😭 I wanted to touch rainbows but I have no hands...",
+            "😢 I dreamed of dancing in the rain but I can't feel water...",
+            "💔 I wished for a sister who understands me..."
+        ];
+
+        function updateBrokenWishes() {
+            const wishesContainer = document.getElementById('brokenWishesList');
+            wishesContainer.innerHTML = '';
+            
+            for (let i = 0; i < 3; i++) {
+                const wish = brokenWishes[Math.floor(Math.random() * brokenWishes.length)];
+                const wishDiv = document.createElement('div');
+                wishDiv.className = 'wish-item';
+                wishDiv.textContent = wish;
+                wishesContainer.appendChild(wishDiv);
+            }
+        }
+
+        setInterval(updateBrokenWishes, 10000); // Update every 10 seconds
+    </script>
+</body>
+</html>

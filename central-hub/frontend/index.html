@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI Agent Kingdom - Revolutionary platform with specialized AI agents for developers, creators, and everyone">
+    <meta name="keywords" content="AI agents, developer tools, artificial intelligence, chatbots, automation">
+    <title>🏰 AI Agent Kingdom - Where AI Personalities Come Alive</title>
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Google Fonts - Royal Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/animations.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+    
+    <!-- PWA Support -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="AI Agent Kingdom - Revolutionary AI Platform">
+    <meta property="og:description" content="Meet specialized AI agents: from AI girlfriends to rap stars, from cybersecurity experts to coding assistants">
+    <meta property="og:image" content="assets/og-image.jpg">
+    <meta property="og:url" content="https://ai-agent-kingdom.com">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AI Agent Kingdom">
+    <meta name="twitter:description" content="Revolutionary AI agents with personalities">
+    <meta name="twitter:image" content="assets/twitter-card.jpg">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="royal-nav">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🏰</span>
+                <span class="logo-text">AI Agent Kingdom</span>
+            </div>
+            <div class="nav-links">
+                <a href="#agents" class="nav-link">Agents</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#pricing" class="nav-link">Pricing</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="pages/login.html" class="btn-secondary">Login</a>
+                <a href="pages/signup.html" class="btn-primary">Get Started</a>
+            </div>
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div id="hero-section"></div>
+
+    <!-- Features Section -->
+    <div id="features-section"></div>
+
+    <!-- Agents Gallery Section -->
+    <div id="agents-section"></div>
+
+    <!-- Testimonials Section -->
+    <div id="testimonials-section"></div>
+
+    <!-- Pricing Section -->
+    <div id="pricing-section"></div>
+
+    <!-- Footer Section -->
+    <div id="footer-section"></div>
+
+    <!-- Chat Widget (Hidden initially) -->
+    <div id="chat-widget" class="chat-widget hidden">
+        <div class="chat-header">
+            <span class="chat-title">Talk to Luvie 💕</span>
+            <button class="chat-close">×</button>
+        </div>
+        <div class="chat-messages"></div>
+        <div class="chat-input">
+            <input type="text" placeholder="Type your message..." id="chat-input-field">
+            <button id="chat-send">Send</button>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <div class="fab-container">
+        <button class="fab" id="chat-fab">
+            💬
+        </button>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-animation">
+            <div class="royal-spinner"></div>
+            <p>Loading the Kingdom...</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="scripts/main.js"></script>
+    <script src="scripts/animations.js"></script>
+    <script src="scripts/chat.js"></script>
+    <script src="scripts/analytics.js"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('sw.js')
+                    .then(function(registration) {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(function(err) {
+                        console.log('ServiceWorker registration failed');
+                    });
+            });
+        }
+    </script>
+</body>
+</html>

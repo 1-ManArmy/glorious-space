@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#020617" />
+    <meta name="description"
+        content="OneLastAI - The ultimate multi-agent AI platform for intelligent automation and AI-powered solutions" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <title>OneLastAI - Multi-Agent AI Platform</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <meta name="keywords"
+        content="AI, artificial intelligence, multi-agent, automation, machine learning, AI platform, intelligent agents" />
+    <meta name="author" content="OneLastAI Team" />
+    <meta property="og:title" content="OneLastAI - Multi-Agent AI Platform" />
+    <meta property="og:description"
+        content="Build, deploy, and scale intelligent AI agents with our cutting-edge multi-agent platform" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="%PUBLIC_URL%/og-image.png" />
+
+    <style>
+        /* CSS Reset and Base Styles */
+        :root {
+            --slate-950: #020617;
+            --slate-900: #0f172a;
+            --slate-800: #1e293b;
+            --slate-700: #334155;
+            --slate-400: #94a3b8;
+            --gray-100: #f3f4f6;
+            --gray-300: #d1d5db;
+            --cyan-400: #22d3ee;
+            --purple-400: #c084fc;
+            --pink-400: #f472b6;
+            --green-400: #4ade80;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--slate-950);
+            color: var(--gray-300);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Background Effects */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: repeating-linear-gradient(0deg, rgba(34, 211, 238, 0.05) 0px, transparent 1px, transparent 40px), repeating-linear-gradient(90deg, rgba(192, 132, 252, 0.05) 0px, transparent 1px, transparent 40px);
+            opacity: 0.5;
+        }
+
+        /* Loader Styles */
+        #initial-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--slate-950);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        .loader-content h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--gray-100);
+            margin-bottom: 0.5rem;
+        }
+
+        .loader-content p {
+            color: var(--slate-400);
+        }
+
+        .spinner {
+            border: 4px solid var(--slate-800);
+            border-top: 4px solid var(--cyan-400);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1.5rem;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Utility and Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 4rem;
+            color: var(--gray-100);
+            text-align: center;
+        }
+
+        /* Header Styles */
+        /* Removed .main-header, .logo, .main-nav styles */
+
+        /* Button Styles */
+        .button-primary,
+        .button-secondary {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        /* Removed .button-primary and .button-secondary specific styles */
+
+        /* Main Content */
+        main {
+            /* Removed padding-top for fixed header */
+        }
+
+        /* Hero Section */
+        /* Removed .hero styles */
+
+        /* Features Section */
+        .features {
+            padding: 6rem 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background-color: rgba(15, 23, 42, 0.6);
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--slate-800);
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--cyan-400);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--gray-100);
+        }
+
+        .feature-card p {
+            color: var(--slate-400);
+        }
+
+        /* Press Section */
+        .press {
+            padding: 6rem 0;
+        }
+
+        .press-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .press-card {
+            background: var(--slate-900);
+            border: 1px solid var(--slate-800);
+            border-radius: 16px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease-in-out;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .press-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-color: var(--press-color, var(--cyan-400));
+        }
+
+        .press-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .press-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            color: var(--slate-950);
+            background-color: var(--press-color, var(--cyan-400));
+        }
+
+        .press-badge {
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            color: var(--press-color, var(--cyan-400));
+            background-color: rgba(var(--press-color-rgb), 0.1);
+            border: 1px solid rgba(var(--press-color-rgb), 0.3);
+        }
+
+        .press-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-100);
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .press-card .excerpt {
+            color: var(--slate-400);
+            flex-grow: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .press-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--slate-400);
+        }
+
+        .press-rating span {
+            color: gold;
+        }
+
+        /* Newsletter Section */
+        .newsletter-section {
+            padding: 6rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .animated-bg-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            background-color: var(--cyan-400);
+            border-radius: 50%;
+            opacity: 0;
+            animation: float 25s infinite ease-in-out;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 0.3;
+            }
+
+            75% {
+                opacity: 0.1;
+            }
+        }
+
+        .newsletter-crystal-container {
+            background: var(--slate-900);
+            border: 1px solid var(--slate-800);
+            border-radius: 24px;
+            padding: 4rem;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-crystal-container:hover {
+            border-color: var(--cyan-400);
+            box-shadow: 0 0 30px rgba(34, 211, 238, 0.1);
+        }
+
+        .newsletter-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--gray-100), var(--slate-400));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .newsletter-subtitle {
+            font-size: 1.125rem;
+            color: var(--slate-400);
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .form-container {
+            display: flex;
+            gap: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .newsletter-input {
+            flex-grow: 1;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--slate-700);
+            background-color: var(--slate-950);
+            color: var(--gray-100);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            border-color: var(--cyan-400);
+            box-shadow: 0 0 10px rgba(34, 211, 238, 0.2);
+        }
+
+        .newsletter-button {
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            background-image: linear-gradient(to right, var(--purple-400), var(--cyan-400));
+            color: var(--slate-950);
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(34, 211, 238, 0.2);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Removed .final-cta-button styles */
+
+        /* Footer Styles */
+        /*
+        .main-footer {
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid var(--slate-800);
+            margin-top: 4rem;
+        }
+
+        .main-footer p {
+            color: var(--slate-400);
+        }
+        */
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .main-nav {
+                display: none;
+                /* Simple hiding for mobile, can be replaced with a burger menu */
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title,
+            .newsletter-title {
+                font-size: 2rem;
+            }
+
+            .form-container {
+                flex-direction: column;
+            }
+
+            .newsletter-crystal-container {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <noscript>
+        <div class="noscript-warning">
+            <h1>OneLastAI</h1>
+            <p>You need to enable JavaScript to run this AI-powered application.</p>
+        </div>
+    </noscript>
+
+    <div id="initial-loader">
+        <div class="loader-content">
+            <div class="spinner"></div>
+            <h2>OneLastAI</h2>
+            <p>Initializing AI Platform...</p>
+        </div>
+    </div>
+
+    <div id="root">
+        <!-- Removed Header Section -->
+
+        <main>
+            <!-- Removed Hero Section -->
+
+            <section class="features" id="features">
+                <div class="container">
+                    <h2 class="section-title">An End-to-End AI Ecosystem</h2>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <h3>Intelligent Agents</h3>
+                            <p>Design and deploy autonomous agents that can reason, learn, and act.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3>Multi-Agent Collaboration</h3>
+                            <p>Orchestrate complex workflows by enabling seamless agent collaboration.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3>Scalable Automation</h3>
+                            <p>Automate complex tasks at scale with our robust and reliable infrastructure.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3>Machine Learning Models</h3>
+                            <p>Integrate state-of-the-art ML models or bring your own.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="press" id="press">
+                <div class="container">
+                    <h2 class="section-title">From the Press</h2>
+                    <div class="press-grid">
+                        <a href="#" class="press-card"
+                            style="--press-color: var(--green-400); --press-color-rgb: 74, 222, 128;">
+                            <div class="press-card-header">
+                                <div class="press-logo">TC</div>
+                                <div class="press-badge">Editor's Choice</div>
+                            </div>
+                            <h3>Revolutionary AI Platform Changing How People Learn to Code</h3>
+                            <p class="excerpt">OneLastAI's phantom-powered learning platform represents a quantum leap
+                                in educational technology...</p>
+                            <div class="press-card-footer">
+                                <div class="publication">TechCrunch</div>
+                                <div class="press-rating">
+                                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="#" class="press-card"
+                            style="--press-color: var(--pink-400); --press-color-rgb: 244, 114, 182;">
+                            <div class="press-card-header">
+                                <div class="press-logo">WR</div>
+                                <div class="press-badge">Must Read</div>
+                            </div>
+                            <h3>The Phantom AI Teaching the Next Generation of Developers</h3>
+                            <p class="excerpt">In the shadowy realm of artificial intelligence, OneLastAI emerges as a
+                                groundbreaking force...</p>
+                            <div class="press-card-footer">
+                                <div class="publication">Wired</div>
+                                <div class="press-rating">
+                                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="#" class="press-card"
+                            style="--press-color: var(--purple-400); --press-color-rgb: 192, 132, 252;">
+                            <div class="press-card-header">
+                                <div class="press-logo">FB</div>
+                                <div class="press-badge">Top Pick</div>
+                            </div>
+                            <h3>Best AI Learning Platform of 2025</h3>
+                            <p class="excerpt">Forbes recognizes OneLastAI as the premier AI-powered learning platform
+                                transforming education...</p>
+                            <div class="press-card-footer">
+                                <div class="publication">Forbes</div>
+                                <div class="press-rating">
+                                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- REFACTORED NEWSLETTER SECTION -->
+            <section class="newsletter-section">
+                <div class="animated-bg-particles" id="particle-container"></div>
+                <div class="container mx-auto px-4 relative z-10">
+                    <div class="newsletter-crystal-container text-center max-w-4xl mx-auto">
+                        <h2 class="newsletter-title">Stay Connected</h2>
+                        <p class="newsletter-subtitle">
+                            Subscribe for the latest updates, AI insights, and exclusive offers.
+                        </p>
+
+                        <div class="newsletter-form" data-controller="newsletter" data-newsletter-target="form">
+                            <form action="/newsletter" method="POST" data-newsletter-target="emailForm"
+                                data-action="submit->newsletter#submitEmail">
+                                <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                                <input type="hidden" name="recipient" value="info@onelastai.com">
+
+                                <div class="form-container">
+                                    <input type="email" name="email" placeholder="Enter your email address..."
+                                        class="newsletter-input" data-newsletter-target="emailInput" required>
+                                    <button type="submit" class="newsletter-button"
+                                        data-newsletter-target="submitButton">
+                                        <span data-newsletter-target="buttonText">Subscribe</span>
+                                        <span data-newsletter-target="buttonSpinner" class="hidden">
+                                            <svg class="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                                style="width: 20px; height: 20px; display: inline-block;">
+                                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                                    stroke-width="4"></circle>
+                                                <path class="opacity-75" fill="currentColor"
+                                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                                </path>
+                                            </svg>
+                                        </span>
+                                    </button>
+                                </div>
+
+                                <div class="newsletter-status mt-4" data-newsletter-target="statusContainer">
+                                    <!-- Status messages will appear here -->
+                                </div>
+                            </form>
+
+                            <div class="form-benefits mt-6">
+                                <div
+                                    class="benefit-list flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-gray-400">
+                                    <span>✓ Weekly AI insights</span>
+                                    <span>✓ Early access</span>
+                                    <span>✓ No spam</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Removed Final CTA section -->
+                    </div>
+                </div>
+            </section>
+            <!-- END OF REFACTORED SECTION -->
+
+        </main>
+
+        <!--
+        <footer class="main-footer">
+            <div class="container">
+                <p>&copy; 2025 OneLastAI. All rights reserved.</p>
+            </div>
+        </footer>
+        -->
+    </div>
+
+    <script>
+        // Hide loader script
+        window.addEventListener('load', function () {
+            setTimeout(function () {
+                const loader = document.getElementById('initial-loader');
+                if (loader) {
+                    loader.style.opacity = '0';
+                    setTimeout(() => loader.style.display = 'none', 500);
+                }
+            }, 500);
+        });
+
+        // Animated background script
+        document.addEventListener('DOMContentLoaded', function () {
+            const container = document.getElementById('particle-container');
+            if (container) {
+                const particleCount = 20; // Keep it low for performance
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+
+                    const size = Math.random() * 3 + 1;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+
+                    particle.style.top = `${Math.random() * 100}%`;
+                    particle.style.left = `${Math.random() * 100}%`;
+
+                    const delay = Math.random() * 25;
+                    const duration = Math.random() * 15 + 10;
+                    particle.style.animationDelay = `${delay}s`;
+                    particle.style.animationDuration = `${duration}s`;
+
+                    container.appendChild(particle);
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

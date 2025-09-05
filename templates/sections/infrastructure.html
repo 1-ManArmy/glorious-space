@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Infrastructure</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* --- Cyberpunk/Mythic Operator Theme --- */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0A0A0A;
+            /* Deep matte black (The Void) */
+            color: #E5E7EB;
+            /* Light gray for base text */
+        }
+
+        /* --- Main Section Styling --- */
+        .infrastructure-section {
+            background-color: #0A0A0A;
+        }
+
+        /* --- Canvas Background --- */
+        #particle-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.6;
+        }
+
+        /* --- Text and Animations --- */
+        .text-glow {
+            text-shadow: 0 0 10px rgba(236, 72, 153, 0.4), 0 0 20px rgba(236, 72, 153, 0.2);
+        }
+
+        .text-gradient-pink {
+            background: linear-gradient(to right, #f9a8d4, #ec4899, #be185d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --- Card Structure (Shared Style) --- */
+        .cyber-card {
+            position: relative;
+            background: rgba(20, 20, 20, 0.5);
+            /* Semi-transparent dark background */
+            backdrop-filter: blur(10px);
+            border: 2px solid #FF00CC;
+            /* Neon pink/magenta border */
+            border-radius: 16px;
+            /* Rounded corners */
+            z-index: 2;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(255, 0, 204, 0.2),
+                /* Outer glow */
+                inset 0 0 10px rgba(255, 0, 204, 0.1);
+            /* Inner glow for depth */
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+                box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .cyber-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 0 30px rgba(255, 0, 204, 0.4),
+                /* Intensified outer glow */
+                inset 0 0 15px rgba(255, 0, 204, 0.2);
+        }
+
+        /* --- Linux Terminal Styling --- */
+        .linux-terminal {
+            font-family: 'Fira Code', monospace;
+            padding: 1.5rem;
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            background-color: #1E1E1E;
+            padding: 0.5rem 1rem;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .terminal-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .terminal-title {
+            color: #9CA3AF;
+            margin-left: auto;
+        }
+
+        .terminal-content {
+            background-color: rgba(10, 10, 10, 0.8);
+            padding: 1.5rem;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            height: 100%;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .terminal-prompt {
+            color: #A5B4FC;
+            /* Indigo-300 */
+        }
+
+        .terminal-command {
+            color: #F472B6;
+            /* Pink-400 */
+        }
+
+        .terminal-output {
+            color: #D1D5DB;
+            /* Gray-300 */
+            white-space: pre-wrap;
+        }
+
+        .terminal-key {
+            color: #FBBF24;
+            /* Amber-400 */
+        }
+
+        .terminal-success {
+            color: #34D399;
+            /* Emerald-400 */
+        }
+
+        .terminal-cursor {
+            display: inline-block;
+            background-color: #34D399;
+            width: 8px;
+            height: 1em;
+            margin-left: 4px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="infrastructure-section relative overflow-hidden py-24">
+        <!-- Dynamic Canvas Background -->
+        <canvas id="particle-canvas"></canvas>
+
+        <div class="relative container mx-auto px-6 lg:px-12 z-10">
+            <!-- Heading -->
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 text-glow text-gradient-pink">
+                    AI-Powered Infrastructure</h2>
+                <p class="text-lg text-gray-300 max-w-3xl mx-auto">
+                    Secure, scalable, and optimized environments built for AI, automation, and real-time intelligence.
+                </p>
+            </div>
+
+            <!-- Grid Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Tech Stack Cards -->
+                <div class="space-y-8">
+                    <div class="cyber-card p-6">
+                        <div class="flex items-center gap-4 mb-3">
+                            <div class="text-3xl text-pink-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+                                    <line x1="7" y1="2" x2="7" y2="22"></line>
+                                    <line x1="17" y1="2" x2="17" y2="22"></line>
+                                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                                    <line x1="2" y1="7" x2="7" y2="7"></line>
+                                    <line x1="2" y1="17" x2="7" y2="17"></line>
+                                    <line x1="17" y1="17" x2="22" y2="17"></line>
+                                    <line x1="17" y1="7" x2="22" y2="7"></line>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-semibold text-white">High-Performance Compute</h3>
+                        </div>
+                        <p class="text-gray-300">
+                            AI workloads optimized with GPU acceleration and distributed computing.
+                        </p>
+                    </div>
+
+                    <div class="cyber-card p-6">
+                        <div class="flex items-center gap-4 mb-3">
+                            <div class="text-3xl text-pink-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-semibold text-white">Security First</h3>
+                        </div>
+                        <p class="text-gray-300">
+                            Enterprise-grade security protocols, encrypted pipelines, and zero-trust architecture.
+                        </p>
+                    </div>
+
+                    <div class="cyber-card p-6">
+                        <div class="flex items-center gap-4 mb-3">
+                            <div class="text-3xl text-pink-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-semibold text-white">Global Scalability</h3>
+                        </div>
+                        <p class="text-gray-300">
+                            Deploy anywhere with cloud-native orchestration and edge computing support.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Linux Terminal -->
+                <div class="linux-terminal cyber-card">
+                    <div class="terminal-header">
+                        <div class="terminal-dots">
+                            <div class="terminal-dot bg-red-500"></div>
+                            <div class="terminal-dot bg-yellow-500"></div>
+                            <div class="terminal-dot bg-green-500"></div>
+                        </div>
+                        <div class="terminal-title">root@onelastAI:~</div>
+                    </div>
+                    <div class="terminal-content">
+                        <div class="terminal-prompt">$ <span class="terminal-command">systemctl status ai-core</span>
+                        </div>
+                        <div class="terminal-output">
+                            ● ai-core.service - AI Core Engine
+                            Loaded: <span class="terminal-key">enabled</span>
+                            Active: <span class="terminal-success">running</span> since Fri 2025-08-29 21:10:32 UTC
+                        </div>
+
+                        <div class="terminal-prompt mt-4">$ <span class="terminal-command">kubectl get pods
+                                --namespace=ai-cluster</span></div>
+                        <div class="terminal-output">
+                            NAME STATUS RESTARTS AGE
+                            ai-inference-gpu-1 <span class="terminal-success">Running</span> 0 12m
+                            ai-data-pipeline-1 <span class="terminal-success">Running</span> 0 12m
+                        </div>
+
+                        <div class="terminal-prompt mt-4">$ <span class="terminal-command">echo "AI Infrastructure
+                                Ready"</span></div>
+                        <div class="terminal-output terminal-success">
+                            AI Infrastructure Ready<span class="terminal-cursor"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // --- Particle Canvas Animation Script ---
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        const numParticles = window.innerWidth > 768 ? 80 : 30;
+        const connectDistance = 120;
+        const particleSpeed = 0.3;
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = canvas.parentElement.offsetHeight;
+        }
+        class Particle {
+            constructor(x, y, vx, vy, radius, color) {
+                this.x = x; this.y = y; this.vx = vx; this.vy = vy; this.radius = radius; this.color = color;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+            update() {
+                this.x += this.vx; this.y += this.vy;
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+        }
+        function init() {
+            particles = [];
+            for (let i = 0; i < numParticles; i++) {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                const vx = (Math.random() - 0.5) * particleSpeed;
+                const vy = (Math.random() - 0.5) * particleSpeed;
+                const radius = Math.random() * 1.5 + 1;
+                const color = `rgba(255, 0, 204, ${Math.random() * 0.5 + 0.2})`;
+                particles.push(new Particle(x, y, vx, vy, radius, color));
+            }
+        }
+        function connect() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < connectDistance) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        const opacity = 1 - distance / connectDistance;
+                        ctx.strokeStyle = `rgba(236, 72, 153, ${opacity * 0.5})`;
+                        ctx.lineWidth = 0.8;
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            connect();
+            requestAnimationFrame(animate);
+        }
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            init();
+        });
+        resizeCanvas();
+        init();
+        animate();
+    </script>
+
+</body>
+
+</html>

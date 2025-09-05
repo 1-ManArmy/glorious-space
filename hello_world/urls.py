@@ -18,6 +18,9 @@ urlpatterns = [
     # Core Application Routes - The Heart of Our Kingdom
     path('', include('hello_world.core.urls', namespace='core')),
     
+    # AI Agents Management - The Crown Jewel
+    path('agents/', include('backend.apps.agents.urls', namespace='agents')),
+    
     # Keycloak Authentication - Royal Gateway
     path('auth/', include('hello_world.core.auth_urls', namespace='auth')),
     

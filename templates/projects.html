@@ -1,0 +1,196 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="h-full scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title|default:"DevCrown Projects" }}</title>
+    <meta name="description" content="{{ meta_description|default:'Explore our AI solutions portfolio' }}">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #111827;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #a78bfa, #f472b6, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-style {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+        }
+    </style>
+</head>
+
+<body class="h-full bg-gray-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-gray-900/95 backdrop-blur-sm border-b border-gray-800 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-8">
+                    <a href="{% url 'core:index' %}" class="logo-style text-2xl font-bold text-white hover:text-blue-400 transition-colors">
+                        DevCrown
+                    </a>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="{% url 'core:index' %}" class="text-gray-300 hover:text-white transition-colors">
+                            <i class="fas fa-home mr-2"></i>Home
+                        </a>
+                        <a href="{% url 'agents:dashboard' %}" class="text-gray-300 hover:text-white transition-colors">
+                            <i class="fas fa-robot mr-2"></i>AI Agents
+                        </a>
+                        <a href="{% url 'core:blog' %}" class="text-gray-300 hover:text-white transition-colors">
+                            <i class="fas fa-blog mr-2"></i>Blog
+                        </a>
+                        <a href="{% url 'core:projects' %}" class="text-white font-semibold">
+                            <i class="fas fa-code mr-2"></i>Projects
+                        </a>
+                        <a href="{% url 'core:dashboard' %}" class="text-gray-300 hover:text-white transition-colors">
+                            <i class="fas fa-chart-bar mr-2"></i>Dashboard
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-16">
+        <!-- Hero Section -->
+        <section class="py-20 bg-gradient-to-r from-purple-900/40 to-blue-900/40">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-4xl sm:text-5xl font-bold text-white mb-6">
+                    AI <span class="text-gradient">Projects</span>
+                </h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Explore our portfolio of cutting-edge AI solutions and applications
+                </p>
+            </div>
+        </section>
+
+        <!-- Projects Content -->
+        <section class="py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Category Filters -->
+                <div class="mb-12 text-center">
+                    <div class="flex flex-wrap justify-center gap-2">
+                        <a href="{% url 'core:projects' %}" 
+                           class="px-4 py-2 rounded-full text-sm {% if not current_category %}bg-purple-600 text-white{% else %}bg-gray-800 text-gray-300 hover:bg-gray-700{% endif %} transition-colors">
+                            All Projects
+                        </a>
+                        {% for category in categories %}
+                        <a href="?category={{ category }}" 
+                           class="px-4 py-2 rounded-full text-sm {% if current_category == category %}bg-purple-600 text-white{% else %}bg-gray-800 text-gray-300 hover:bg-gray-700{% endif %} transition-colors">
+                            {{ category }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Projects Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {% for project in projects %}
+                    <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700 hover:border-purple-500 transition-all overflow-hidden group">
+                        <!-- Project Image -->
+                        <div class="aspect-video bg-gradient-to-br from-purple-900/50 to-blue-900/50 flex items-center justify-center">
+                            <i class="fas fa-project-diagram text-4xl text-purple-400 group-hover:scale-110 transition-transform"></i>
+                        </div>
+                        
+                        <div class="p-6">
+                            <!-- Status & Category -->
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="bg-purple-600/20 text-purple-300 px-2 py-1 rounded text-xs">
+                                    {{ project.category }}
+                                </span>
+                                <span class="text-xs px-2 py-1 rounded
+                                    {% if project.status == 'Production' %}bg-green-600/20 text-green-300
+                                    {% elif project.status == 'Beta' %}bg-yellow-600/20 text-yellow-300
+                                    {% else %}bg-blue-600/20 text-blue-300{% endif %}">
+                                    {{ project.status }}
+                                </span>
+                            </div>
+                            
+                            <!-- Title & Description -->
+                            <h3 class="text-xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors">
+                                {{ project.title }}
+                            </h3>
+                            
+                            <p class="text-gray-400 mb-4">{{ project.description }}</p>
+                            
+                            <!-- Technologies -->
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                {% for tech in project.technologies %}
+                                <span class="bg-gray-700/50 text-gray-300 px-2 py-1 rounded text-xs">
+                                    {{ tech }}
+                                </span>
+                                {% endfor %}
+                            </div>
+                            
+                            <!-- Action Buttons -->
+                            <div class="flex space-x-3">
+                                <a href="{{ project.demo_url }}" 
+                                   class="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-lg text-center hover:from-purple-600 hover:to-pink-600 transition-all">
+                                    <i class="fas fa-play mr-2"></i>Demo
+                                </a>
+                                <a href="{{ project.github_url }}" 
+                                   class="flex-1 border border-gray-600 text-gray-300 px-4 py-2 rounded-lg text-center hover:bg-gray-700 transition-all" 
+                                   title="View source code">
+                                    <i class="fab fa-github mr-2"></i>Code
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-span-full text-center py-16">
+                        <i class="fas fa-folder-open text-6xl text-gray-600 mb-4"></i>
+                        <p class="text-gray-400 text-lg">No projects found in this category.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Call to Action -->
+                <div class="mt-16 text-center">
+                    <div class="bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl border border-gray-700 max-w-2xl mx-auto">
+                        <h3 class="text-2xl font-bold text-white mb-4">Have a Project Idea?</h3>
+                        <p class="text-gray-400 mb-6">
+                            Let's collaborate and build something amazing together with AI technology.
+                        </p>
+                        <a href="{% url 'core:contact' %}" 
+                           class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all inline-flex items-center">
+                            <i class="fas fa-envelope mr-2"></i>
+                            Contact Us
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="text-center text-gray-400">
+                <p>&copy; 2024 DevCrown. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

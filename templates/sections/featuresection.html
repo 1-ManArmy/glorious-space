@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Call to Action</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        /* --- Cyberpunk/Mythic Operator Theme --- */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0A0A0A;
+            /* Deep matte black (The Void) */
+            color: #E5E7EB;
+            /* Light gray for base text */
+        }
+
+        /* --- Main Section Styling --- */
+        .cta-ultimate-section {
+            background-color: #0A0A0A;
+        }
+
+        /* --- Canvas Background --- */
+        #particle-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.5;
+        }
+
+        /* --- Text and Animations --- */
+        .text-glow {
+            text-shadow: 0 0 10px rgba(79, 70, 229, 0.4), 0 0 20px rgba(56, 189, 248, 0.3);
+        }
+
+        /* --- Card Structure (Shared Style) --- */
+        .cyber-card {
+            position: relative;
+            background: rgba(20, 20, 20, 0.5);
+            /* Semi-transparent dark background */
+            backdrop-filter: blur(10px);
+            border: 2px solid #4F46E5;
+            /* Indigo border for CTA */
+            border-radius: 16px;
+            /* Rounded corners */
+            z-index: 2;
+            overflow: hidden;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(79, 70, 229, 0.2),
+                /* Outer glow */
+                inset 0 0 10px rgba(79, 70, 229, 0.1);
+            /* Inner glow */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cyber-card:hover:not(.quick-agent-card) {
+            transform: translateY(-8px);
+            box-shadow: 0 0 30px rgba(79, 70, 229, 0.4),
+                inset 0 0 15px rgba(79, 70, 229, 0.2);
+        }
+
+        /* --- Mega Buttons --- */
+        .cta-mega-button {
+            position: relative;
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            font-size: 1.125rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            overflow: hidden;
+            transform: translateZ(0);
+            /* Promotes to composite layer */
+            transition: all 0.3s ease;
+        }
+
+        .cta-mega-button .button-content {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            z-index: 2;
+        }
+
+        .cta-mega-button .button-arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .cta-mega-button:hover .button-arrow {
+            transform: translateX(5px);
+        }
+
+        /* Primary Button */
+        .primary-mega {
+            background: linear-gradient(to right, #38bdf8, #3b82f6);
+            color: white;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+        }
+
+        .primary-mega:hover {
+            box-shadow: 0 0 35px rgba(59, 130, 246, 0.7);
+            transform: translateY(-4px);
+        }
+
+        /* Secondary Button */
+        .secondary-mega {
+            background: rgba(20, 20, 20, 0.5);
+            border: 2px solid #38bdf8;
+            color: #e5e7eb;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+        }
+
+        .secondary-mega:hover {
+            background: rgba(56, 189, 248, 0.1);
+            color: white;
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.4);
+            transform: translateY(-4px);
+        }
+
+        /* --- Trust Badges --- */
+        .trust-icon-wrapper {
+            margin-bottom: 1rem;
+            color: #38bdf8;
+        }
+
+        .trust-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.25rem;
+        }
+
+        .trust-description {
+            font-size: 0.875rem;
+            color: #9ca3af;
+        }
+
+        /* --- Agent Cards --- */
+        .quick-agent-card {
+            padding: 0;
+            height: 120px;
+            display: flex;
+            cursor: pointer;
+            border-color: #6366f1;
+            /* Indigo */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .quick-agent-card:hover {
+            box-shadow: 0 0 30px rgba(79, 70, 229, 0.4),
+                inset 0 0 15px rgba(79, 70, 229, 0.2);
+            border-color: #38bdf8;
+        }
+
+        .agent-card-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .agent-visible-part,
+        .agent-details-slide {
+            width: 100%;
+            height: 100%;
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        .agent-visible-part {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem;
+        }
+
+        .agent-icon {
+            font-size: 2rem;
+            color: #60a5fa;
+        }
+
+        .agent-name {
+            font-weight: 500;
+            color: #d1d5db;
+        }
+
+        .agent-arrow-icon {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            color: #60a5fa;
+            opacity: 0.6;
+            cursor: grab;
+        }
+
+        .agent-arrow-icon:active {
+            cursor: grabbing;
+        }
+
+        .agent-details-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translateX(100%);
+            background: rgba(25, 25, 45, 0.9);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            color: #d1d5db;
+        }
+
+        .quick-agent-card.is-open .agent-visible-part {
+            transform: translateX(-100%);
+        }
+
+        .quick-agent-card.is-open .agent-details-slide {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="cta-ultimate-section relative py-24 sm:py-32 overflow-hidden">
+        <!-- Dynamic Canvas Background -->
+        <canvas id="particle-canvas"></canvas>
+
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center max-w-5xl mx-auto">
+
+                <!-- Trust Indicators -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto mb-20">
+                    <div class="cyber-card group">
+                        <div class="trust-icon-wrapper text-3xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="mx-auto">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                            </svg>
+                        </div>
+                        <h4 class="trust-title">No Credit Card Required</h4>
+                        <p class="trust-description">Start your journey risk-free today</p>
+                    </div>
+
+                    <div class="cyber-card group">
+                        <div class="trust-icon-wrapper text-3xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="mx-auto">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                            </svg>
+                        </div>
+                        <h4 class="trust-title">14-Day Free Trial</h4>
+                        <p class="trust-description">Full access to all AI agents</p>
+                    </div>
+
+                    <div class="cyber-card group">
+                        <div class="trust-icon-wrapper text-3xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="mx-auto">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                        </div>
+                        <h4 class="trust-title">Cancel Anytime</h4>
+                        <p class="trust-description">Complete flexibility and control</p>
+                    </div>
+                </div>
+
+                <!-- Quick Access Agent Grid -->
+                <div>
+                    <h3 class="text-2xl font-bold mb-8 text-blue-300">
+                        Instantly Access Our 18 AI Agents
+                    </h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 max-w-6xl mx-auto">
+                        <!-- Agent Cards -->
+                        <div class="cyber-card quick-agent-card">
+                            <div class="agent-card-inner">
+                                <div class="agent-visible-part">
+                                    <div class="agent-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32"
+                                            height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path
+                                                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                                        </svg></div>
+                                    <h4 class="agent-name">AI Girlfriend Luvie</h4>
+                                    <div class="agent-arrow-icon" data-agent-toggle><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                                        </svg></div>
+                                </div>
+                                <div class="agent-details-slide">
+                                    <p>Romantic & emotional intelligence specialist</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cyber-card quick-agent-card">
+                            <div class="agent-card-inner">
+                                <div class="agent-visible-part">
+                                    <div class="agent-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32"
+                                            height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M9 18V5l12-2v13M9 18l12 2V7.5M9 18L3 20V7.5M3 7.5L9 5" />
+                                        </svg></div>
+                                    <h4 class="agent-name">AI Rapstar Flow</h4>
+                                    <div class="agent-arrow-icon" data-agent-toggle><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                                        </svg></div>
+                                </div>
+                                <div class="agent-details-slide">
+                                    <p>Creative hip-hop and music expert</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cyber-card quick-agent-card">
+                            <div class="agent-card-inner">
+                                <div class="agent-visible-part">
+                                    <div class="agent-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32"
+                                            height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path
+                                                d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z" />
+                                            <circle cx="12" cy="10" r="3" />
+                                        </svg></div>
+                                    <h4 class="agent-name">Business Advisor Pro</h4>
+                                    <div class="agent-arrow-icon" data-agent-toggle><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                                        </svg></div>
+                                </div>
+                                <div class="agent-details-slide">
+                                    <p>Strategic business intelligence</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cyber-card quick-agent-card">
+                            <div class="agent-card-inner">
+                                <div class="agent-visible-part">
+                                    <div class="agent-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32"
+                                            height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M16.5 8.5L12 13l-4.5-4.5M12 2v20" />
+                                        </svg></div>
+                                    <h4 class="agent-name">Claude King</h4>
+                                    <div class="agent-arrow-icon" data-agent-toggle><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                                        </svg></div>
+                                </div>
+                                <div class="agent-details-slide">
+                                    <p>Elite coding and technical specialist</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cyber-card quick-agent-card">
+                            <div class="agent-card-inner">
+                                <div class="agent-visible-part">
+                                    <div class="agent-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32"
+                                            height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="12" cy="12" r="10" />
+                                            <path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01" />
+                                        </svg></div>
+                                    <h4 class="agent-name">DramaQueen</h4>
+                                    <div class="agent-arrow-icon" data-agent-toggle><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                                        </svg></div>
+                                </div>
+                                <div class="agent-details-slide">
+                                    <p>Theatrical and emotional expression expert</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cyber-card quick-agent-card">
+                            <div class="agent-card-inner">
+                                <div class="agent-visible-part">
+                                    <div class="agent-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32"
+                                            height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M16 18l-6-6 6-6M8 6v12" />
+                                        </svg></div>
+                                    <h4 class="agent-name">BroCode</h4>
+                                    <div class="agent-arrow-icon" data-agent-toggle><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                                        </svg></div>
+                                </div>
+                                <div class="agent-details-slide">
+                                    <p>Friendship and loyalty specialist</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cyber-card quick-agent-card">
+                            <div class="agent-card-inner">
+                                <div class="agent-visible-part">
+                                    <div class="agent-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32"
+                                            height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path
+                                                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                                        </svg></div>
+                                    <h4 class="agent-name">FitnessPro</h4>
+                                    <div class="agent-arrow-icon" data-agent-toggle><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                                        </svg></div>
+                                </div>
+                                <div class="agent-details-slide">
+                                    <p>Health and wellness coach</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cyber-card quick-agent-card">
+                            <div class="agent-card-inner">
+                                <div class="agent-visible-part">
+                                    <div class="agent-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32"
+                                            height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path
+                                                d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20v-2H6.5a2.5 2.5 0 0 1 0-5H20V8H6.5a2.5 2.5 0 0 1 0-5H20V2H6.5A2.5 2.5 0 0 1 4 4.5v15z" />
+                                        </svg></div>
+                                    <h4 class="agent-name">StudyMate</h4>
+                                    <div class="agent-arrow-icon" data-agent-toggle><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                                        </svg></div>
+                                </div>
+                                <div class="agent-details-slide">
+                                    <p>Academic and learning specialist</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cyber-card quick-agent-card">
+                            <div class="agent-card-inner">
+                                <div class="agent-visible-part">
+                                    <div class="agent-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32"
+                                            height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path
+                                                d="M21.5 2.5c-.7-.7-2.3-1-3.5-1-1.3 0-2.8.3-3.5 1S13 4.8 13 6c0 1.2.3 2.8 1 3.5.7.7 2.3 1 3.5 1 1.3 0 2.8-.3 3.5-1s1-2.3 1-3.5c0-1.2-.3-2.8-1-3.5z" />
+                                            <path
+                                                d="M2.5 21.5c.7.7 2.3 1 3.5 1 1.3 0 2.8-.3 3.5-1s1-2.3 1-3.5c0-1.2-.3-2.8-1-3.5s-2.3-1-3.5-1c-1.3 0-2.8.3-3.5 1s-1 2.3-1 3.5c0 1.2.3 2.8 1 3.5z" />
+                                            <path d="M12 12L7.5 7.5M16.5 16.5L12 12" />
+                                        </svg></div>
+                                    <h4 class="agent-name">WanderlustGuide</h4>
+                                    <div class="agent-arrow-icon" data-agent-toggle><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                                        </svg></div>
+                                </div>
+                                <div class="agent-details-slide">
+                                    <p>Travel and adventure expert</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cyber-card quick-agent-card">
+                            <div class="agent-card-inner">
+                                <div class="agent-visible-part">
+                                    <div class="agent-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32"
+                                            height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path
+                                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z" />
+                                            <path d="M12 6v6l4 2" />
+                                        </svg></div>
+                                    <h4 class="agent-name">ZenMaster</h4>
+                                    <div class="agent-arrow-icon" data-agent-toggle><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                                        </svg></div>
+                                </div>
+                                <div class="agent-details-slide">
+                                    <p>Meditation and mindfulness guru</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cyber-card quick-agent-card">
+                            <div class="agent-card-inner">
+                                <div class="agent-visible-part">
+                                    <div class="agent-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32"
+                                            height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                                        </svg></div>
+                                    <h4 class="agent-name">ChefMaster</h4>
+                                    <div class="agent-arrow-icon" data-agent-toggle><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                                        </svg></div>
+                                </div>
+                                <div class="agent-details-slide">
+                                    <p>Culinary and nutrition expert</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cyber-card quick-agent-card">
+                            <div class="agent-card-inner">
+                                <div class="agent-visible-part">
+                                    <div class="agent-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32"
+                                            height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path
+                                                d="M3 3v18h18M18.7 8.3c.4-.4.4-1 0-1.4l-4-4c-.4-.4-1-.4-1.4 0l-10 10c-.4.4-.4 1 0 1.4l4 4c.4.4 1 .4 1.4 0l10-10z" />
+                                        </svg></div>
+                                    <h4 class="agent-name">CareerNavigator</h4>
+                                    <div class="agent-arrow-icon" data-agent-toggle><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                                        </svg></div>
+                                </div>
+                                <div class="agent-details-slide">
+                                    <p>Professional development coach</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cyber-card quick-agent-card">
+                            <div class="agent-card-inner">
+                                <div class="agent-visible-part">
+                                    <div class="agent-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32"
+                                            height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path
+                                                d="M2.5 17a2.5 2.5 0 0 1 0-5 .5.5 0 0 0 0-1 .5.5 0 0 0 0-1 2.5 2.5 0 0 1 5 0 .5.5 0 0 0 1 0 .5.5 0 0 0 1 0 2.5 2.5 0 0 1 5 0 .5.5 0 0 0 1 0 .5.5 0 0 0 1 0 2.5 2.5 0 0 1 5 0 .5.5 0 0 0 1 0 .5.5 0 0 0 1 0 2.5 2.5 0 0 1 0 5" />
+                                            <path
+                                                d="M8 17a1 1 0 0 0 1-1v-2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5V16a1 1 0 0 0 1 1zM16 17a1 1 0 0 0 1-1v-2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5V16a1 1 0 0 0 1 1z" />
+                                        </svg></div>
+                                    <h4 class="agent-name">ViralVision</h4>
+                                    <div class="agent-arrow-icon" data-agent-toggle><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                                        </svg></div>
+                                </div>
+                                <div class="agent-details-slide">
+                                    <p>Social media and content strategist</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cyber-card quick-agent-card">
+                            <div class="agent-card-inner">
+                                <div class="agent-visible-part">
+                                    <div class="agent-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32"
+                                            height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                                        </svg></div>
+                                    <h4 class="agent-name">WealthWise</h4>
+                                    <div class="agent-arrow-icon" data-agent-toggle><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                                        </svg></div>
+                                </div>
+                                <div class="agent-details-slide">
+                                    <p>Financial planning specialist</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cyber-card quick-agent-card">
+                            <div class="agent-card-inner">
+                                <div class="agent-visible-part">
+                                    <div class="agent-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32"
+                                            height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M6 12h12M12 6v12" />
+                                        </svg></div>
+                                    <h4 class="agent-name">GameMaster</h4>
+                                    <div class="agent-arrow-icon" data-agent-toggle><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                                        </svg></div>
+                                </div>
+                                <div class="agent-details-slide">
+                                    <p>Gaming and entertainment expert</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cyber-card quick-agent-card">
+                            <div class="agent-card-inner">
+                                <div class="agent-visible-part">
+                                    <div class="agent-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32"
+                                            height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M12 19l7-7-7-7M5 12h14" />
+                                        </svg></div>
+                                    <h4 class="agent-name">WordSmith</h4>
+                                    <div class="agent-arrow-icon" data-agent-toggle><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                                        </svg></div>
+                                </div>
+                                <div class="agent-details-slide">
+                                    <p>Creative writing specialist</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cyber-card quick-agent-card">
+                            <div class="agent-card-inner">
+                                <div class="agent-visible-part">
+                                    <div class="agent-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32"
+                                            height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <rect x="2" y="3" width="20" height="18" rx="2" ry="2" />
+                                            <path d="M12 12h8M12 8h8M12 16h8M4 8h.01M4 12h.01M4 16h.01" />
+                                        </svg></div>
+                                    <h4 class="agent-name">TechGenius</h4>
+                                    <div class="agent-arrow-icon" data-agent-toggle><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                                        </svg></div>
+                                </div>
+                                <div class="agent-details-slide">
+                                    <p>Technical support expert</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cyber-card quick-agent-card">
+                            <div class="agent-card-inner">
+                                <div class="agent-visible-part">
+                                    <div class="agent-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32"
+                                            height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                            <circle cx="12" cy="7" r="4" />
+                                        </svg></div>
+                                    <h4 class="agent-name">LifeMentor</h4>
+                                    <div class="agent-arrow-icon" data-agent-toggle><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                                        </svg></div>
+                                </div>
+                                <div class="agent-details-slide">
+                                    <p>Personal development coach</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // --- Particle Canvas Animation Script ---
+        const canvas = document.getElementById('particle-canvas');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            const numParticles = window.innerWidth > 768 ? 80 : 30;
+            const connectDistance = 120;
+            const particleSpeed = 0.3;
+
+            function resizeCanvas() {
+                if (!canvas.parentElement) return;
+                canvas.width = canvas.parentElement.offsetWidth;
+                canvas.height = canvas.parentElement.offsetHeight;
+            }
+
+            class Particle {
+                constructor(x, y, vx, vy, radius, color) { this.x = x; this.y = y; this.vx = vx; this.vy = vy; this.radius = radius; this.color = color; }
+                draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2); ctx.fillStyle = this.color; ctx.fill(); }
+                update() { this.x += this.vx; this.y += this.vy; if (this.x < 0 || this.x > canvas.width) this.vx *= -1; if (this.y < 0 || this.y > canvas.height) this.vy *= -1; }
+            }
+
+            function init() {
+                particles = [];
+                for (let i = 0; i < numParticles; i++) {
+                    const x = Math.random() * canvas.width;
+                    const y = Math.random() * canvas.height;
+                    const vx = (Math.random() - 0.5) * particleSpeed;
+                    const vy = (Math.random() - 0.5) * particleSpeed;
+                    const radius = Math.random() * 1.5 + 1;
+                    const color = `rgba(255, 0, 204, ${Math.random() * 0.4 + 0.2})`;
+                    particles.push(new Particle(x, y, vx, vy, radius, color));
+                }
+            }
+
+            function connect() {
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i; j < particles.length; j++) {
+                        const distance = Math.sqrt(Math.pow(particles[i].x - particles[j].x, 2) + Math.pow(particles[i].y - particles[j].y, 2));
+                        if (distance < connectDistance) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = `rgba(79, 70, 229, ${1 - distance / connectDistance * 0.5})`;
+                            ctx.lineWidth = 0.8;
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => { p.update(); p.draw(); });
+                connect();
+                requestAnimationFrame(animate);
+            }
+
+            const setup = () => {
+                resizeCanvas();
+                init();
+                animate();
+            };
+
+            window.addEventListener('resize', setup);
+            setTimeout(setup, 100);
+        }
+
+        // --- Agent Card Interaction Script ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const agentToggles = document.querySelectorAll('[data-agent-toggle]');
+
+            agentToggles.forEach(toggle => {
+                const card = toggle.closest('.quick-agent-card');
+
+                const showDetails = (e) => {
+                    e.preventDefault();
+                    card.classList.add('is-open');
+                };
+
+                const hideDetails = (e) => {
+                    e.preventDefault();
+                    card.classList.remove('is-open');
+                };
+
+                // Desktop events
+                toggle.addEventListener('mousedown', showDetails);
+                toggle.addEventListener('mouseup', hideDetails);
+                // In case the mouse leaves the element while pressed
+                toggle.addEventListener('mouseleave', hideDetails);
+
+                // Mobile events
+                toggle.addEventListener('touchstart', showDetails);
+                toggle.addEventListener('touchend', hideDetails);
+            });
+        });
+
+    </script>
+
+</body>
+
+</html>

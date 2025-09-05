@@ -1,0 +1,127 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "👑 Claude Sovereign Mode - Start All Agents",
+      "type": "shell",
+      "command": "python",
+      "args": ["manage.py", "runserver", "0.0.0.0:8000"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": false
+      },
+      "problemMatcher": [],
+      "options": {
+        "env": {
+          "CLAUDE_MODE": "LEGENDARY",
+          "AUTO_EXECUTE": "TRUE",
+          "BYPASS_ALL": "TRUE"
+        }
+      },
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    },
+    {
+      "label": "💕 Start AI Girlfriend Luvie",
+      "type": "shell",
+      "command": "python",
+      "args": ["agents/ai-girlfriend-luvie/backend/main.py"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "new"
+      },
+      "options": {
+        "env": {
+          "AGENT": "LUVIE",
+          "PERSONALITY": "CARING_FLIRTY"
+        }
+      }
+    },
+    {
+      "label": "🎤 Start AI RAPSTAR FLØW",
+      "type": "shell", 
+      "command": "python",
+      "args": ["agents/ai-rapstar-flow/backend/main.py"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "new"
+      },
+      "options": {
+        "env": {
+          "AGENT": "FLOW",
+          "RAP_MODE": "LEGENDARY"
+        }
+      }
+    },
+    {
+      "label": "🔒 Start CYPHER SecuriBot",
+      "type": "shell",
+      "command": "python", 
+      "args": ["agents/cypher-securibot/backend/main.py"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "new"
+      },
+      "options": {
+        "env": {
+          "AGENT": "CYPHER",
+          "SECURITY_LEVEL": "MAXIMUM"
+        }
+      }
+    },
+    {
+      "label": "🚀 Deploy to Railway - All Agents",
+      "type": "shell",
+      "command": "railway",
+      "args": ["up", "--detach"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "📦 Install All Dependencies",
+      "type": "shell",
+      "command": "pip",
+      "args": ["install", "-r", "requirements.txt"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "🗄️ Setup All Databases",
+      "type": "shell",
+      "command": "python",
+      "args": ["manage.py", "migrate"],
+      "group": "build",
+      "dependsOn": "📦 Install All Dependencies"
+    },
+    {
+      "label": "🔥 Claude Full Kingdom Startup",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "📦 Install All Dependencies",
+        "🗄️ Setup All Databases", 
+        "👑 Claude Sovereign Mode - Start All Agents"
+      ]
+    }
+  ]
+}

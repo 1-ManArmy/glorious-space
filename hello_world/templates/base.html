@@ -81,6 +81,27 @@
                         </ul>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{% url 'core:blog_index' %}">
+                            <i class="fas fa-blog"></i> Blog
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="legalDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-gavel"></i> Legal
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'core:privacy_policy' %}">
+                                <i class="fas fa-shield-alt"></i> Privacy Policy
+                            </a></li>
+                            <li><a class="dropdown-item" href="{% url 'core:terms_of_service' %}">
+                                <i class="fas fa-file-contract"></i> Terms of Service
+                            </a></li>
+                            <li><a class="dropdown-item" href="{% url 'core:cookies_policy' %}">
+                                <i class="fas fa-cookie-bite"></i> Cookies Policy
+                            </a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'core:about' %}">
                             <i class="fas fa-info-circle"></i> About
                         </a>
@@ -99,21 +120,21 @@
                                 <li><a class="dropdown-item" href="{% url 'core:dashboard' %}">
                                     <i class="fas fa-tachometer-alt"></i> Dashboard
                                 </a></li>
-                                <li><a class="dropdown-item" href="{% url 'users:profile' %}">
+                                <li><a class="dropdown-item" href="{% url 'core:profile' %}">
                                     <i class="fas fa-user"></i> Profile
                                 </a></li>
-                                <li><a class="dropdown-item" href="{% url 'core:create_project' %}">
+                                <li><a class="dropdown-item" href="{% url 'core:project_create' %}">
                                     <i class="fas fa-plus"></i> Create Project
                                 </a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="{% url 'users:logout' %}">
+                                <li><a class="dropdown-item" href="{% url 'auth:keycloak_logout' %}">
                                     <i class="fas fa-sign-out-alt"></i> Logout
                                 </a></li>
                             </ul>
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'users:login' %}">
+                            <a class="nav-link" href="{% url 'core:login' %}">
                                 <i class="fas fa-sign-in-alt"></i> Login
                             </a>
                         </li>
@@ -164,8 +185,8 @@
                     <ul class="list-unstyled">
                         <li><a href="{% url 'core:projects' %}" class="text-muted">Projects</a></li>
                         <li><a href="{% url 'core:developers' %}" class="text-muted">Developers</a></li>
-                        <li><a href="{% url 'core:canvas_playground' %}" class="text-muted">Canvas</a></li>
-                        <li><a href="#" class="text-muted">API</a></li>
+                        <li><a href="{% url 'core:canvas' %}" class="text-muted">Canvas</a></li>
+                        <li><a href="{% url 'core:blog_index' %}" class="text-muted">Blog</a></li>
                     </ul>
                 </div>
                 
@@ -194,8 +215,8 @@
                     <ul class="list-unstyled">
                         <li><a href="{% url 'core:about' %}" class="text-muted">About</a></li>
                         <li><a href="#" class="text-muted">Careers</a></li>
-                        <li><a href="#" class="text-muted">Privacy</a></li>
-                        <li><a href="#" class="text-muted">Terms</a></li>
+                        <li><a href="{% url 'core:privacy_policy' %}" class="text-muted">Privacy</a></li>
+                        <li><a href="{% url 'core:terms_of_service' %}" class="text-muted">Terms</a></li>
                     </ul>
                 </div>
             </div>

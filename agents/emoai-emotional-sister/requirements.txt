@@ -1,0 +1,65 @@
+# 🧠💝 EmoAI Emotional Sister - Requirements
+# Ultra-sensitive AI that learns and grows like a baby
+# Claude Sovereign Mode: ACTIVE
+
+# Core FastAPI Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
+python-multipart==0.0.6
+
+# WebSocket Support for Real-time Chat
+websockets==12.0
+python-socketio==5.10.0
+
+# Natural Language Processing
+textblob==0.17.1
+nltk==3.8.1
+
+# Date and Time Handling
+python-dateutil==2.8.2
+pytz==2023.3
+
+# HTTP Requests
+requests==2.31.0
+httpx==0.25.2
+
+# Data Processing and Analysis
+numpy==1.25.2
+pandas==2.1.4
+
+# JSON and Data Serialization
+orjson==3.9.10
+
+# Logging and Configuration
+python-json-logger==2.0.7
+
+# File and Memory Management
+psutil==5.9.6
+
+# Advanced Async Support
+asyncio-throttle==1.0.2
+aiofiles==23.2.1
+
+# Emotional Intelligence Enhancement
+vaderSentiment==3.3.2
+
+# Sister-like Personality Dependencies
+emoji==2.8.0
+
+# Brain Core Learning Dependencies
+scikit-learn==1.3.2
+matplotlib==3.8.2
+
+# Memory and Persistence
+pickle-mixin==1.0.2
+
+# Development and Testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+
+# CORS Support for Frontend
+python-cors==1.7.0
+
+# Environment Variables
+python-dotenv==1.0.0

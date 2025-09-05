@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>👑 AI Agent Kingdom - Legendary AI Companions</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/hero.css">
+    <style>
+        /* LEGENDARY HERO SECTION STYLES */
+        .hero-container {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-bg-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(255, 0, 0, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+            animation: heroGlow 8s ease-in-out infinite alternate;
+        }
+        
+        @keyframes heroGlow {
+            0% { opacity: 0.3; transform: scale(1); }
+            100% { opacity: 0.7; transform: scale(1.1); }
+        }
+        
+        .hero-content {
+            text-align: center;
+            max-width: 1200px;
+            padding: 2rem;
+            z-index: 10;
+            position: relative;
+        }
+        
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ff0000, #ffd700, #ff0000);
+            background-size: 200% 200%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: titleShine 3s ease-in-out infinite;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
+        }
+        
+        @keyframes titleShine {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: #ffd700;
+            margin-bottom: 2rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+        
+        .hero-description {
+            font-size: 1.2rem;
+            color: #cccccc;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-container {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+        
+        .cta-button {
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-primary {
+            background: linear-gradient(45deg, #ff0000, #ff4444);
+            color: white;
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.3);
+        }
+        
+        .cta-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(255, 0, 0, 0.5);
+        }
+        
+        .cta-secondary {
+            background: transparent;
+            color: #ffd700;
+            border: 2px solid #ffd700;
+        }
+        
+        .cta-secondary:hover {
+            background: #ffd700;
+            color: #000;
+            transform: translateY(-5px);
+        }
+        
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #ff0000;
+            display: block;
+        }
+        
+        .stat-label {
+            color: #cccccc;
+            font-size: 1rem;
+            margin-top: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem; }
+            .hero-subtitle { font-size: 1.2rem; }
+            .hero-description { font-size: 1rem; }
+            .cta-container { flex-direction: column; align-items: center; }
+            .hero-stats { gap: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero-container">
+        <div class="hero-bg-animation"></div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title">
+                👑 AI AGENT KINGDOM
+            </h1>
+            
+            <h2 class="hero-subtitle">
+                Where Legendary AI Companions Come to Life
+            </h2>
+            
+            <p class="hero-description">
+                Experience the next generation of AI companions with unique personalities, 
+                specialized skills, and emotional intelligence. From virtual girlfriends to 
+                cybersecurity experts, rap battle buddies to coding assistants - your 
+                perfect AI companion awaits in our royal kingdom.
+            </p>
+            
+            <div class="cta-container">
+                <button class="cta-button cta-primary" onclick="exploreAgents()">
+                    🚀 EXPLORE AGENTS
+                </button>
+                <button class="cta-button cta-secondary" onclick="signUp()">
+                    👑 JOIN KINGDOM
+                </button>
+            </div>
+            
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">12+</span>
+                    <span class="stat-label">AI Agents</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">∞</span>
+                    <span class="stat-label">Conversations</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label">Available</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Private</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // LEGENDARY HERO ANIMATIONS AND INTERACTIONS
+        function exploreAgents() {
+            window.location.href = '#agents-section';
+            // Smooth scroll animation will be handled by main.js
+        }
+        
+        function signUp() {
+            window.location.href = '/signup';
+        }
+        
+        // Dynamic typing effect for hero subtitle
+        document.addEventListener('DOMContentLoaded', function() {
+            const subtitles = [
+                "Where Legendary AI Companions Come to Life",
+                "Your Personal AI Army Awaits",
+                "Experience Next-Generation AI Personalities",
+                "Where Code Meets Consciousness"
+            ];
+            
+            let currentIndex = 0;
+            const subtitleElement = document.querySelector('.hero-subtitle');
+            
+            function rotateSubtitle() {
+                subtitleElement.style.opacity = '0';
+                setTimeout(() => {
+                    currentIndex = (currentIndex + 1) % subtitles.length;
+                    subtitleElement.textContent = subtitles[currentIndex];
+                    subtitleElement.style.opacity = '1';
+                }, 500);
+            }
+            
+            setInterval(rotateSubtitle, 4000);
+        });
+        
+        // Particle effect for hero background
+        class HeroParticles {
+            constructor() {
+                this.canvas = document.createElement('canvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.particles = [];
+                this.init();
+            }
+            
+            init() {
+                this.canvas.style.position = 'absolute';
+                this.canvas.style.top = '0';
+                this.canvas.style.left = '0';
+                this.canvas.style.pointerEvents = 'none';
+                this.canvas.style.zIndex = '1';
+                
+                document.querySelector('.hero-container').appendChild(this.canvas);
+                
+                this.resize();
+                this.createParticles();
+                this.animate();
+                
+                window.addEventListener('resize', () => this.resize());
+            }
+            
+            resize() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+            
+            createParticles() {
+                for (let i = 0; i < 50; i++) {
+                    this.particles.push({
+                        x: Math.random() * this.canvas.width,
+                        y: Math.random() * this.canvas.height,
+                        vx: (Math.random() - 0.5) * 0.5,
+                        vy: (Math.random() - 0.5) * 0.5,
+                        size: Math.random() * 2 + 1,
+                        opacity: Math.random() * 0.5 + 0.2
+                    });
+                }
+            }
+            
+            animate() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                this.particles.forEach(particle => {
+                    particle.x += particle.vx;
+                    particle.y += particle.vy;
+                    
+                    if (particle.x < 0 || particle.x > this.canvas.width) particle.vx *= -1;
+                    if (particle.y < 0 || particle.y > this.canvas.height) particle.vy *= -1;
+                    
+                    this.ctx.beginPath();
+                    this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                    this.ctx.fillStyle = `rgba(255, 215, 0, ${particle.opacity})`;
+                    this.ctx.fill();
+                });
+                
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+        
+        // Initialize particles after DOM load
+        document.addEventListener('DOMContentLoaded', () => {
+            new HeroParticles();
+        });
+    </script>
+</body>
+</html>

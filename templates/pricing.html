@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💎 Pricing - Glorious Space Kingdom</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7, #dda0dd);
+            background-size: 300% 300%;
+            animation: gradientShift 20s ease infinite;
+            z-index: -2;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .logo-icon {
+            font-size: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 15px;
+            border-radius: 20px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-secondary {
+            padding: 10px 20px;
+            border: 2px solid white;
+            background: transparent;
+            color: white;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            padding: 10px 20px;
+            background: white;
+            color: #667eea;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .main-content {
+            margin-top: 80px;
+            padding: 60px 20px;
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 80px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: slideUp 1s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 30px;
+            line-height: 1.6;
+            animation: slideUp 1s ease-out 0.2s both;
+        }
+
+        .billing-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 60px;
+            animation: slideUp 1s ease-out 0.4s both;
+        }
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .toggle-option {
+            padding: 12px 20px;
+            border-radius: 25px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-option.active {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .savings-badge {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-5px); }
+            60% { transform: translateY(-3px); }
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeIn 1s ease-out 0.6s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 40px 30px;
+            position: relative;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s ease;
+            overflow: hidden;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .pricing-card.featured {
+            border: 3px solid #ff6b6b;
+            transform: scale(1.05);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+
+        .plan-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .free-icon { color: #28a745; }
+        .pro-icon { color: #007bff; }
+        .enterprise-icon { color: #6f42c1; }
+
+        .plan-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .plan-description {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .plan-price {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .price-amount {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #333;
+        }
+
+        .price-currency {
+            font-size: 1.5rem;
+            vertical-align: top;
+        }
+
+        .price-period {
+            font-size: 1rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 1.2rem;
+            margin-right: 10px;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .features-list li {
+            padding: 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        .feature-icon {
+            color: #28a745;
+            font-weight: 600;
+            width: 20px;
+            text-align: center;
+        }
+
+        .feature-unavailable {
+            color: #dc3545;
+        }
+
+        .feature-text {
+            flex: 1;
+        }
+
+        .feature-highlight {
+            background: rgba(40, 167, 69, 0.1);
+            margin: 0 -15px;
+            padding: 12px 15px;
+            border-radius: 10px;
+        }
+
+        .select-plan-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+
+        .btn-free {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+        }
+
+        .btn-pro {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            color: white;
+        }
+
+        .btn-enterprise {
+            background: linear-gradient(45deg, #6f42c1, #563d7c);
+            color: white;
+        }
+
+        .select-plan-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .money-back {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .faq-section {
+            max-width: 800px;
+            margin: 100px auto 0;
+            padding: 0 20px;
+        }
+
+        .faq-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .faq-question {
+            padding: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .faq-answer {
+            padding: 0 25px 25px;
+            color: #666;
+            line-height: 1.6;
+            display: none;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .contact-section {
+            text-align: center;
+            margin: 80px auto;
+            max-width: 600px;
+            padding: 0 20px;
+        }
+
+        .contact-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .contact-description {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .contact-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+            }
+
+            .pricing-card.featured {
+                transform: none;
+            }
+
+            .pricing-card.featured:hover {
+                transform: translateY(-10px);
+            }
+
+            .billing-toggle {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <div class="floating-particles"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <span class="logo-icon">🏰</span>
+                Glorious Space
+            </a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/agents">AI Agents</a></li>
+                <li><a href="/pricing">Pricing</a></li>
+                <li><a href="/docs">Docs</a></li>
+                <li><a href="/support">Support</a></li>
+            </ul>
+            <div class="cta-buttons">
+                <a href="/auth/signin" class="btn-secondary">Sign In</a>
+                <a href="/auth/signup" class="btn-primary">Get Started</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section class="hero-section">
+            <h1 class="hero-title">Simple, Transparent Pricing</h1>
+            <p class="hero-subtitle">
+                Choose the perfect plan for your AI journey. Start free, upgrade when you're ready, 
+                and unlock the full power of our AI Agent Kingdom.
+            </p>
+            
+            <div class="billing-toggle">
+                <div class="toggle-container">
+                    <div class="toggle-option active" onclick="toggleBilling('monthly')">Monthly</div>
+                    <div class="toggle-option" onclick="toggleBilling('yearly')">Yearly</div>
+                </div>
+                <div class="savings-badge" id="savingsBadge">Save 30% 🎉</div>
+            </div>
+        </section>
+
+        <section class="pricing-grid">
+            <!-- Free Plan -->
+            <div class="pricing-card">
+                <div class="plan-icon free-icon">
+                    <i class="fas fa-seedling"></i>
+                </div>
+                <h3 class="plan-name">Explorer</h3>
+                <p class="plan-description">
+                    Perfect for trying out our AI agents and exploring the kingdom
+                </p>
+                <div class="plan-price">
+                    <span class="price-amount">
+                        <span class="price-currency">$</span>0
+                    </span>
+                    <div class="price-period">Forever Free</div>
+                </div>
+                <ul class="features-list">
+                    <li>
+                        <i class="fas fa-check feature-icon"></i>
+                        <span class="feature-text">3 AI Agents Access</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check feature-icon"></i>
+                        <span class="feature-text">100 Messages per Month</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check feature-icon"></i>
+                        <span class="feature-text">Basic Chat Interface</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check feature-icon"></i>
+                        <span class="feature-text">Community Support</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-times feature-icon feature-unavailable"></i>
+                        <span class="feature-text">Premium AI Models</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-times feature-icon feature-unavailable"></i>
+                        <span class="feature-text">Voice Chat</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-times feature-icon feature-unavailable"></i>
+                        <span class="feature-text">API Access</span>
+                    </li>
+                </ul>
+                <a href="/auth/signup?plan=free" class="select-plan-btn btn-free">Start Free</a>
+                <div class="money-back">No credit card required</div>
+            </div>
+
+            <!-- Pro Plan -->
+            <div class="pricing-card featured">
+                <div class="popular-badge">Most Popular ⭐</div>
+                <div class="plan-icon pro-icon">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <h3 class="plan-name">Pro Kingdom</h3>
+                <p class="plan-description">
+                    Unlock the full power of AI agents with premium features and unlimited access
+                </p>
+                <div class="plan-price">
+                    <span class="original-price yearly-price" id="proOriginal">$348</span>
+                    <span class="price-amount">
+                        <span class="price-currency">$</span><span id="proPrice">29</span>
+                    </span>
+                    <div class="price-period" id="proPeriod">per month</div>
+                </div>
+                <ul class="features-list">
+                    <li class="feature-highlight">
+                        <i class="fas fa-check feature-icon"></i>
+                        <span class="feature-text"><strong>All 18+ AI Agents</strong></span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check feature-icon"></i>
+                        <span class="feature-text">Unlimited Messages</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check feature-icon"></i>
+                        <span class="feature-text">Premium AI Models (GPT-4, Claude)</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check feature-icon"></i>
+                        <span class="feature-text">Voice Chat & Audio</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check feature-icon"></i>
+                        <span class="feature-text">Advanced Customization</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check feature-icon"></i>
+                        <span class="feature-text">Priority Support</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check feature-icon"></i>
+                        <span class="feature-text">API Access (1M calls/month)</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check feature-icon"></i>
+                        <span class="feature-text">Export Conversations</span>
+                    </li>
+                </ul>
+                <a href="/auth/signup?plan=pro" class="select-plan-btn btn-pro">Choose Pro</a>
+                <div class="money-back">💫 30-day money-back guarantee</div>
+            </div>
+
+            <!-- Enterprise Plan -->
+            <div class="pricing-card">
+                <div class="plan-icon enterprise-icon">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <h3 class="plan-name">Enterprise</h3>
+                <p class="plan-description">
+                    Custom solutions for teams and organizations with advanced needs
+                </p>
+                <div class="plan-price">
+                    <span class="price-amount">Custom</span>
+                    <div class="price-period">Contact Sales</div>
+                </div>
+                <ul class="features-list">
+                    <li>
+                        <i class="fas fa-check feature-icon"></i>
+                        <span class="feature-text">Everything in Pro</span>
+                    </li>
+                    <li class="feature-highlight">
+                        <i class="fas fa-check feature-icon"></i>
+                        <span class="feature-text"><strong>Custom AI Agent Development</strong></span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check feature-icon"></i>
+                        <span class="feature-text">Unlimited API Calls</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check feature-icon"></i>
+                        <span class="feature-text">White-label Solutions</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check feature-icon"></i>
+                        <span class="feature-text">Dedicated Account Manager</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check feature-icon"></i>
+                        <span class="feature-text">SLA & 24/7 Support</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check feature-icon"></i>
+                        <span class="feature-text">On-premise Deployment</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check feature-icon"></i>
+                        <span class="feature-text">Training & Onboarding</span>
+                    </li>
+                </ul>
+                <a href="/contact/enterprise" class="select-plan-btn btn-enterprise">Contact Sales</a>
+                <div class="money-back">🤝 Custom terms available</div>
+            </div>
+        </section>
+
+        <section class="faq-section">
+            <h2 class="faq-title">Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>What AI agents are included in each plan?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Our Explorer plan includes 3 core agents: AI Girlfriend Luvie, CYPHER SecuriBot, and AI Comedian Jokey. The Pro plan unlocks all 18+ agents including STELLAR AstroMaster, EmoAI, AI RAPSTAR FLØW, and all future agents we develop. Enterprise customers can request custom agents built specifically for their needs.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>Can I upgrade or downgrade my plan anytime?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! You can upgrade your plan instantly and start enjoying premium features immediately. If you downgrade, your plan will change at the end of your current billing period, and you'll retain access to premium features until then.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>What payment methods do you accept?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>We accept all major credit cards (Visa, MasterCard, American Express), PayPal, Apple Pay, Google Pay, and bank transfers for Enterprise customers. All payments are processed securely through Stripe.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>Is there a free trial for Pro features?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! All new users get a 7-day free trial of Pro features when they sign up. No credit card required. You can explore all premium agents and features risk-free before deciding to subscribe.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>What's your refund policy?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>We offer a 30-day money-back guarantee for all paid plans. If you're not completely satisfied, contact our support team within 30 days of your purchase for a full refund, no questions asked.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>Do you offer discounts for students or non-profits?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! We offer 50% discounts for verified students and qualified non-profit organizations. Contact our support team with your credentials to apply for these special rates.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-section">
+            <h2 class="contact-title">Still have questions?</h2>
+            <p class="contact-description">
+                Our team is here to help you choose the perfect plan and get the most out of your AI Agent Kingdom experience.
+            </p>
+            <a href="/support/contact" class="contact-btn">
+                <i class="fas fa-comments"></i> Contact Support
+            </a>
+        </section>
+    </main>
+
+    <script>
+        let isYearly = false;
+
+        // Create floating particles
+        function createParticles() {
+            const container = document.querySelector('.floating-particles');
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.width = particle.style.height = Math.random() * 6 + 2 + 'px';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Toggle billing period
+        function toggleBilling(period) {
+            isYearly = period === 'yearly';
+            
+            // Update toggle buttons
+            document.querySelectorAll('.toggle-option').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update prices
+            updatePricing();
+            
+            // Update savings badge visibility
+            const savingsBadge = document.getElementById('savingsBadge');
+            savingsBadge.style.display = isYearly ? 'block' : 'none';
+        }
+
+        // Update pricing display
+        function updatePricing() {
+            const proPrice = document.getElementById('proPrice');
+            const proPeriod = document.getElementById('proPeriod');
+            const proOriginal = document.getElementById('proOriginal');
+            
+            if (isYearly) {
+                proPrice.textContent = '20';
+                proPeriod.textContent = 'per month (billed yearly)';
+                proOriginal.style.display = 'inline';
+            } else {
+                proPrice.textContent = '29';
+                proPeriod.textContent = 'per month';
+                proOriginal.style.display = 'none';
+            }
+        }
+
+        // Toggle FAQ
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            const isActive = faqItem.classList.contains('active');
+            
+            // Close all FAQ items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Open clicked item if it wasn't active
+            if (!isActive) {
+                faqItem.classList.add('active');
+            }
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Initialize
+        createParticles();
+        
+        // Add pricing card hover effects
+        document.querySelectorAll('.pricing-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.zIndex = '10';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.zIndex = '1';
+            });
+        });
+
+        // Add loading animation to plan selection buttons
+        document.querySelectorAll('.select-plan-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                if (this.href && !this.href.includes('contact')) {
+                    e.preventDefault();
+                    
+                    const originalText = this.textContent;
+                    this.textContent = 'Loading...';
+                    this.style.pointerEvents = 'none';
+                    
+                    setTimeout(() => {
+                        window.location.href = this.href;
+                    }, 1000);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

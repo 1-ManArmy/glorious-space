@@ -1,0 +1,97 @@
+{% load static %}
+<!-- Stats Section -->
+<section class="stats-section py-20 bg-gradient-to-r from-blue-900/20 to-purple-900/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-white mb-4">
+                Our <span class="text-blue-400">Impact</span>
+            </h2>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                Numbers that showcase our commitment to excellence and innovation
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Stat items -->
+            <div class="text-center">
+                <div class="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-users text-white text-2xl"></i>
+                </div>
+                <div class="text-3xl font-bold text-white mb-2" id="users-count">1000+</div>
+                <div class="text-gray-300">Active Users</div>
+            </div>
+            
+            <div class="text-center">
+                <div class="w-20 h-20 bg-gradient-to-r from-green-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-project-diagram text-white text-2xl"></i>
+                </div>
+                <div class="text-3xl font-bold text-white mb-2" id="projects-count">50+</div>
+                <div class="text-gray-300">Projects Completed</div>
+            </div>
+            
+            <div class="text-center">
+                <div class="w-20 h-20 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-robot text-white text-2xl"></i>
+                </div>
+                <div class="text-3xl font-bold text-white mb-2" id="agents-count">18</div>
+                <div class="text-gray-300">AI Agents</div>
+            </div>
+            
+            <div class="text-center">
+                <div class="w-20 h-20 bg-gradient-to-r from-yellow-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-star text-white text-2xl"></i>
+                </div>
+                <div class="text-3xl font-bold text-white mb-2" id="rating-count">4.9</div>
+                <div class="text-gray-300">User Rating</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+// Animate counters when section comes into view
+function animateCounter(elementId, targetValue, duration = 2000) {
+    const element = document.getElementById(elementId);
+    const startValue = 0;
+    const increment = targetValue / (duration / 16);
+    let currentValue = startValue;
+    
+    const timer = setInterval(() => {
+        currentValue += increment;
+        if (currentValue >= targetValue) {
+            currentValue = targetValue;
+            clearInterval(timer);
+        }
+        
+        if (elementId === 'rating-count') {
+            element.textContent = currentValue.toFixed(1);
+        } else if (elementId === 'users-count') {
+            element.textContent = Math.floor(currentValue) + '+';
+        } else if (elementId === 'projects-count') {
+            element.textContent = Math.floor(currentValue) + '+';
+        } else {
+            element.textContent = Math.floor(currentValue);
+        }
+    }, 16);
+}
+
+// Trigger animation when section is visible
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            animateCounter('users-count', 1000);
+            animateCounter('projects-count', 50);
+            animateCounter('agents-count', 18);
+            animateCounter('rating-count', 4.9);
+            observer.unobserve(entry.target);
+        }
+    });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const statsSection = document.querySelector('.stats-section');
+    if (statsSection) {
+        observer.observe(statsSection);
+    }
+});
+</script>

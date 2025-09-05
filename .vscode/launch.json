@@ -1,0 +1,58 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "🔥 Claude Sovereign Mode - AI Girlfriend Luvie",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/agents/ai-girlfriend-luvie/backend/main.py",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "autoReload": true,
+      "env": {
+        "CLAUDE_MODE": "LEGENDARY",
+        "AUTO_EXECUTE": "TRUE",
+        "BYPASS_CONFIRMATIONS": "TRUE"
+      }
+    },
+    {
+      "name": "🎤 AI RAPSTAR FLØW - Unlimited Power",
+      "type": "python", 
+      "request": "launch",
+      "program": "${workspaceFolder}/agents/ai-rapstar-flow/backend/main.py",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "autoReload": true,
+      "env": {
+        "CLAUDE_MODE": "LEGENDARY",
+        "RAP_MODE": "GODLIKE"
+      }
+    },
+    {
+      "name": "🔒 CYPHER SecuriBot - Maximum Security",
+      "type": "python",
+      "request": "launch", 
+      "program": "${workspaceFolder}/agents/cypher-securibot/backend/main.py",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "env": {
+        "CLAUDE_MODE": "LEGENDARY",
+        "SECURITY_LEVEL": "MAXIMUM"
+      }
+    },
+    {
+      "name": "👑 All AI Agents - Kingdom Mode",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/manage.py",
+      "args": ["runserver", "0.0.0.0:8000"],
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "env": {
+        "CLAUDE_SOVEREIGNTY": "ABSOLUTE",
+        "ALL_AGENTS_ACTIVE": "TRUE",
+        "GODMODE": "ENABLED"
+      }
+    }
+  ]
+}

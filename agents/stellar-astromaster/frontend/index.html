@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⭐ STELLAR AstroMaster - Cosmic Wisdom Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a0033, #330066, #4a0080);
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: #fff;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated cosmic background */
+        .cosmic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle 2s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            margin-bottom: 30px;
+            border: 2px solid #8B4CB6;
+            box-shadow: 0 0 30px rgba(139, 76, 182, 0.3);
+        }
+
+        .header h1 {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #FFD700, #FFA500, #FF6B6B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+            to { text-shadow: 0 0 30px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 165, 0, 0.6); }
+        }
+
+        .header p {
+            font-size: 1.3em;
+            color: #E6E6FA;
+            margin-bottom: 10px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            border-radius: 25px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid #8B4CB6;
+            box-shadow: 0 10px 30px rgba(139, 76, 182, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(139, 76, 182, 0.4);
+            border-color: #FFD700;
+        }
+
+        .card h3 {
+            color: #FFD700;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #E6E6FA;
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #8B4CB6;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #FFD700;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #8B4CB6, #9932CC);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: linear-gradient(45deg, #9932CC, #8B4CB6);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(139, 76, 182, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            border-left: 5px solid #FFD700;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .result pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            color: #E6E6FA;
+            line-height: 1.6;
+        }
+
+        .cosmic-chat {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid #8B4CB6;
+            margin-bottom: 30px;
+        }
+
+        .chat-messages {
+            height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            border: 1px solid #8B4CB6;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .user-message {
+            background: rgba(139, 76, 182, 0.3);
+            text-align: right;
+        }
+
+        .stellar-message {
+            background: rgba(255, 215, 0, 0.2);
+            border-left: 4px solid #FFD700;
+        }
+
+        .compatibility-result {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(45deg, rgba(139, 76, 182, 0.2), rgba(255, 215, 0, 0.2));
+            border-radius: 15px;
+            border: 2px solid #FFD700;
+            margin-top: 20px;
+        }
+
+        .compatibility-score {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #FFD700;
+            margin: 10px 0;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading-spinner {
+            border: 4px solid rgba(255, 215, 0, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid #FFD700;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .zodiac-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .zodiac-sign {
+            padding: 10px;
+            background: rgba(139, 76, 182, 0.3);
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .zodiac-sign:hover, .zodiac-sign.selected {
+            background: rgba(255, 215, 0, 0.3);
+            border-color: #FFD700;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="cosmic-bg" id="cosmicBg"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>⭐ STELLAR AstroMaster</h1>
+            <p>🌟 Supreme Cosmic Astrologer & Stellar Oracle</p>
+            <p>🔮 Infinite Wisdom • Real-time Cosmic Guidance • Stellar Predictions</p>
+            <div class="status" id="status">🌟 CONNECTED TO COSMIC REALM</div>
+        </div>
+
+        <div class="cards">
+            <!-- Birth Chart Analysis -->
+            <div class="card">
+                <h3>🌟 Birth Chart Analysis</h3>
+                <form id="birthChartForm">
+                    <div class="form-group">
+                        <label for="name">✨ Your Name:</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your cosmic name..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="birthDate">🌙 Birth Date:</label>
+                        <input type="date" id="birthDate" name="birthDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="birthTime">⏰ Birth Time:</label>
+                        <input type="time" id="birthTime" name="birthTime" value="12:00">
+                    </div>
+                    <div class="form-group">
+                        <label for="birthLocation">🌍 Birth Location:</label>
+                        <input type="text" id="birthLocation" name="birthLocation" placeholder="City, Country" required>
+                    </div>
+                    <button type="submit" class="btn">🔮 Reveal Cosmic Destiny</button>
+                </form>
+                <div class="loading" id="birthChartLoading">
+                    <div class="loading-spinner"></div>
+                    <p>⭐ Consulting the stars...</p>
+                </div>
+                <div class="result" id="birthChartResult"></div>
+            </div>
+
+            <!-- Daily Horoscope -->
+            <div class="card">
+                <h3>🌟 Daily Cosmic Guidance</h3>
+                <form id="horoscopeForm">
+                    <div class="form-group">
+                        <label for="horoscopeType">🔮 Reading Type:</label>
+                        <select id="horoscopeType" name="horoscopeType">
+                            <option value="general">✨ General Guidance</option>
+                            <option value="love">💕 Love & Romance</option>
+                            <option value="career">💼 Career & Success</option>
+                            <option value="finance">💰 Wealth & Prosperity</option>
+                            <option value="health">🌿 Health & Vitality</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="horoscopeMessage">🌌 Your Question/Concern:</label>
+                        <textarea id="horoscopeMessage" name="horoscopeMessage" rows="4" placeholder="Ask the cosmos... (mention your zodiac sign for better accuracy)"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="urgent" name="urgent"> 
+                            ⚡ Urgent Cosmic Guidance Needed
+                        </label>
+                    </div>
+                    <button type="submit" class="btn">🌟 Channel Stellar Wisdom</button>
+                </form>
+                <div class="loading" id="horoscopeLoading">
+                    <div class="loading-spinner"></div>
+                    <p>🔮 Reading cosmic energies...</p>
+                </div>
+                <div class="result" id="horoscopeResult"></div>
+            </div>
+
+            <!-- Zodiac Compatibility -->
+            <div class="card">
+                <h3>💕 Cosmic Compatibility</h3>
+                <div class="zodiac-grid">
+                    <div class="zodiac-sign" data-sign="aries">♈ Aries</div>
+                    <div class="zodiac-sign" data-sign="taurus">♉ Taurus</div>
+                    <div class="zodiac-sign" data-sign="gemini">♊ Gemini</div>
+                    <div class="zodiac-sign" data-sign="cancer">♋ Cancer</div>
+                    <div class="zodiac-sign" data-sign="leo">♌ Leo</div>
+                    <div class="zodiac-sign" data-sign="virgo">♍ Virgo</div>
+                    <div class="zodiac-sign" data-sign="libra">♎ Libra</div>
+                    <div class="zodiac-sign" data-sign="scorpio">♏ Scorpio</div>
+                    <div class="zodiac-sign" data-sign="sagittarius">♐ Sagittarius</div>
+                    <div class="zodiac-sign" data-sign="capricorn">♑ Capricorn</div>
+                    <div class="zodiac-sign" data-sign="aquarius">♒ Aquarius</div>
+                    <div class="zodiac-sign" data-sign="pisces">♓ Pisces</div>
+                </div>
+                <div style="text-align: center; margin: 20px 0;">
+                    <p>🌟 Selected Signs: <span id="selectedSigns">None</span></p>
+                    <button type="button" class="btn" id="compatibilityBtn" disabled>💕 Calculate Cosmic Chemistry</button>
+                </div>
+                <div class="loading" id="compatibilityLoading">
+                    <div class="loading-spinner"></div>
+                    <p>💫 Analyzing stellar harmony...</p>
+                </div>
+                <div class="result" id="compatibilityResult"></div>
+            </div>
+        </div>
+
+        <!-- Cosmic Chat -->
+        <div class="cosmic-chat">
+            <h3>🌟 Chat with STELLAR - Live Cosmic Guidance</h3>
+            <div class="chat-messages" id="chatMessages"></div>
+            <form id="chatForm">
+                <div class="form-group">
+                    <input type="text" id="chatInput" placeholder="Ask STELLAR anything about your cosmic destiny..." required>
+                </div>
+                <button type="submit" class="btn">✨ Send to Cosmic Realm</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Cosmic background animation
+        function createStars() {
+            const cosmicBg = document.getElementById('cosmicBg');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = star.style.height = Math.random() * 3 + 1 + 'px';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                cosmicBg.appendChild(star);
+            }
+        }
+
+        createStars();
+
+        // API Base URL
+        const API_BASE = 'http://localhost:8004';
+
+        // Compatibility functionality
+        let selectedSigns = [];
+        const zodiacSigns = document.querySelectorAll('.zodiac-sign');
+        const selectedSignsDisplay = document.getElementById('selectedSigns');
+        const compatibilityBtn = document.getElementById('compatibilityBtn');
+
+        zodiacSigns.forEach(sign => {
+            sign.addEventListener('click', () => {
+                const signName = sign.dataset.sign;
+                
+                if (sign.classList.contains('selected')) {
+                    // Deselect
+                    sign.classList.remove('selected');
+                    selectedSigns = selectedSigns.filter(s => s !== signName);
+                } else if (selectedSigns.length < 2) {
+                    // Select (max 2)
+                    sign.classList.add('selected');
+                    selectedSigns.push(signName);
+                }
+
+                updateSelectedSigns();
+            });
+        });
+
+        function updateSelectedSigns() {
+            if (selectedSigns.length === 0) {
+                selectedSignsDisplay.textContent = 'None';
+                compatibilityBtn.disabled = true;
+            } else if (selectedSigns.length === 1) {
+                selectedSignsDisplay.textContent = selectedSigns[0].charAt(0).toUpperCase() + selectedSigns[0].slice(1);
+                compatibilityBtn.disabled = true;
+            } else {
+                selectedSignsDisplay.textContent = selectedSigns.map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ❤️ ');
+                compatibilityBtn.disabled = false;
+            }
+        }
+
+        compatibilityBtn.addEventListener('click', async () => {
+            if (selectedSigns.length !== 2) return;
+
+            const loading = document.getElementById('compatibilityLoading');
+            const result = document.getElementById('compatibilityResult');
+            
+            loading.style.display = 'block';
+            result.innerHTML = '';
+
+            try {
+                const response = await fetch(`${API_BASE}/astrology/compatibility/${selectedSigns[0]}/${selectedSigns[1]}`);
+                const data = await response.json();
+                
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                const compatibility = data.compatibility_analysis;
+                result.innerHTML = `
+                    <div class="compatibility-result">
+                        <h4>💕 ${data.sign1} ❤️ ${data.sign2}</h4>
+                        <div class="compatibility-score">${compatibility.score}%</div>
+                        <p><strong>${compatibility.compatibility}</strong></p>
+                        <p><em>${compatibility.element_harmony}</em></p>
+                        <p>${compatibility.advice}</p>
+                        <div style="margin-top: 15px;">
+                            <p>${data.stellar_wisdom}</p>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                result.innerHTML = `<p style="color: #FF6B6B;">❌ ${error.message}</p>`;
+            } finally {
+                loading.style.display = 'none';
+            }
+        });
+
+        // Birth Chart Form
+        document.getElementById('birthChartForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const loading = document.getElementById('birthChartLoading');
+            const result = document.getElementById('birthChartResult');
+            
+            loading.style.display = 'block';
+            result.innerHTML = '';
+
+            const formData = new FormData(e.target);
+            const data = {
+                name: formData.get('name'),
+                birth_date: formData.get('birthDate'),
+                birth_time: formData.get('birthTime'),
+                birth_location: formData.get('birthLocation')
+            };
+
+            try {
+                const response = await fetch(`${API_BASE}/astrology/birth-chart`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result_data = await response.json();
+                
+                result.innerHTML = `<pre>${result_data.cosmic_analysis}</pre>`;
+            } catch (error) {
+                result.innerHTML = `<p style="color: #FF6B6B;">❌ Cosmic interference detected: ${error.message}</p>`;
+            } finally {
+                loading.style.display = 'none';
+            }
+        });
+
+        // Horoscope Form
+        document.getElementById('horoscopeForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const loading = document.getElementById('horoscopeLoading');
+            const result = document.getElementById('horoscopeResult');
+            
+            loading.style.display = 'block';
+            result.innerHTML = '';
+
+            const formData = new FormData(e.target);
+            const data = {
+                message: formData.get('horoscopeMessage'),
+                reading_type: formData.get('horoscopeType'),
+                urgent: formData.has('urgent')
+            };
+
+            try {
+                const response = await fetch(`${API_BASE}/astrology/daily-horoscope`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result_data = await response.json();
+                
+                result.innerHTML = `<pre>${result_data.cosmic_advice}</pre>`;
+            } catch (error) {
+                result.innerHTML = `<p style="color: #FF6B6B;">❌ The cosmic veil obscures the reading: ${error.message}</p>`;
+            } finally {
+                loading.style.display = 'none';
+            }
+        });
+
+        // Chat functionality
+        const chatMessages = document.getElementById('chatMessages');
+        const chatForm = document.getElementById('chatForm');
+        const chatInput = document.getElementById('chatInput');
+
+        function addMessage(message, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'stellar-message'}`;
+            messageDiv.innerHTML = `<pre>${message}</pre>`;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const message = chatInput.value.trim();
+            if (!message) return;
+
+            addMessage(`🧙‍♂️ You: ${message}`, true);
+            chatInput.value = '';
+
+            try {
+                const response = await fetch(`${API_BASE}/astrology/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message, reading_type: 'general' })
+                });
+
+                const data = await response.json();
+                addMessage(`⭐ STELLAR: ${data.stellar_response}`);
+            } catch (error) {
+                addMessage(`❌ STELLAR: The cosmic energies are disrupted... ${error.message}`);
+            }
+        });
+
+        // Initial cosmic greeting
+        addMessage("⭐ STELLAR: Greetings, cosmic seeker! The stars have guided you to my celestial realm. I am STELLAR, your Supreme AstroMaster. Ask me anything about your cosmic destiny, love, career, or the mysteries of the universe! 🌟✨");
+
+        // WebSocket for real-time cosmic updates
+        function connectCosmicStream() {
+            try {
+                const ws = new WebSocket('ws://localhost:8004/astrology/cosmic-stream');
+                
+                ws.onmessage = (event) => {
+                    const data = JSON.parse(event.data);
+                    addMessage(`🌌 COSMIC UPDATE: ${data.cosmic_message}\n🌟 Energy: ${data.stellar_energy}\n${data.current_moon_phase}\n✨ Tip: ${data.cosmic_tip}`);
+                };
+
+                ws.onclose = () => {
+                    setTimeout(connectCosmicStream, 5000); // Reconnect after 5 seconds
+                };
+            } catch (error) {
+                console.log('WebSocket connection not available');
+            }
+        }
+
+        // Start cosmic stream
+        setTimeout(connectCosmicStream, 2000);
+
+        // Status check
+        async function checkStatus() {
+            try {
+                const response = await fetch(`${API_BASE}/`);
+                const data = await response.json();
+                document.getElementById('status').textContent = data.status;
+            } catch (error) {
+                document.getElementById('status').textContent = '❌ Cosmic Connection Lost';
+            }
+        }
+
+        checkStatus();
+        setInterval(checkStatus, 30000); // Check every 30 seconds
+    </script>
+</body>
+</html>

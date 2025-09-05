@@ -1,0 +1,174 @@
+# AI Girlfriend "Luvie" Backend Dependencies
+# ========================================
+
+# FastAPI Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+
+# Database & Storage
+sqlalchemy==2.0.23
+psycopg2-binary==2.9.7
+alembic==1.12.1
+
+# Data Validation & Serialization
+pydantic==2.5.0
+pydantic-settings==2.0.3
+
+# AI & Machine Learning
+openai==1.3.7
+transformers==4.35.2
+torch==2.1.1
+sentence-transformers==2.2.2
+
+# Audio Processing (for voice features)
+pydub==0.25.1
+speechrecognition==3.10.0
+gtts==2.4.0
+
+# Image Processing
+pillow==10.1.0
+opencv-python==4.8.1.78
+
+# Real-time Communication
+websockets==12.0
+python-socketio==5.11.0
+
+# Authentication & Security
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.6
+
+# HTTP Requests
+httpx==0.25.2
+aiohttp==3.9.1
+
+# Date & Time
+python-dateutil==2.8.2
+
+# Environment Variables
+python-dotenv==1.0.0
+
+# Logging & Monitoring
+loguru==0.7.2
+
+# Data Processing
+pandas==2.1.4
+numpy==1.24.3
+
+# Task Queue (for background processing)
+celery==5.3.4
+redis==5.0.1
+
+# Email & Notifications
+emails==0.6
+
+# Testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+httpx==0.25.2
+
+# Development Tools
+black==23.11.0
+isort==5.12.0
+flake8==6.1.0
+
+# Production WSGI Server
+gunicorn==21.2.0
+
+# CORS Middleware
+python-cors==1.7.0
+
+# File Upload & Storage
+aiofiles==23.2.1
+
+# JSON Processing
+orjson==3.9.10
+
+# Validation & Parsing
+email-validator==2.1.0
+phonenumbers==8.13.27
+
+# Caching
+aiocache==0.12.2
+
+# Rate Limiting
+slowapi==0.1.9
+
+# Monitoring & Health Checks
+prometheus-client==0.19.0
+
+# Async Database
+asyncpg==0.29.0
+databases[postgresql]==0.8.0
+
+# Background Tasks
+apscheduler==3.10.4
+
+# Text Processing & NLP
+nltk==3.8.1
+spacy==3.7.2
+textblob==0.17.1
+
+# Personality & Emotion Analysis
+vaderSentiment==3.3.2
+
+# Chat Features
+emoji==2.8.0
+profanity-check==1.0.3
+
+# Voice Synthesis (Premium Features)
+azure-cognitiveservices-speech==1.34.0
+
+# Social Features
+python-social-auth==0.3.6
+
+# Payment Processing (for Premium)
+stripe==7.9.0
+
+# Analytics
+mixpanel==4.10.1
+
+# WebRTC (for video calls)
+aiortc==1.6.0
+
+# Local AI Models (Ollama integration)
+ollama==0.1.7
+
+# Relationship Analytics
+scikit-learn==1.3.2
+
+# Chat History & Context
+chromadb==0.4.18
+
+# Real-time Notifications
+pusher==3.3.2
+
+# Virtual Gifts & Gamification
+django-gamification==1.0.0
+
+# Voice Cloning (Premium)
+coqui-tts==0.18.2
+
+# Deployment & Infrastructure
+docker==6.1.3
+kubernetes==28.1.0
+
+# Backup & Recovery
+boto3==1.34.0  # AWS S3 for backups
+
+# Performance Monitoring
+newrelic==9.2.0
+
+# Security
+cryptography==41.0.8
+bcrypt==4.1.2
+
+# Mobile Push Notifications
+pyfcm==1.5.4
+
+# Social Media Integration
+tweepy==4.14.0
+facebook-sdk==3.1.0
+
+# Advanced Personality Modeling
+personality-insights==3.1.0

@@ -1,0 +1,776 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Events & Conferences - DevCrown</title>
+    <meta name="description" content="Discover upcoming AI conferences, industry events, networking meetups, and tech gatherings. Connect with the AI community and stay at the forefront of innovation.">
+    
+    <!-- SEO Meta Tags -->
+    <meta property="og:title" content="AI Events & Conferences - DevCrown">
+    <meta property="og:description" content="Connect with the AI community through conferences, meetups, and industry events">
+    <meta property="og:image" content="{% static 'images/devcrown-events-og.png' %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'favicon.ico' %}">
+    <link rel="apple-touch-icon" href="{% static 'apple-touch-icon.png' %}">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="h-full bg-gray-900 text-white">
+    <div class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black">
+        
+        <!-- Header -->
+        <div class="bg-gray-800/50 backdrop-blur-sm border-b border-gray-700">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-red-500 to-pink-600 rounded-full flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-2xl font-bold bg-gradient-to-r from-red-400 to-pink-400 bg-clip-text text-transparent">
+                                AI Events & Conferences
+                            </h1>
+                            <p class="text-gray-400 text-sm">Global Events • Networking • Innovation</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Event Status -->
+                    <div class="hidden md:flex items-center space-x-6 text-sm">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                            <span class="text-green-400 font-semibold">LIVE</span>
+                            <span class="text-gray-400">AI Summit 2025</span>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-green-400 font-bold text-lg">1,247</div>
+                            <div class="text-gray-400">Attendees</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            
+            <!-- Hero Section -->
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+                    Connect with the 
+                    <span class="bg-gradient-to-r from-red-400 to-pink-400 bg-clip-text text-transparent">AI Community</span>
+                </h2>
+                <p class="text-xl text-gray-300 max-w-4xl mx-auto mb-8">
+                    Discover and attend premier AI conferences, industry summits, networking events, 
+                    and tech meetups happening worldwide. Build connections and stay ahead of innovation.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#featured" class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                        Featured Events
+                    </a>
+                    <a href="#conferences" class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                        Conferences
+                    </a>
+                    <a href="#meetups" class="border border-gray-600 hover:border-gray-500 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                        Local Meetups
+                    </a>
+                </div>
+            </div>
+
+            <!-- Live Event Banner -->
+            <div class="bg-gradient-to-r from-green-900/50 to-emerald-900/50 border border-green-500/30 rounded-lg p-6 mb-12">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-4 h-4 bg-green-500 rounded-full animate-pulse"></div>
+                            <span class="bg-green-600 text-white px-3 py-1 rounded-full text-xs font-bold">HAPPENING NOW</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-1">
+                                AI Summit 2025: The Future of Intelligent Systems
+                            </h3>
+                            <p class="text-gray-300 text-sm">
+                                Join 1,200+ industry leaders, researchers, and innovators at the world's premier AI conference
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="text-center">
+                            <div class="text-green-400 font-bold text-lg">1,247</div>
+                            <div class="text-gray-400 text-xs">Live Attendees</div>
+                        </div>
+                        <a href="/events/live/ai-summit-2025" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                            Join Virtual
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Categories -->
+            <div class="mb-12">
+                <div class="flex flex-wrap gap-3 justify-center">
+                    <button class="bg-red-600 text-white px-4 py-2 rounded-full text-sm font-semibold">All Events</button>
+                    <button class="bg-gray-700 hover:bg-gray-600 text-gray-300 px-4 py-2 rounded-full text-sm transition-colors">Conferences</button>
+                    <button class="bg-gray-700 hover:bg-gray-600 text-gray-300 px-4 py-2 rounded-full text-sm transition-colors">Workshops</button>
+                    <button class="bg-gray-700 hover:bg-gray-600 text-gray-300 px-4 py-2 rounded-full text-sm transition-colors">Meetups</button>
+                    <button class="bg-gray-700 hover:bg-gray-600 text-gray-300 px-4 py-2 rounded-full text-sm transition-colors">Virtual Events</button>
+                    <button class="bg-gray-700 hover:bg-gray-600 text-gray-300 px-4 py-2 rounded-full text-sm transition-colors">Networking</button>
+                    <button class="bg-gray-700 hover:bg-gray-600 text-gray-300 px-4 py-2 rounded-full text-sm transition-colors">Hackathons</button>
+                </div>
+            </div>
+
+            <!-- Main Content Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                
+                <!-- Main Content -->
+                <div class="lg:col-span-3">
+                    
+                    <!-- Featured Events -->
+                    <section id="featured" class="mb-12">
+                        <h2 class="text-2xl font-bold text-white mb-8 flex items-center">
+                            <svg class="w-6 h-6 text-red-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                            </svg>
+                            Featured Events
+                        </h2>
+                        
+                        <div class="space-y-6">
+                            
+                            <!-- Event 1 - Major Conference -->
+                            <article class="bg-gradient-to-br from-red-900/20 to-pink-900/20 backdrop-blur-sm rounded-xl border border-red-500/30 p-6 hover:border-red-400 transition-colors">
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="flex items-center space-x-3">
+                                        <span class="bg-red-600 text-white px-3 py-1 rounded-full text-xs font-semibold">FEATURED</span>
+                                        <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-semibold">CONFERENCE</span>
+                                        <span class="text-red-400 text-sm">Oct 15-17, 2025 • San Francisco, CA</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2 text-gray-400 text-sm">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                        </svg>
+                                        <span>2,500 expected attendees</span>
+                                    </div>
+                                </div>
+                                
+                                <h3 class="text-2xl font-bold text-white mb-3">
+                                    AI World Conference 2025: Shaping Tomorrow's Intelligence
+                                </h3>
+                                
+                                <p class="text-gray-300 text-sm mb-4">
+                                    The world's largest AI conference bringing together 2,500+ researchers, entrepreneurs, 
+                                    and industry leaders. Featuring 150+ speakers, hands-on workshops, and exclusive networking opportunities.
+                                </p>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                    <div class="bg-gray-800/50 rounded-lg p-3">
+                                        <h4 class="text-white font-semibold text-sm mb-1">Keynote Speakers</h4>
+                                        <p class="text-gray-400 text-xs">Dr. Andrew Ng, Fei-Fei Li, Demis Hassabis</p>
+                                    </div>
+                                    <div class="bg-gray-800/50 rounded-lg p-3">
+                                        <h4 class="text-white font-semibold text-sm mb-1">Focus Areas</h4>
+                                        <p class="text-gray-400 text-xs">AGI, Robotics, Ethics, Healthcare AI</p>
+                                    </div>
+                                    <div class="bg-gray-800/50 rounded-lg p-3">
+                                        <h4 class="text-white font-semibold text-sm mb-1">Networking</h4>
+                                        <p class="text-gray-400 text-xs">50+ companies, startup showcase</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div class="flex space-x-3">
+                                        <a href="/events/register/ai-world-2025" class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-semibold text-sm transition-colors">
+                                            Register Now
+                                        </a>
+                                        <a href="/events/ai-world-2025/agenda" class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg font-semibold text-sm transition-colors">
+                                            View Agenda
+                                        </a>
+                                        <button class="text-gray-400 hover:text-gray-300 text-sm transition-colors">
+                                            Save Event
+                                        </button>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-red-400 text-lg font-bold">$1,299</div>
+                                        <div class="text-gray-400 text-xs">Early Bird: $999</div>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <!-- Event 2 - Workshop Series -->
+                            <article class="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700 p-6 hover:border-green-500 transition-colors">
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="flex items-center space-x-3">
+                                        <span class="bg-green-600 text-white px-3 py-1 rounded-full text-xs font-semibold">WORKSHOP</span>
+                                        <span class="text-green-400 text-sm">Sep 25-26, 2025 • Virtual + NYC</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2 text-gray-400 text-sm">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                        </svg>
+                                        <span>Limited to 100 participants</span>
+                                    </div>
+                                </div>
+                                
+                                <h3 class="text-xl font-bold text-white mb-3">
+                                    Advanced Multimodal AI Workshop: Hands-On Implementation
+                                </h3>
+                                
+                                <p class="text-gray-300 text-sm mb-4">
+                                    Intensive 2-day workshop focusing on building multimodal AI systems. Learn from experts, 
+                                    work on real projects, and get personalized mentorship. Includes access to cutting-edge tools and datasets.
+                                </p>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                    <div class="bg-gray-800/50 rounded-lg p-3">
+                                        <h4 class="text-white font-semibold text-sm mb-1">What You'll Build</h4>
+                                        <p class="text-gray-400 text-xs">Text-to-image app, video analysis system</p>
+                                    </div>
+                                    <div class="bg-gray-800/50 rounded-lg p-3">
+                                        <h4 class="text-white font-semibold text-sm mb-1">Tools Provided</h4>
+                                        <p class="text-gray-400 text-xs">GPU credits, datasets, code templates</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div class="flex space-x-3">
+                                        <a href="/events/register/multimodal-workshop" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-semibold text-sm transition-colors">
+                                            Apply Now
+                                        </a>
+                                        <button class="text-gray-400 hover:text-gray-300 text-sm transition-colors">
+                                            Prerequisites
+                                        </button>
+                                    </div>
+                                    <span class="text-green-400 text-sm font-semibold">$499</span>
+                                </div>
+                            </article>
+
+                            <!-- Event 3 - Virtual Summit -->
+                            <article class="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700 p-6 hover:border-purple-500 transition-colors">
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="flex items-center space-x-3">
+                                        <span class="bg-purple-600 text-white px-3 py-1 rounded-full text-xs font-semibold">VIRTUAL</span>
+                                        <span class="text-purple-400 text-sm">Nov 8, 2025 • Global Virtual Event</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2 text-gray-400 text-sm">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        <span>Global virtual attendance</span>
+                                    </div>
+                                </div>
+                                
+                                <h3 class="text-xl font-bold text-white mb-3">
+                                    AI Ethics & Society Virtual Summit
+                                </h3>
+                                
+                                <p class="text-gray-300 text-sm mb-4">
+                                    Join global thought leaders discussing AI's impact on society, ethics in AI development, 
+                                    and responsible AI practices. Features interactive panels and worldwide networking.
+                                </p>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div class="flex space-x-3">
+                                        <a href="/events/register/ai-ethics-summit" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-semibold text-sm transition-colors">
+                                            Join Free
+                                        </a>
+                                        <button class="text-gray-400 hover:text-gray-300 text-sm transition-colors">
+                                            Schedule
+                                        </button>
+                                    </div>
+                                    <span class="text-purple-400 text-sm font-semibold">Free</span>
+                                </div>
+                            </article>
+                        </div>
+                    </section>
+
+                    <!-- Upcoming Conferences -->
+                    <section id="conferences" class="mb-12">
+                        <h2 class="text-2xl font-bold text-white mb-8 flex items-center">
+                            <svg class="w-6 h-6 text-blue-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                            </svg>
+                            Upcoming Conferences
+                        </h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            
+                            <!-- Conference 1 -->
+                            <div class="bg-gray-800/50 backdrop-blur-sm rounded-lg border border-gray-700 overflow-hidden hover:border-blue-500 transition-colors">
+                                <div class="aspect-video bg-gradient-to-br from-blue-600 to-indigo-600 relative">
+                                    <div class="absolute inset-0 bg-black/20"></div>
+                                    <div class="absolute top-4 left-4 flex space-x-2">
+                                        <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-semibold">CONFERENCE</span>
+                                        <span class="bg-yellow-600 text-white px-3 py-1 rounded-full text-xs font-semibold">HYBRID</span>
+                                    </div>
+                                    <div class="absolute bottom-4 right-4">
+                                        <span class="bg-black/60 text-white px-2 py-1 rounded text-xs">3 days</span>
+                                    </div>
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <div class="text-center">
+                                            <div class="text-white text-3xl font-bold">Oct</div>
+                                            <div class="text-white text-4xl font-bold">22</div>
+                                            <div class="text-blue-200 text-sm">2025</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-4">
+                                    <h3 class="text-lg font-bold text-white mb-2">
+                                        NeurIPS 2025: Neural Information Processing Systems
+                                    </h3>
+                                    <p class="text-gray-300 text-sm mb-3">
+                                        Premier conference for neural information processing research. Vancouver, Canada.
+                                    </p>
+                                    <div class="flex items-center justify-between">
+                                        <a href="/events/neurips-2025" class="text-blue-400 hover:text-blue-300 font-semibold text-sm transition-colors">
+                                            Learn More →
+                                        </a>
+                                        <span class="text-gray-400 text-xs">Vancouver, CA</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Conference 2 -->
+                            <div class="bg-gray-800/50 backdrop-blur-sm rounded-lg border border-gray-700 overflow-hidden hover:border-green-500 transition-colors">
+                                <div class="aspect-video bg-gradient-to-br from-green-600 to-emerald-600 relative">
+                                    <div class="absolute inset-0 bg-black/20"></div>
+                                    <div class="absolute top-4 left-4 flex space-x-2">
+                                        <span class="bg-green-600 text-white px-3 py-1 rounded-full text-xs font-semibold">CONFERENCE</span>
+                                        <span class="bg-red-600 text-white px-3 py-1 rounded-full text-xs font-semibold">SOLD OUT</span>
+                                    </div>
+                                    <div class="absolute bottom-4 right-4">
+                                        <span class="bg-black/60 text-white px-2 py-1 rounded text-xs">2 days</span>
+                                    </div>
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <div class="text-center">
+                                            <div class="text-white text-3xl font-bold">Nov</div>
+                                            <div class="text-white text-4xl font-bold">12</div>
+                                            <div class="text-green-200 text-sm">2025</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-4">
+                                    <h3 class="text-lg font-bold text-white mb-2">
+                                        AI for Good Global Summit
+                                    </h3>
+                                    <p class="text-gray-300 text-sm mb-3">
+                                        UN-organized summit on AI applications for sustainable development goals.
+                                    </p>
+                                    <div class="flex items-center justify-between">
+                                        <a href="/events/ai-for-good-2025" class="text-green-400 hover:text-green-300 font-semibold text-sm transition-colors">
+                                            Waitlist →
+                                        </a>
+                                        <span class="text-gray-400 text-xs">Geneva, CH</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Local Meetups -->
+                    <section id="meetups" class="mb-12">
+                        <h2 class="text-2xl font-bold text-white mb-8 flex items-center">
+                            <svg class="w-6 h-6 text-yellow-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            Local Meetups & Networking
+                        </h2>
+                        
+                        <div class="space-y-4">
+                            
+                            <!-- Meetup 1 -->
+                            <div class="bg-gray-800/50 backdrop-blur-sm rounded-lg border border-gray-700 p-4 hover:border-yellow-500 transition-colors">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h3 class="text-white font-semibold mb-1">SF AI Professionals Meetup</h3>
+                                        <p class="text-gray-300 text-sm mb-2">Monthly networking for AI professionals in San Francisco</p>
+                                        <div class="flex items-center space-x-4 text-xs text-gray-400">
+                                            <span>📅 Sep 20, 2025 • 6:00 PM</span>
+                                            <span>📍 San Francisco, CA</span>
+                                            <span>👥 47 attending</span>
+                                        </div>
+                                    </div>
+                                    <a href="/meetups/sf-ai-professionals" class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-lg font-semibold text-sm transition-colors">
+                                        Join
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Meetup 2 -->
+                            <div class="bg-gray-800/50 backdrop-blur-sm rounded-lg border border-gray-700 p-4 hover:border-indigo-500 transition-colors">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h3 class="text-white font-semibold mb-1">NYC Machine Learning Developers</h3>
+                                        <p class="text-gray-300 text-sm mb-2">Technical talks and hands-on ML workshops</p>
+                                        <div class="flex items-center space-x-4 text-xs text-gray-400">
+                                            <span>📅 Sep 18, 2025 • 7:00 PM</span>
+                                            <span>📍 New York, NY</span>
+                                            <span>👥 123 attending</span>
+                                        </div>
+                                    </div>
+                                    <a href="/meetups/nyc-ml-developers" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-semibold text-sm transition-colors">
+                                        Join
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Meetup 3 -->
+                            <div class="bg-gray-800/50 backdrop-blur-sm rounded-lg border border-gray-700 p-4 hover:border-purple-500 transition-colors">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h3 class="text-white font-semibold mb-1">London AI Ethics Discussion Group</h3>
+                                        <p class="text-gray-300 text-sm mb-2">Bi-weekly discussions on AI ethics and societal impact</p>
+                                        <div class="flex items-center space-x-4 text-xs text-gray-400">
+                                            <span>📅 Sep 24, 2025 • 6:30 PM</span>
+                                            <span>📍 London, UK</span>
+                                            <span>👥 89 attending</span>
+                                        </div>
+                                    </div>
+                                    <a href="/meetups/london-ai-ethics" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-semibold text-sm transition-colors">
+                                        Join
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-6">
+                            <a href="/meetups/find-local" class="text-yellow-400 hover:text-yellow-300 font-semibold transition-colors">
+                                Find meetups in your area →
+                            </a>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="space-y-8">
+                    
+                    <!-- Event Search -->
+                    <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700 p-6">
+                        <h3 class="text-lg font-bold text-white mb-4">Find Events</h3>
+                        <div class="space-y-3">
+                            <input type="text" placeholder="Search events..." 
+                                   class="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 text-sm focus:outline-none focus:border-red-500">
+                            <select class="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white text-sm focus:outline-none focus:border-red-500">
+                                <option>All locations</option>
+                                <option>San Francisco, CA</option>
+                                <option>New York, NY</option>
+                                <option>London, UK</option>
+                                <option>Toronto, CA</option>
+                                <option>Berlin, DE</option>
+                                <option>Virtual Events</option>
+                            </select>
+                            <select class="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white text-sm focus:outline-none focus:border-red-500">
+                                <option>All event types</option>
+                                <option>Conferences</option>
+                                <option>Workshops</option>
+                                <option>Meetups</option>
+                                <option>Hackathons</option>
+                                <option>Virtual Events</option>
+                            </select>
+                            <button class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg font-semibold text-sm transition-colors">
+                                Search Events
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Event Calendar -->
+                    <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700 p-6">
+                        <h3 class="text-lg font-bold text-white mb-6 flex items-center">
+                            <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            This Month
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-12 text-center">
+                                    <div class="text-red-400 text-xs font-semibold">SEP</div>
+                                    <div class="text-white text-lg font-bold">18</div>
+                                </div>
+                                <div>
+                                    <h4 class="text-white text-sm font-semibold">NYC ML Meetup</h4>
+                                    <p class="text-gray-400 text-xs">New York • 7:00 PM</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-12 text-center">
+                                    <div class="text-blue-400 text-xs font-semibold">SEP</div>
+                                    <div class="text-white text-lg font-bold">20</div>
+                                </div>
+                                <div>
+                                    <h4 class="text-white text-sm font-semibold">SF AI Professionals</h4>
+                                    <p class="text-gray-400 text-xs">San Francisco • 6:00 PM</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-12 text-center">
+                                    <div class="text-green-400 text-xs font-semibold">SEP</div>
+                                    <div class="text-white text-lg font-bold">25</div>
+                                </div>
+                                <div>
+                                    <h4 class="text-white text-sm font-semibold">Multimodal Workshop</h4>
+                                    <p class="text-gray-400 text-xs">Virtual + NYC • All Day</p>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="/events/calendar" class="text-blue-400 hover:text-blue-300 text-sm font-semibold mt-4 inline-block">
+                            View Full Calendar →
+                        </a>
+                    </div>
+
+                    <!-- Event Types -->
+                    <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700 p-6">
+                        <h3 class="text-lg font-bold text-white mb-4">Event Types</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-300 text-sm">Major Conferences</span>
+                                <span class="text-blue-400 text-xs">23 upcoming</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-300 text-sm">Technical Workshops</span>
+                                <span class="text-green-400 text-xs">47 upcoming</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-300 text-sm">Local Meetups</span>
+                                <span class="text-yellow-400 text-xs">156 upcoming</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-300 text-sm">Virtual Events</span>
+                                <span class="text-purple-400 text-xs">89 upcoming</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-300 text-sm">Hackathons</span>
+                                <span class="text-red-400 text-xs">12 upcoming</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Event -->
+                    <div class="bg-gradient-to-br from-red-900/50 to-pink-900/50 rounded-xl border border-red-500/30 p-6">
+                        <h3 class="text-lg font-bold text-white mb-3">Submit Your Event</h3>
+                        <p class="text-gray-300 text-sm mb-4">
+                            Organizing an AI event? List it on our platform and reach thousands of AI professionals.
+                        </p>
+                        <a href="/events/submit" class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg font-semibold text-sm transition-colors inline-block text-center">
+                            Submit Event
+                        </a>
+                    </div>
+
+                    <!-- Event Statistics -->
+                    <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700 p-6">
+                        <h3 class="text-lg font-bold text-white mb-4">Platform Stats</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Total Events</span>
+                                <span class="text-red-400 font-semibold">2,347</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Global Attendees</span>
+                                <span class="text-blue-400 font-semibold">1.2M</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Cities Covered</span>
+                                <span class="text-green-400 font-semibold">156</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Virtual Attendance</span>
+                                <span class="text-purple-400 font-semibold">450K</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Event category filter functionality
+        document.querySelectorAll('button').forEach(button => {
+            if (button.textContent.includes('All Events') || button.textContent.includes('Conferences')) {
+                button.addEventListener('click', function() {
+                    // Remove active class from all category buttons
+                    document.querySelectorAll('button').forEach(btn => {
+                        if (btn.classList.contains('bg-red-600')) {
+                            btn.classList.remove('bg-red-600');
+                            btn.classList.add('bg-gray-700', 'hover:bg-gray-600');
+                        }
+                    });
+                    
+                    // Add active class to clicked button
+                    this.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                    this.classList.add('bg-red-600');
+                    
+                    console.log('Event category filter:', this.textContent);
+                    filterEvents(this.textContent);
+                });
+            }
+        });
+
+        // Filter events by category
+        function filterEvents(category) {
+            const articles = document.querySelectorAll('article');
+            articles.forEach(article => {
+                const categoryTags = article.querySelectorAll('span');
+                let matchFound = false;
+                
+                categoryTags.forEach(tag => {
+                    if (category === 'All Events' || tag.textContent.includes(category.toUpperCase())) {
+                        matchFound = true;
+                    }
+                });
+                
+                if (matchFound) {
+                    article.style.display = 'block';
+                    article.style.opacity = '1';
+                } else {
+                    article.style.opacity = '0.3';
+                }
+            });
+        }
+
+        // Event search functionality
+        document.querySelector('button').addEventListener('click', function() {
+            if (this.textContent.includes('Search Events')) {
+                const searchTerm = document.querySelector('input[placeholder="Search events..."]').value;
+                const location = document.querySelectorAll('select')[0].value;
+                const eventType = document.querySelectorAll('select')[1].value;
+                
+                console.log('Event search:', { searchTerm, location, eventType });
+                alert(`Searching for: "${searchTerm}" in ${location} for ${eventType}`);
+                
+                // This would trigger actual search functionality
+                searchEvents(searchTerm, location, eventType);
+            }
+        });
+
+        // Search events function
+        function searchEvents(term, location, type) {
+            // Simulate search results
+            console.log(`Searching events: ${term} | ${location} | ${type}`);
+            // This would filter and display matching events
+        }
+
+        // Event registration tracking
+        document.querySelectorAll('a[href*="/events/register/"]').forEach(link => {
+            link.addEventListener('click', function() {
+                const eventTitle = this.closest('article').querySelector('h3').textContent.trim();
+                console.log(`Registering for event: ${eventTitle}`);
+            });
+        });
+
+        // Meetup joining
+        document.querySelectorAll('a[href*="/meetups/"]').forEach(link => {
+            link.addEventListener('click', function() {
+                const meetupName = this.closest('div').querySelector('h3').textContent.trim();
+                console.log(`Joining meetup: ${meetupName}`);
+            });
+        });
+
+        // Save event functionality
+        document.querySelectorAll('button').forEach(button => {
+            if (button.textContent.includes('Save Event')) {
+                button.addEventListener('click', function() {
+                    const eventTitle = this.closest('article').querySelector('h3').textContent.trim();
+                    alert(`"${eventTitle}" saved to your calendar and event list.`);
+                    this.textContent = 'Saved ✓';
+                    this.classList.add('text-green-400');
+                });
+            }
+        });
+
+        // Event submission
+        document.querySelector('a[href="/events/submit"]').addEventListener('click', function() {
+            console.log('Opening event submission form...');
+            // This would open the event submission interface
+        });
+
+        // Live event joining
+        document.querySelector('a[href*="/events/live/"]').addEventListener('click', function() {
+            console.log('Joining live event...');
+            // This would connect to the live event platform
+        });
+
+        // Calendar view
+        document.querySelectorAll('a[href*="/events/calendar"]').forEach(link => {
+            link.addEventListener('click', function() {
+                console.log('Opening event calendar view...');
+            });
+        });
+
+        // Agenda viewing
+        document.querySelectorAll('a[href*="/agenda"]').forEach(link => {
+            link.addEventListener('click', function() {
+                const eventTitle = this.closest('article').querySelector('h3').textContent.trim();
+                console.log(`Viewing agenda for: ${eventTitle}`);
+            });
+        });
+
+        // Location-based event filtering
+        function filterByLocation(location) {
+            console.log(`Filtering events by location: ${location}`);
+            // This would show events in the specified location
+        }
+
+        // Date-based event filtering
+        function filterByDate(dateRange) {
+            console.log(`Filtering events by date: ${dateRange}`);
+            // This would show events in the specified date range
+        }
+
+        // Event sharing
+        function shareEvent(eventId, platform) {
+            console.log(`Sharing event ${eventId} on ${platform}`);
+            // This would integrate with social sharing APIs
+        }
+
+        // Event reminders
+        function setEventReminder(eventId, reminderTime) {
+            console.log(`Setting reminder for event ${eventId} at ${reminderTime}`);
+            // This would integrate with notification systems
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
