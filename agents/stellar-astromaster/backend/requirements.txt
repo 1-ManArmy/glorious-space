@@ -5,6 +5,6 @@ python-multipart==0.0.6
 websockets==11.0.3
 pyephem==4.1.5
 pytz==2023.3
-requests==2.31.0
+requests==2.33.0
 httpx==0.25.0
 python-dateutil==2.8.2

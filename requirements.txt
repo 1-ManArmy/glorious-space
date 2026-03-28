@@ -38,13 +38,13 @@ psycopg2-binary~=2.9.9
 redis~=5.0.8
 
 # Security & Encryption
-cryptography~=45.0.7
+cryptography~=46.0.6
 
 # File Upload & Storage
 Pillow~=10.4.0
 
 # Utilities
-requests~=2.32.3
+requests~=2.33.0
 python-slugify~=8.0.4
 
 # Production Deployment
