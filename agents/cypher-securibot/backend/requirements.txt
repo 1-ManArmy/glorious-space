@@ -9,15 +9,15 @@ websockets==12.0
 # Security & Network Analysis
 python-nmap==0.7.1
 psutil==5.9.6
-requests==2.31.0
-scapy==2.5.0
+requests==2.33.0
+scapy==2.7.0rc1
 
 # Data Processing
 pydantic==2.5.0
-python-multipart==0.0.6
+python-multipart==0.0.22
 
 # AI & Machine Learning (for threat analysis)
-transformers==4.36.0
+transformers==5.0.0rc3
 torch==2.1.0
 numpy==1.24.3
 
@@ -25,9 +25,9 @@ numpy==1.24.3
 python-json-logger==2.0.7
 
 # Security Tools
-cryptography==41.0.7
+cryptography==46.0.6
 paramiko==3.3.1
-pyopenssl==23.3.0
+pyopenssl==26.0.0
 
 # Database (for threat intelligence)
 sqlalchemy==2.0.23
